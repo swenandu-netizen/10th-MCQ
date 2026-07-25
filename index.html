@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>10th Master Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4facfe;
+            --secondary: #00f2fe;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h2 { color: var(--text-dark); font-weight: 700; margin-bottom: 5px; }
+        p { color: var(--text-light); font-size: 14px; margin-bottom: 20px; }
+
+        input[type="number"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0 10px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+        .primary-btn:active { transform: scale(0.98); }
+        .back-btn { background-color: #edf2f7; color: var(--text-dark); margin-top: 20px; }
+
+        .option-btn { 
+            background-color: #ffffff; 
+            color: var(--text-dark); 
+            text-align: left; 
+            padding-left: 20px;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* सही और गलत जवाब के रंग (Colors) */
+        .correct-ans {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724 !important;
+        }
+        .wrong-ans {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24 !important;
+        }
+
+        .hidden { display: none; }
+        #message { margin-top: 15px; font-weight: 600; font-size: 14px; }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        #quizTitle { font-size: 16px; color: var(--primary); margin: 0;}
+        #questionCount { margin: 0; font-weight: 600; background: #edf2f7; padding: 5px 10px; border-radius: 8px;}
+        #questionText { text-align: left; font-size: 18px; color: var(--text-dark); margin-bottom: 25px; line-height: 1.5;}
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 20px auto;
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container fade-in" id="appContainer">
+    
+    <!-- 1. Login Screen -->
+    <div id="loginScreen">
+        <h2>विद्यार्थी लॉगिन</h2>
+        <p>क्विझ सुरू करण्यासाठी मोबाईल नंबर आणि पासवर्ड टाका.</p>
+        <input type="number" id="mobileInput" placeholder="मोबाईल नंबर">
+        <input type="password" id="passwordInput" placeholder="पासवर्ड">
+        <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
+        <p id="message"></p>
+    </div>
+
+    <!-- 2. Subject Selection Screen -->
+    <div id="subjectScreen" class="hidden">
+        <h2 id="welcomeText">विषय निवडा</h2>
+        <p>तुम्हाला कोणत्या विषयाची टेस्ट द्यायची आहे?</p>
+        <div id="subjectList"></div>
+    </div>
+
+    <!-- 3. Chapter Selection Screen -->
+    <div id="chapterScreen" class="hidden">
+        <h2 id="subjectTitle">Chapter निवडा</h2>
+        <p>तुम्हाला कोणता धडा वाचायचा आहे?</p>
+        <div id="chapterList"></div>
+        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा</button>
+    </div>
+
+    <!-- 4. Quiz Screen -->
+    <div id="quizScreen" class="hidden">
+        <div class="quiz-header">
+            <h3 id="quizTitle"></h3>
+            <p id="questionCount">1 / 10</p>
+        </div>
+        <h3 id="questionText">प्रश्न इथे दिसेल</h3>
+        <div id="optionsList"></div>
+    </div>
+
+    <!-- 5. Result Screen -->
+    <div id="resultScreen" class="hidden">
+        <h2>निकाल (Result) 🏆</h2>
+        <p>अभिनंदन! तुम्ही टेस्ट पूर्ण केली आहे.</p>
+        <div class="score-circle" id="scoreText">0 / 10</div>
+        <button class="primary-btn" onclick="showScreen('subjectScreen')">📚 दुसरे विषय निवडा</button>
+    </div>
+
+</div>
+
+<script>
+    // 🔴 महत्त्वाचे: इथे तुमची नवीन Apps Script ची लिंक टाका 🔴
+    
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQto4Ws4BbDG8VBNajXiJpaurxpw5AKDVspwzhDIg7_XF_koHSBg/exec";
+
+    let allData = [];
+    let currentQuizData = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function showScreen(screenId) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('subjectScreen').classList.add('hidden');
+        document.getElementById('chapterScreen').classList.add('hidden');
+        document.getElementById('quizScreen').classList.add('hidden');
+        document.getElementById('resultScreen').classList.add('hidden');
+        
+        let screen = document.getElementById(screenId);
+        screen.classList.remove('hidden');
+        screen.classList.add('fade-in'); 
+    }
+
+    function loginUser() {
+        let mobile = document.getElementById('mobileInput').value;
+        let password = document.getElementById('passwordInput').value;
+        let msgBox = document.getElementById('message');
+
+        if(mobile === "" || password === "") {
+            msgBox.style.color = "red";
+            msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड दोन्ही भरणे आवश्यक आहे!"; 
+            return;
+        }
+        
+        msgBox.style.color = "#4facfe";
+        msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
+
+        fetch(SCRIPT_URL + "?action=login&mobile=" + mobile + "&password=" + password)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                msgBox.innerText = "डेटा डाउनलोड होत आहे...";
+                document.getElementById('welcomeText').innerText = "नमस्कार, " + (data.name || "विद्यार्थी") + "!";
+                fetchAllMCQs(); 
+            } else {
+                msgBox.style.color = "red";
+                msgBox.innerText = "चुकीचा नंबर किंवा पासवर्ड! ❌";
+            }
+        }).catch(err => { 
+            msgBox.style.color = "red";
+            msgBox.innerText = "कनेक्शन एरर! इंटरनेट तपासा."; 
+        });
+    }
+
+    function fetchAllMCQs() {
+        fetch(SCRIPT_URL + "?action=getMCQs")
+        .then(res => res.json())
+        .then(data => {
+            allData = data; 
+            loadSubjects();
+            showScreen('subjectScreen');
+        });
+    }
+
+    function loadSubjects() {
+        let subjects = [...new Set(allData.map(item => item.subject))]; 
+        let html = "";
+        subjects.forEach(sub => {
+            html += `<button class="primary-btn" onclick="loadChapters('${sub}')">${sub}</button>`;
+        });
+        document.getElementById('subjectList').innerHTML = html;
+    }
+
+    function loadChapters(selectedSubject) {
+        document.getElementById('subjectTitle').innerText = selectedSubject;
+        let filteredData = allData.filter(item => item.subject === selectedSubject);
+        let chapters = [...new Set(filteredData.map(item => item.lesson))]; 
+        
+        let html = "";
+        chapters.forEach(chap => {
+            html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">${chap}</button>`;
+        });
+        document.getElementById('chapterList').innerHTML = html;
+        showScreen('chapterScreen');
+    }
+
+    function startQuiz(subject, chapter) {
+        document.getElementById('quizTitle').innerText = subject + " - " + chapter;
+        currentQuizData = allData.filter(item => item.subject === subject && item.lesson === chapter);
+        
+        currentQuestionIndex = 0;
+        score = 0;
+        showScreen('quizScreen');
+        displayQuestion();
+    }
+
+    function displayQuestion() {
+        if(currentQuestionIndex >= currentQuizData.length) {
+            endQuiz();
+            return;
+        }
+
+        let qData = currentQuizData[currentQuestionIndex];
+        document.getElementById('questionCount').innerText = `${currentQuestionIndex + 1} / ${currentQuizData.length}`;
+        document.getElementById('questionText').innerText = qData.question;
+
+        // हर बटन को एक ID (btnA, btnB...) दी गई है ताकि कलर बदला जा सके
+        let optionsHtml = `
+            <button class="option-btn" id="btnA" onclick="checkAnswer('${qData.optA}', '${qData.answer}', 'btnA')"><b style="margin-right:10px; color:#4facfe;">A.</b> ${qData.optA}</button>
+            <button class="option-btn" id="btnB" onclick="checkAnswer('${qData.optB}', '${qData.answer}', 'btnB')"><b style="margin-right:10px; color:#4facfe;">B.</b> ${qData.optB}</button>
+            <button class="option-btn" id="btnC" onclick="checkAnswer('${qData.optC}', '${qData.answer}', 'btnC')"><b style="margin-right:10px; color:#4facfe;">C.</b> ${qData.optC}</button>
+            <button class="option-btn" id="btnD" onclick="checkAnswer('${qData.optD}', '${qData.answer}', 'btnD')"><b style="margin-right:10px; color:#4facfe;">D.</b> ${qData.optD}</button>
+        `;
+        document.getElementById('optionsList').innerHTML = optionsHtml;
+    }
+
+    function checkAnswer(selected, correct, btnId) {
+        // बटन क्लिक होते ही सभी बट्स को लॉक (disable) कर दें ताकि छात्र दो बार क्लिक ना कर सके
+        let allBtns = document.getElementsByClassName("option-btn");
+        for(let btn of allBtns) {
+            btn.disabled = true;
+        }
+
+        let clickedBtn = document.getElementById(btnId);
+        let qData = currentQuizData[currentQuestionIndex];
+
+        if(selected == correct) {
+            score++;
+            clickedBtn.classList.add("correct-ans"); // सही जवाब पर हरा रंग
+        } else {
+            clickedBtn.classList.add("wrong-ans"); // गलत पर लाल रंग
+            
+            // सही जवाब वाला बटन ढूंढकर उसे हरा करें
+            if(qData.optA == correct) document.getElementById("btnA").classList.add("correct-ans");
+            if(qData.optB == correct) document.getElementById("btnB").classList.add("correct-ans");
+            if(qData.optC == correct) document.getElementById("btnC").classList.add("correct-ans");
+            if(qData.optD == correct) document.getElementById("btnD").classList.add("correct-ans");
+        }
+
+        // 1.5 सेकंड का इंतज़ार करें, फिर अगला सवाल दिखाएं
+        setTimeout(() => {
+            currentQuestionIndex++;
+            displayQuestion(); 
+        }, 1500);
+    }
+
+    function endQuiz() {
+        document.getElementById('scoreText').innerText = `${score} / ${currentQuizData.length}`;
+        showScreen('resultScreen');
+    }
+</script>
+
+</body>
+</html>
