@@ -6,12 +6,11 @@
     <title>10th Master Quiz</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <style>
+      <style>
         :root {
             --primary: #4facfe;
             --secondary: #00f2fe;
-            --text-dark: #2d3748;
-            --text-light: #718096;
+            --text-dark: #1a202c; /* और डार्क कर दिया गया है */
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
         }
@@ -27,40 +26,57 @@
             padding: 15px;
         }
 
+        /* बॉक्स को चौड़ा (Full screen feel) करने के लिए */
         .container {
-            width: 100%;
-            max-width: 420px;
+            width: 95%; 
+            max-width: 550px; 
             background: var(--card-bg);
-            padding: 30px 25px;
+            padding: 40px 25px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             text-align: center;
         }
 
-        h2 { color: var(--text-dark); font-weight: 700; margin-bottom: 5px; }
-        p { color: var(--text-light); font-size: 14px; margin-bottom: 20px; }
+        /* Heading का साइज़ बढ़ाया गया है */
+        h2 { 
+            color: var(--text-dark); 
+            font-weight: 700; 
+            font-size: 26px;
+            margin-bottom: 10px; 
+        }
+        
+        /* फीके टेक्स्ट को डार्क और बड़ा किया गया है */
+        p { 
+            color: #333333; 
+            font-size: 18px; 
+            font-weight: 500;
+            margin-bottom: 25px; 
+            line-height: 1.5;
+        }
 
         input[type="number"], input[type="password"] {
             width: 100%;
-            padding: 15px;
-            margin: 10px 0 10px 0;
+            padding: 16px;
+            margin: 10px 0 15px 0;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 18px; /* इनपुट टेक्स्ट बड़ा किया */
             font-family: 'Poppins', sans-serif;
             box-sizing: border-box;
             outline: none;
             transition: 0.3s;
         }
+        
         input:focus { border-color: var(--primary); }
 
+        /* बटन्स को भी बड़ा किया गया है */
         button {
             width: 100%;
-            padding: 15px;
-            margin: 8px 0;
+            padding: 18px;
+            margin: 10px 0;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
@@ -73,8 +89,14 @@
             color: white;
             box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
         }
+
         .primary-btn:active { transform: scale(0.98); }
-        .back-btn { background-color: #edf2f7; color: var(--text-dark); margin-top: 20px; }
+
+        .back-btn { 
+            background-color: #edf2f7; 
+            color: var(--text-dark);
+            margin-top: 20px;
+        }
 
         .option-btn { 
             background-color: #ffffff; 
@@ -85,8 +107,7 @@
             display: flex;
             align-items: center;
         }
-        
-        /* सही और गलत जवाब के रंग (Colors) */
+
         .correct-ans {
             background-color: #d4edda !important;
             border-color: #28a745 !important;
@@ -99,7 +120,8 @@
         }
 
         .hidden { display: none; }
-        #message { margin-top: 15px; font-weight: 600; font-size: 14px; }
+        
+        #message { margin-top: 15px; font-weight: 600; font-size: 16px; }
         
         .quiz-header {
             display: flex;
@@ -110,9 +132,18 @@
             margin-bottom: 20px;
         }
 
-        #quizTitle { font-size: 16px; color: var(--primary); margin: 0;}
+        #quizTitle { font-size: 18px; color: var(--primary); margin: 0;}
         #questionCount { margin: 0; font-weight: 600; background: #edf2f7; padding: 5px 10px; border-radius: 8px;}
-        #questionText { text-align: left; font-size: 18px; color: var(--text-dark); margin-bottom: 25px; line-height: 1.5;}
+        
+        /* सवाल के टेक्स्ट को और बड़ा और साफ किया गया है */
+        #questionText { 
+            text-align: left; 
+            font-size: 20px; 
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
 
         .score-circle {
             width: 120px;
@@ -135,6 +166,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
+
+    
 <link rel="manifest" href="manifest.json">
 <script>
   if ('serviceWorker' in navigator) {
