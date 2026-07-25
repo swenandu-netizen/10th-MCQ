@@ -4,16 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>10th Master Quiz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
-      <style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
         :root {
             --primary: #4facfe;
             --secondary: #00f2fe;
-            --text-dark: #1a202c; /* और डार्क कर दिया गया है */
+            --text-dark: #1a202c; 
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #e2e8f0;
         }
+
+        body.dark-mode {
+            --text-dark: #f7fafc; 
+            --card-bg: #2d3748;
+            --input-bg: #4a5568;
+            --input-border: #718096;
+            background: #1a202c !important;
+        }
+        body.dark-mode p { color: #cbd5e0; }
+        body.dark-mode .back-btn { background-color: #4a5568; color: #f7fafc; }
+        body.dark-mode .option-btn { background-color: #2d3748; color: #f7fafc; border-color: #718096; }
+        body.dark-mode #questionCount { background: #4a5568; color: #f7fafc; }
+        body.dark-mode .quiz-header { border-color: #4a5568; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -24,189 +41,118 @@
             align-items: center;
             justify-content: center;
             padding: 15px;
+            transition: background 0.3s;
         }
 
-        /* बॉक्स को चौड़ा (Full screen feel) करने के लिए */
         .container {
-            width: 95%; 
-            max-width: 550px; 
-            background: var(--card-bg);
-            padding: 40px 25px;
-            border-radius: 20px;
+            width: 95%; max-width: 550px; background: var(--card-bg);
+            padding: 40px 25px; border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            text-align: center;
+            text-align: center; box-sizing: border-box; position: relative;
+            transition: background 0.3s;
         }
 
-        /* Heading का साइज़ बढ़ाया गया है */
-        h2 { 
-            color: var(--text-dark); 
-            font-weight: 700; 
-            font-size: 26px;
-            margin-bottom: 10px; 
-        }
-        
-        /* फीके टेक्स्ट को डार्क और बड़ा किया गया है */
-        p { 
-            color: #333333; 
-            font-size: 18px; 
-            font-weight: 500;
-            margin-bottom: 25px; 
-            line-height: 1.5;
+        .theme-toggle {
+            position: absolute; top: 15px; right: 20px; background: none;
+            border: none; font-size: 24px; cursor: pointer; box-shadow: none; width: auto; padding: 0; margin: 0;
         }
 
-        input[type="number"], input[type="password"] {
-            width: 100%;
-            padding: 16px;
-            margin: 10px 0 15px 0;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 18px; /* इनपुट टेक्स्ट बड़ा किया */
-            font-family: 'Poppins', sans-serif;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.3s;
+        h2 { color: var(--text-dark); font-weight: 700; font-size: 26px; margin-bottom: 10px; }
+        p { color: #333333; font-size: 18px; font-weight: 500; margin-bottom: 25px; line-height: 1.5; }
+
+        input[type="text"], input[type="number"], input[type="password"] {
+            width: 100%; padding: 16px; margin: 10px 0 15px 0;
+            background-color: var(--input-bg); color: var(--text-dark);
+            border: 2px solid var(--input-border); border-radius: 12px;
+            font-size: 18px; font-family: 'Poppins', sans-serif;
+            box-sizing: border-box; outline: none; transition: 0.3s;
         }
-        
         input:focus { border-color: var(--primary); }
 
-        /* बटन्स को भी बड़ा किया गया है */
         button {
-            width: 100%;
-            padding: 18px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
+            width: 100%; padding: 18px; margin: 10px 0; border: none; border-radius: 12px;
+            font-size: 18px; font-weight: 600; font-family: 'Poppins', sans-serif;
+            cursor: pointer; transition: all 0.3s ease; box-sizing: border-box;
         }
 
-        .primary-btn {
-            background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-        }
-
+        .primary-btn { background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%); color: white; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
         .primary-btn:active { transform: scale(0.98); }
+        .whatsapp-btn { background: #25D366; color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+        
+        /* Text Button for Toggle */
+        .text-btn { background: none; color: var(--primary); font-size: 16px; margin-top: 10px; padding: 10px; box-shadow: none; text-decoration: underline; }
 
-        .back-btn { 
-            background-color: #edf2f7; 
-            color: var(--text-dark);
-            margin-top: 20px;
-        }
+        .back-btn { background-color: #edf2f7; color: var(--text-dark); margin-top: 20px; }
+        .option-btn { background-color: var(--card-bg); color: var(--text-dark); text-align: left; padding-left: 20px; border: 2px solid var(--input-border); display: flex; align-items: center; }
+        .locked-btn { background-color: #e2e8f0; color: #4a5568; cursor: pointer; border: 2px dashed #a0aec0; }
+        body.dark-mode .locked-btn { background-color: #4a5568; color: #cbd5e0; border-color: #718096; }
 
-        .option-btn { 
-            background-color: #ffffff; 
-            color: var(--text-dark); 
-            text-align: left; 
-            padding-left: 20px;
-            border: 2px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-        }
-
-        .correct-ans {
-            background-color: #d4edda !important;
-            border-color: #28a745 !important;
-            color: #155724 !important;
-        }
-        .wrong-ans {
-            background-color: #f8d7da !important;
-            border-color: #dc3545 !important;
-            color: #721c24 !important;
-        }
+        .correct-ans { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
+        .wrong-ans { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
 
         .hidden { display: none; }
+        #message, #regMessage { margin-top: 15px; font-weight: 600; font-size: 16px; }
         
-        #message { margin-top: 15px; font-weight: 600; font-size: 16px; }
-        
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; margin-bottom: 20px; }
         #quizTitle { font-size: 18px; color: var(--primary); margin: 0;}
         #questionCount { margin: 0; font-weight: 600; background: #edf2f7; padding: 5px 10px; border-radius: 8px;}
-        
-        /* सवाल के टेक्स्ट को और बड़ा और साफ किया गया है */
-        #questionText { 
-            text-align: left; 
-            font-size: 20px; 
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
+        #questionText { text-align: left; font-size: 20px; font-weight: 600; color: var(--text-dark); margin-bottom: 25px; line-height: 1.6; }
 
         .score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 120px; height: 120px; border-radius: 50%;
             background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            font-weight: bold;
-            margin: 20px auto;
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-size: 30px; font-weight: bold; margin: 20px auto;
             box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
         }
-
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
-
-    
-<link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
-
-    
 </head>
 <body>
 
 <div class="container fade-in" id="appContainer">
-    
+    <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
     <!-- 1. Login Screen -->
     <div id="loginScreen">
         <h2>विद्यार्थी लॉगिन</h2>
         <p>क्विझ सुरू करण्यासाठी मोबाईल नंबर आणि पासवर्ड टाका.</p>
-        <input type="number" id="mobileInput" placeholder="मोबाईल नंबर">
+        <input type="number" id="mobileInput" placeholder="मोबाईल नंबर (उदा. 9876543210)">
         <input type="password" id="passwordInput" placeholder="पासवर्ड">
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
+        <button class="text-btn" onclick="showScreen('registerScreen')">नवीन आहात? इथे खाते काढा (Register)</button>
     </div>
 
-    <!-- 2. Subject Selection Screen -->
+    <!-- 2. Register Screen (नवीन खाते काढा) -->
+    <div id="registerScreen" class="hidden">
+        <h2>नवीन खाते काढा</h2>
+        <p>स्वतःची नोंदणी करून फ्री टेस्ट सोडवा.</p>
+        <input type="text" id="regNameInput" placeholder="तुमचे पूर्ण नाव">
+        <input type="number" id="regMobileInput" placeholder="मोबाईल नंबर">
+        <input type="password" id="regPasswordInput" placeholder="नवीन पासवर्ड तयार करा">
+        <button class="primary-btn" onclick="registerUser()">नोंदणी करा 📝</button>
+        <p id="regMessage"></p>
+        <button class="text-btn" onclick="showScreen('loginScreen')">आधीच खाते आहे? लॉगिन करा</button>
+    </div>
+
+    <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
         <h2 id="welcomeText">विषय निवडा</h2>
         <p>तुम्हाला कोणत्या विषयाची टेस्ट द्यायची आहे?</p>
         <div id="subjectList"></div>
     </div>
 
-    <!-- 3. Chapter Selection Screen -->
+    <!-- 4. Chapter Selection Screen -->
     <div id="chapterScreen" class="hidden">
         <h2 id="subjectTitle">Chapter निवडा</h2>
-        <p>तुम्हाला कोणता धडा वाचायचा आहे?</p>
+        <p>कोणता धडा वाचायचा आहे?</p>
         <div id="chapterList"></div>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा</button>
     </div>
 
-    <!-- 4. Quiz Screen -->
+    <!-- 5. Quiz Screen -->
     <div id="quizScreen" class="hidden">
         <div class="quiz-header">
             <h3 id="quizTitle"></h3>
@@ -216,28 +162,41 @@
         <div id="optionsList"></div>
     </div>
 
-    <!-- 5. Result Screen -->
+    <!-- 6. Result Screen -->
     <div id="resultScreen" class="hidden">
         <h2>निकाल (Result) 🏆</h2>
         <p>अभिनंदन! तुम्ही टेस्ट पूर्ण केली आहे.</p>
         <div class="score-circle" id="scoreText">0 / 10</div>
-        <button class="primary-btn" onclick="showScreen('subjectScreen')">📚 दुसरे विषय निवडा</button>
+        <button class="whatsapp-btn" onclick="shareOnWhatsApp()">📲 WhatsApp वर शेअर करा</button>
+        <button class="primary-btn" onclick="showScreen('subjectScreen')" style="margin-top: 15px;">📚 दुसरे विषय निवडा</button>
     </div>
-
 </div>
 
 <script>
-    // 🔴 महत्त्वाचे: इथे तुमची नवीन Apps Script ची लिंक टाका 🔴
+    // ⚠️ इथे तुमचा 'New Deployment' केलेला Apps Script URL टाका
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQto4Ws4BbDG8VBNajXiJpaurxpw5AKDVspwzhDIg7_XF_koHSBg/exec"; 
+    const ADMIN_WHATSAPP = "919876543210"; 
     
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQto4Ws4BbDG8VBNajXiJpaurxpw5AKDVspwzhDIg7_XF_koHSBg/exec";
-
     let allData = [];
     let currentQuizData = [];
     let currentQuestionIndex = 0;
     let score = 0;
+    let currentUserPlan = "Free"; 
+    let currentSubjectName = "";
+    let currentChapterName = "";
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        document.getElementById('themeBtn').innerText = document.body.classList.contains('dark-mode') ? "☀️" : "🌙";
+    }
 
     function showScreen(screenId) {
         document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('registerScreen').classList.add('hidden');
         document.getElementById('subjectScreen').classList.add('hidden');
         document.getElementById('chapterScreen').classList.add('hidden');
         document.getElementById('quizScreen').classList.add('hidden');
@@ -248,6 +207,40 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQt
         screen.classList.add('fade-in'); 
     }
 
+    // Register User Logic
+    function registerUser() {
+        let name = document.getElementById('regNameInput').value;
+        let mobile = document.getElementById('regMobileInput').value;
+        let password = document.getElementById('regPasswordInput').value;
+        let msgBox = document.getElementById('regMessage');
+
+        if(name === "" || mobile === "" || password === "") {
+            msgBox.style.color = "red";
+            msgBox.innerText = "सर्व माहिती भरणे आवश्यक आहे!"; 
+            return;
+        }
+        
+        msgBox.style.color = "#4facfe";
+        msgBox.innerText = "खाते तयार करत आहे... कृपया थांबा ⏳";
+
+        fetch(`${SCRIPT_URL}?action=register&name=${name}&mobile=${mobile}&password=${password}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                msgBox.style.color = "green";
+                msgBox.innerText = "अकाउंट यशस्वीरित्या तयार झाले! आता तुम्ही लॉगिन करू शकता.";
+                setTimeout(() => { showScreen('loginScreen'); }, 2000);
+            } else {
+                msgBox.style.color = "red";
+                msgBox.innerText = data.message;
+            }
+        }).catch(err => { 
+            msgBox.style.color = "red";
+            msgBox.innerText = "कनेक्शन एरर! इंटरनेट तपासा."; 
+        });
+    }
+
+    // Login User Logic
     function loginUser() {
         let mobile = document.getElementById('mobileInput').value;
         let password = document.getElementById('passwordInput').value;
@@ -255,19 +248,25 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQt
 
         if(mobile === "" || password === "") {
             msgBox.style.color = "red";
-            msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड दोन्ही भरणे आवश्यक आहे!"; 
+            msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड भरणे आवश्यक आहे!"; 
             return;
         }
         
         msgBox.style.color = "#4facfe";
         msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
 
-        fetch(SCRIPT_URL + "?action=login&mobile=" + mobile + "&password=" + password)
+        fetch(`${SCRIPT_URL}?action=login&mobile=${mobile}&password=${password}`)
         .then(res => res.json())
         .then(data => {
             if(data.success) {
                 msgBox.innerText = "डेटा डाउनलोड होत आहे...";
-                document.getElementById('welcomeText').innerText = "नमस्कार, " + (data.name || "विद्यार्थी") + "!";
+                currentUserPlan = data.plan; 
+
+                let planBadge = currentUserPlan === "Free" ? 
+                    "<br><span style='font-size: 16px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🔒 Free Plan</span>" : 
+                    "<br><span style='font-size: 16px; color: #2f855a; background: #c6f6d5; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🌟 Paid Plan</span>";
+
+                document.getElementById('welcomeText').innerHTML = "नमस्कार, " + (data.name || "विद्यार्थी") + "! " + planBadge;
                 fetchAllMCQs(); 
             } else {
                 msgBox.style.color = "red";
@@ -304,76 +303,81 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQt
         let chapters = [...new Set(filteredData.map(item => item.lesson))]; 
         
         let html = "";
-        chapters.forEach(chap => {
-            html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">${chap}</button>`;
+        chapters.forEach((chap, index) => {
+            let historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap);
+            let scoreText = historyScore ? `<br><small style="font-size:14px; font-weight:normal; display:block; margin-top:3px; color: #e2e8f0;">(मागील स्कोर: ${historyScore})</small>` : "";
+
+            if(currentUserPlan === "Free" && index > 0) {
+                html += `<button class="locked-btn" onclick="buyPaidPlan('${chap}')">🔒 ${chap} <br><small style="font-size:14px; font-weight:normal; display:block; margin-top:3px;">(Unlock करण्यासाठी क्लिक करा)</small></button>`;
+            } else {
+                html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
+            }
         });
         document.getElementById('chapterList').innerHTML = html;
         showScreen('chapterScreen');
     }
 
+    function buyPaidPlan(chapterName) {
+        let userNumber = document.getElementById('mobileInput').value;
+        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला '10th Master Quiz' ॲप मध्ये '${chapterName}' आणि बाकी सर्व विषय अनलॉक करण्यासाठी *Paid Plan* घ्यायचा आहे. कृपया मला पेमेंटची माहिती द्या.`;
+        let url = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+    }
+
     function startQuiz(subject, chapter) {
+        currentSubjectName = subject;
+        currentChapterName = chapter;
         document.getElementById('quizTitle').innerText = subject + " - " + chapter;
         currentQuizData = allData.filter(item => item.subject === subject && item.lesson === chapter);
-        
-        currentQuestionIndex = 0;
-        score = 0;
+        currentQuestionIndex = 0; score = 0;
         showScreen('quizScreen');
         displayQuestion();
     }
 
     function displayQuestion() {
-        if(currentQuestionIndex >= currentQuizData.length) {
-            endQuiz();
-            return;
-        }
-
+        if(currentQuestionIndex >= currentQuizData.length) { endQuiz(); return; }
         let qData = currentQuizData[currentQuestionIndex];
         document.getElementById('questionCount').innerText = `${currentQuestionIndex + 1} / ${currentQuizData.length}`;
         document.getElementById('questionText').innerText = qData.question;
 
-        // हर बटन को एक ID (btnA, btnB...) दी गई है ताकि कलर बदला जा सके
         let optionsHtml = `
-            <button class="option-btn" id="btnA" onclick="checkAnswer('${qData.optA}', '${qData.answer}', 'btnA')"><b style="margin-right:10px; color:#4facfe;">A.</b> ${qData.optA}</button>
-            <button class="option-btn" id="btnB" onclick="checkAnswer('${qData.optB}', '${qData.answer}', 'btnB')"><b style="margin-right:10px; color:#4facfe;">B.</b> ${qData.optB}</button>
-            <button class="option-btn" id="btnC" onclick="checkAnswer('${qData.optC}', '${qData.answer}', 'btnC')"><b style="margin-right:10px; color:#4facfe;">C.</b> ${qData.optC}</button>
-            <button class="option-btn" id="btnD" onclick="checkAnswer('${qData.optD}', '${qData.answer}', 'btnD')"><b style="margin-right:10px; color:#4facfe;">D.</b> ${qData.optD}</button>
+            <button class="option-btn" id="btnA" onclick="checkAnswer('${qData.optA}', '${qData.answer}', 'btnA')"><b style="margin-right:15px; color:#4facfe;">A.</b> ${qData.optA}</button>
+            <button class="option-btn" id="btnB" onclick="checkAnswer('${qData.optB}', '${qData.answer}', 'btnB')"><b style="margin-right:15px; color:#4facfe;">B.</b> ${qData.optB}</button>
+            <button class="option-btn" id="btnC" onclick="checkAnswer('${qData.optC}', '${qData.answer}', 'btnC')"><b style="margin-right:15px; color:#4facfe;">C.</b> ${qData.optC}</button>
+            <button class="option-btn" id="btnD" onclick="checkAnswer('${qData.optD}', '${qData.answer}', 'btnD')"><b style="margin-right:15px; color:#4facfe;">D.</b> ${qData.optD}</button>
         `;
         document.getElementById('optionsList').innerHTML = optionsHtml;
     }
 
     function checkAnswer(selected, correct, btnId) {
-        // बटन क्लिक होते ही सभी बट्स को लॉक (disable) कर दें ताकि छात्र दो बार क्लिक ना कर सके
         let allBtns = document.getElementsByClassName("option-btn");
-        for(let btn of allBtns) {
-            btn.disabled = true;
-        }
-
+        for(let btn of allBtns) { btn.disabled = true; }
         let clickedBtn = document.getElementById(btnId);
         let qData = currentQuizData[currentQuestionIndex];
 
         if(selected == correct) {
-            score++;
-            clickedBtn.classList.add("correct-ans"); // सही जवाब पर हरा रंग
+            score++; clickedBtn.classList.add("correct-ans"); 
         } else {
-            clickedBtn.classList.add("wrong-ans"); // गलत पर लाल रंग
-            
-            // सही जवाब वाला बटन ढूंढकर उसे हरा करें
+            clickedBtn.classList.add("wrong-ans"); 
             if(qData.optA == correct) document.getElementById("btnA").classList.add("correct-ans");
             if(qData.optB == correct) document.getElementById("btnB").classList.add("correct-ans");
             if(qData.optC == correct) document.getElementById("btnC").classList.add("correct-ans");
             if(qData.optD == correct) document.getElementById("btnD").classList.add("correct-ans");
         }
-
-        // 1.5 सेकंड का इंतज़ार करें, फिर अगला सवाल दिखाएं
-        setTimeout(() => {
-            currentQuestionIndex++;
-            displayQuestion(); 
-        }, 1500);
+        setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
 
     function endQuiz() {
-        document.getElementById('scoreText').innerText = `${score} / ${currentQuizData.length}`;
+        let finalScore = `${score} / ${currentQuizData.length}`;
+        document.getElementById('scoreText').innerText = finalScore;
+        localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScore);
         showScreen('resultScreen');
+    }
+
+    function shareOnWhatsApp() {
+        let text = `🏆 मी 10th Master Quiz मध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? इथे क्लिक करून ॲप डाउनलोड कर आणि चॅलेंज स्वीकार: https://swenandu-netizen.github.io/10th-MCQ/`;
+        let url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
     }
 </script>
 
