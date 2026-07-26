@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+RAUNAK<!DOCTYPE html>
 <html lang="mr">
 <head>
     <meta charset="UTF-8">
@@ -309,16 +309,17 @@
         showScreen('chapterScreen');
     }
 
-    function buyPaidPlan(chapterName) {
+        function buyPaidPlan(chapterName) {
         let userNumber = document.getElementById('mobileInput').value;
         let text = "";
         if(currentUserPlan === "Expired") {
-            text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. माझा 7 दिवसांचा Trial संपला आहे. मला *Premium Plan* घ्यायचा आहे. कृपया पेमेंटची माहिती द्या.`;
+            text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. माझा 7 दिवसांचा Trial संपला आहे. मला 10th Winner ॲपचा संपूर्ण ॲक्सेस (मूळ किंमत ₹499) आता *स्पेशल ऑफरमध्ये फक्त ₹99* ला घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
         } else {
-            text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला सर्व विषय अनलॉक करण्यासाठी *Premium Plan* घ्यायचा आहे. कृपया पेमेंटची माहिती द्या.`;
+            text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला सर्व विषय अनलॉक करण्यासाठी 10th Winner ॲपचा प्रीमियम प्लॅन (₹499 ऐवजी *ऑफरमध्ये फक्त ₹99*) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
         }
         window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
     }
+
 
     function startQuiz(subject, chapter) {
         currentSubjectName = subject; currentChapterName = chapter;
