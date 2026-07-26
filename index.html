@@ -1,11 +1,11 @@
-RAUNAK<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="mr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>10th Master Quiz</title>
+    <title>10th Winner App</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     
     <style>
@@ -78,7 +78,6 @@ RAUNAK<!DOCTYPE html>
         .primary-btn { background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%); color: white; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
         .primary-btn:active { transform: scale(0.98); }
         .whatsapp-btn { background: #25D366; color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
-        .download-btn { background: #28a745; color: white; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); text-decoration: none; display: block; text-align: center; padding: 18px; border-radius: 12px; font-weight: 600; font-size: 18px; margin-top: 15px; }
         
         .text-btn { background: none; color: var(--primary); font-size: 16px; margin-top: 10px; padding: 10px; box-shadow: none; text-decoration: underline; }
 
@@ -90,7 +89,6 @@ RAUNAK<!DOCTYPE html>
         .correct-ans { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
         .wrong-ans { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
 
-        /* Notice Box Style */
         .notice-box { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ffeeba; font-weight: 600; font-size: 16px; text-align: left; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
         .hidden { display: none; }
@@ -117,7 +115,7 @@ RAUNAK<!DOCTYPE html>
 <div class="container fade-in" id="appContainer">
     <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙</button>
 
-    <!-- 1. Login Screen -->
+    <!-- 1. Login Screen (Download Button Removed) -->
     <div id="loginScreen">
         <h2>विद्यार्थी लॉगिन</h2>
         <p>क्विझ सुरू करण्यासाठी मोबाईल नंबर आणि पासवर्ड टाका.</p>
@@ -126,9 +124,6 @@ RAUNAK<!DOCTYPE html>
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
         <button class="text-btn" onclick="showScreen('registerScreen')">नवीन आहात? इथे खाते काढा (Register)</button>
-        
-        <!-- App Download Button -->
-        <a href="10th-quiz.apk" download class="download-btn">📥 Download Android App</a>
     </div>
 
     <!-- 2. Register Screen -->
@@ -143,13 +138,10 @@ RAUNAK<!DOCTYPE html>
         <button class="text-btn" onclick="showScreen('loginScreen')">आधीच खाते आहे? लॉगिन करा</button>
     </div>
 
-    <!-- 3. Subject Selection Screen (With Notice Box) -->
+    <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
         <h2 id="welcomeText">विषय निवडा</h2>
-        
-        <!-- Notice Box -->
         <div id="noticeBox" class="notice-box">📢 <span id="noticeText"></span></div>
-        
         <p>तुम्हाला कोणत्या विषयाची टेस्ट द्यायची आहे?</p>
         <div id="subjectList"></div>
     </div>
@@ -180,6 +172,33 @@ RAUNAK<!DOCTYPE html>
         <button class="whatsapp-btn" onclick="shareOnWhatsApp()">📲 WhatsApp वर शेअर करा</button>
         <button class="primary-btn" onclick="showScreen('subjectScreen')" style="margin-top: 15px;">📚 दुसरे विषय निवडा</button>
     </div>
+
+    <!-- 7. Price / Premium Screen -->
+    <div id="priceScreen" class="hidden">
+        <h2 style="color: #e52e71; font-weight: 800;">👑 VIP Premium</h2>
+        <p>10th Board परीक्षेत 90%+ मार्क्स मिळवा!</p>
+        
+        <div style="background: #fff5f5; border: 2px dashed #e52e71; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+            <h3 style="margin: 0; color: #a0aec0; text-decoration: line-through; font-size: 18px;">मूळ किंमत: ₹499</h3>
+            <h1 style="margin: 10px 0; color: #e52e71; font-size: 40px; font-weight: 800;">फक्त ₹99</h1>
+            <p style="margin: 0; font-size: 15px; font-weight: bold; color: #25D366;">🎉 आजची स्पेशल ऑफर (80% OFF)</p>
+        </div>
+
+        <div style="text-align: left; font-size: 16px; color: #2d3748; line-height: 1.8; margin-bottom: 25px; padding-left: 10px;">
+            <b>तुम्हाला काय मिळेल?</b>
+            <ul style="margin-top: 5px; padding-left: 20px;">
+                <li>✅ सर्व विषयांच्या VIP Mock Tests</li>
+                <li>✅ पूर्ण वर्षाचा (परीक्षेपर्यंत) ॲक्सेस</li>
+                <li>✅ मित्रांसोबत स्कोर शेअरिंग</li>
+                <li>✅ No Ads (कोणतीही जाहिरात नाही)</li>
+            </ul>
+        </div>
+
+        <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); font-size: 20px; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4);" onclick="buyPaidPlan()">
+            🚀 ₹99 मध्ये खरेदी करा
+        </button>
+        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ नंतर सांगेन (Back)</button>
+    </div>
 </div>
 
 <script>
@@ -197,7 +216,7 @@ RAUNAK<!DOCTYPE html>
     }
 
     function showScreen(screenId) {
-        ['loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen'].forEach(id => {
+        ['loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
         let screen = document.getElementById(screenId);
@@ -212,7 +231,6 @@ RAUNAK<!DOCTYPE html>
         let msgBox = document.getElementById('regMessage');
 
         if(name === "" || mobile === "" || password === "") { msgBox.style.color = "red"; msgBox.innerText = "सर्व माहिती भरणे आवश्यक आहे!"; return; }
-        
         msgBox.style.color = "#4facfe"; msgBox.innerText = "खाते तयार करत आहे... कृपया थांबा ⏳";
 
         fetch(`${SCRIPT_URL}?action=register&name=${name}&mobile=${mobile}&password=${password}`)
@@ -221,9 +239,7 @@ RAUNAK<!DOCTYPE html>
             if(data.success) {
                 msgBox.style.color = "green"; msgBox.innerText = "अकाउंट यशस्वीरित्या तयार झाले! आता तुम्ही लॉगिन करू शकता.";
                 setTimeout(() => { showScreen('loginScreen'); }, 2000);
-            } else {
-                msgBox.style.color = "red"; msgBox.innerText = data.message;
-            }
+            } else { msgBox.style.color = "red"; msgBox.innerText = data.message; }
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
@@ -233,7 +249,6 @@ RAUNAK<!DOCTYPE html>
         let msgBox = document.getElementById('message');
 
         if(mobile === "" || password === "") { msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड भरणे आवश्यक आहे!"; return; }
-        
         msgBox.style.color = "#4facfe"; msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
 
         fetch(`${SCRIPT_URL}?action=login&mobile=${mobile}&password=${password}`)
@@ -244,7 +259,7 @@ RAUNAK<!DOCTYPE html>
                 
                 let planBadge = "";
                 if(currentUserPlan === "Free") {
-                    planBadge = "<br><span style='font-size: 14px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🔒 Free Plan</span> <br><button onclick='askForTrial()' style='background:#25D366; color:white; font-size:12px; padding:5px 10px; margin-top:8px; border-radius:8px; width:auto;'>🎁 7 Days Free Trial मिळवा</button>";
+                    planBadge = "<br><span style='font-size: 14px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🔒 Free Plan</span> <br><button onclick='askForTrial()' style='background:#25D366; color:white; font-size:12px; padding:5px 10px; margin-top:8px; border-radius:8px; border:none; cursor:pointer;'>🎁 7 Days Free Trial मिळवा</button>";
                 } else if(currentUserPlan === "Trial") {
                     planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Trial Active</span>";
                 } else if(currentUserPlan === "Expired") {
@@ -253,23 +268,47 @@ RAUNAK<!DOCTYPE html>
                     planBadge = "<br><span style='font-size: 14px; color: #2f855a; background: #c6f6d5; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🌟 Premium Plan</span>";
                 }
 
-                document.getElementById('welcomeText').innerHTML = "नमस्कार, " + (data.name || "विद्यार्थी") + "! " + planBadge;
+                let upgradeBtn = "";
+                if(currentUserPlan !== "Paid") {
+                    upgradeBtn = `<br><button onclick="showScreen('priceScreen')" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:8px 15px; margin-top:12px; border-radius:8px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">👑 Upgrade to VIP (₹99)</button>`;
+                }
+
+                document.getElementById('welcomeText').innerHTML = "नमस्कार, " + (data.name || "विद्यार्थी") + "! " + planBadge + upgradeBtn;
                 
                 if (data.notice && data.notice.trim() !== "") {
                     document.getElementById('noticeBox').style.display = "block"; document.getElementById('noticeText').innerText = data.notice;
                 } else { document.getElementById('noticeBox').style.display = "none"; }
 
                 fetchAllMCQs(); 
-            } else {
-                msgBox.style.color = "red"; msgBox.innerText = "चुकीचा नंबर किंवा पासवर्ड! ❌";
-            }
+            } else { msgBox.style.color = "red"; msgBox.innerText = "चुकीचा नंबर किंवा पासवर्ड! ❌"; }
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
     function askForTrial() {
         let userNumber = document.getElementById('mobileInput').value;
-        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला '10th Master Quiz' ॲप मध्ये *7 Days Free Trial* पाहिजे आहे. कृपया माझे खाते ॲक्टिव्हेट करा.`;
-        window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
+        let btn = event.target;
+        btn.innerText = "प्रोसेस होत आहे... ⏳";
+        btn.disabled = true;
+        btn.style.opacity = "0.7";
+
+        fetch(`${SCRIPT_URL}?action=activateTrial&mobile=${userNumber}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Free Trial सुरू झाले आहे. आता तुम्ही सर्व VIP टेस्ट देऊ शकता.");
+                loginUser(); 
+            } else {
+                alert("⚠️ तुम्ही आधीच Trial वापरले आहे किंवा काहीतरी चूक झाली आहे.");
+                btn.innerText = "🎁 7 Days Free Trial मिळवा";
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }
+        }).catch(err => {
+            alert("कनेक्शन एरर! कृपया इंटरनेट तपासा.");
+            btn.innerText = "🎁 7 Days Free Trial मिळवा";
+            btn.disabled = false;
+            btn.style.opacity = "1";
+        });
     }
 
     function fetchAllMCQs() {
@@ -301,7 +340,7 @@ RAUNAK<!DOCTYPE html>
                 if(index === 0) {
                     html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
                 } else {
-                    html += `<button class="locked-btn" onclick="buyPaidPlan('${chap}')">🔒 ${chap} <br><small>(Unlock करण्यासाठी क्लिक करा)</small></button>`;
+                    html += `<button class="locked-btn" onclick="showScreen('priceScreen')">🔒 ${chap} <br><small>(Unlock करण्यासाठी क्लिक करा)</small></button>`;
                 }
             }
         });
@@ -309,17 +348,11 @@ RAUNAK<!DOCTYPE html>
         showScreen('chapterScreen');
     }
 
-        function buyPaidPlan(chapterName) {
+    function buyPaidPlan() {
         let userNumber = document.getElementById('mobileInput').value;
-        let text = "";
-        if(currentUserPlan === "Expired") {
-            text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. माझा 7 दिवसांचा Trial संपला आहे. मला 10th Winner ॲपचा संपूर्ण ॲक्सेस (मूळ किंमत ₹499) आता *स्पेशल ऑफरमध्ये फक्त ₹99* ला घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
-        } else {
-            text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला सर्व विषय अनलॉक करण्यासाठी 10th Winner ॲपचा प्रीमियम प्लॅन (₹499 ऐवजी *ऑफरमध्ये फक्त ₹99*) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
-        }
+        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला 10th Winner ॲपचा संपूर्ण प्रीमियम प्लॅन (मूळ किंमत ₹499 ऐवजी *स्पेशल ऑफरमध्ये फक्त ₹99* ला) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
         window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
     }
-
 
     function startQuiz(subject, chapter) {
         currentSubjectName = subject; currentChapterName = chapter;
@@ -354,6 +387,7 @@ RAUNAK<!DOCTYPE html>
         else {
             clickedBtn.classList.add("wrong-ans"); 
             if(qData.optA == correct) document.getElementById("btnA").classList.add("correct-ans");
+            if(qData.optB == correct) document.jsdelivr = correct; // Safe fallback
             if(qData.optB == correct) document.getElementById("btnB").classList.add("correct-ans");
             if(qData.optC == correct) document.getElementById("btnC").classList.add("correct-ans");
             if(qData.optD == correct) document.getElementById("btnD").classList.add("correct-ans");
@@ -369,7 +403,7 @@ RAUNAK<!DOCTYPE html>
     }
 
     function shareOnWhatsApp() {
-        let text = `🏆 मी 10th Master Quiz मध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 </script>
