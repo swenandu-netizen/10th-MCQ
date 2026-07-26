@@ -260,8 +260,10 @@
                 let planBadge = "";
                 if(currentUserPlan === "Free") {
                     planBadge = "<br><span style='font-size: 14px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🔒 Free Plan</span> <br><button onclick='askForTrial()' style='background:#25D366; color:white; font-size:12px; padding:5px 10px; margin-top:8px; border-radius:8px; border:none; cursor:pointer;'>🎁 7 Days Free Trial मिळवा</button>";
-                } else if(currentUserPlan === "Trial") {
-                    planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Trial Active</span>";
+                 } else if(currentUserPlan === "Trial") {
+                    planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Freemium Active</span>";
+                }
+
                 } else if(currentUserPlan === "Expired") {
                     planBadge = "<br><span style='font-size: 14px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>❌ Trial Expired</span>";
                 } else {
@@ -284,7 +286,7 @@
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
-    function askForTrial() {
+        function askForTrial() {
         let userNumber = document.getElementById('mobileInput').value;
         let btn = event.target;
         btn.innerText = "प्रोसेस होत आहे... ⏳";
@@ -295,10 +297,20 @@
         .then(res => res.json())
         .then(data => {
             if(data.success) {
-                alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Free Trial सुरू झाले आहे. आता तुम्ही सर्व VIP टेस्ट देऊ शकता.");
-                loginUser(); 
+                alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Freemium सुरू झाले आहे. आता तुम्ही सर्व VIP टेस्ट देऊ शकता.");
+                
+                // इथे आपण ॲपला सांगतोय की प्लॅन आता Trial (Freemium) झाला आहे
+                currentUserPlan = "Trial"; 
+                
+                // बॅज लगेच बदलण्यासाठी
+                let planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Freemium Active</span>";
+                let upgradeBtn = `<br><button onclick="showScreen('priceScreen')" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:8px 15px; margin-top:12px; border-radius:8px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">👑 Upgrade to VIP (₹99)</button>`;
+                document.getElementById('welcomeText').innerHTML = "नमस्कार! " + planBadge + upgradeBtn;
+                
+                // चॅप्टर्सचे लॉक लगेच उघडण्यासाठी रिफ्रेश करा
+                fetchAllMCQs(); 
             } else {
-                alert("⚠️ तुम्ही आधीच Trial वापरले आहे किंवा काहीतरी चूक झाली आहे.");
+                alert("⚠️ काहीतरी चूक झाली आहे. (कदाचित तुम्ही आधीच Freemium वापरले आहे)");
                 btn.innerText = "🎁 7 Days Free Trial मिळवा";
                 btn.disabled = false;
                 btn.style.opacity = "1";
@@ -310,6 +322,7 @@
             btn.style.opacity = "1";
         });
     }
+
 
     function fetchAllMCQs() {
         fetch(SCRIPT_URL + "?action=getMCQs")
