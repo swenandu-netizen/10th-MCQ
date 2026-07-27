@@ -12,86 +12,90 @@
             --primary: #4facfe;
             --secondary: #00f2fe;
             --text-dark: #1a202c; 
-            --bg-color: #f4f7f6;
+            --bg-color: #1e3c72; 
+            --bg-gradient: linear-gradient(180deg, #2b32b2 0%, #1488cc 100%);
             --card-bg: #ffffff;
             --input-bg: #ffffff;
             --input-border: #e2e8f0;
         }
 
-        body.dark-mode {
-            --text-dark: #f7fafc; 
-            --card-bg: #2d3748;
-            --input-bg: #4a5568;
-            --input-border: #718096;
-            background: #1a202c !important;
-        }
-        body.dark-mode p { color: #cbd5e0; }
-        body.dark-mode .back-btn { background-color: #4a5568; color: #f7fafc; }
-        body.dark-mode .option-btn { background-color: #2d3748; color: #f7fafc; border-color: #718096; }
-        body.dark-mode #questionCount { background: #4a5568; color: #f7fafc; }
-        body.dark-mode .quiz-header { border-color: #4a5568; }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 15px;
-            transition: background 0.3s;
         }
 
         .container {
-            width: 95%; max-width: 550px; background: var(--card-bg);
-            padding: 40px 25px; border-radius: 20px;
+            width: 100%; max-width: 550px; background: var(--card-bg);
+            padding: 30px 20px; border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             text-align: center; box-sizing: border-box; position: relative;
-            transition: background 0.3s;
         }
 
-        .theme-toggle {
-            position: absolute; top: 15px; right: 20px; background: none;
-            border: none; font-size: 24px; cursor: pointer; box-shadow: none; width: auto; padding: 0; margin: 0;
+        .container.transparent-bg {
+            background: transparent;
+            box-shadow: none;
+            padding: 10px;
         }
 
         h2 { color: var(--text-dark); font-weight: 700; font-size: 26px; margin-bottom: 10px; }
-        p { color: #333333; font-size: 18px; font-weight: 500; margin-bottom: 25px; line-height: 1.5; }
+        .transparent-bg h2 { color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        p { color: #555; font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.5; }
+        .transparent-bg p { color: #e2e8f0; }
 
-        input[type="text"], input[type="number"], input[type="password"] {
+        input[type="text"], input[type="number"], input[type="password"], input[type="email"] {
             width: 100%; padding: 16px; margin: 10px 0 15px 0;
             background-color: var(--input-bg); color: var(--text-dark);
             border: 2px solid var(--input-border); border-radius: 12px;
-            font-size: 18px; font-family: 'Poppins', sans-serif;
+            font-size: 16px; font-family: 'Poppins', sans-serif;
             box-sizing: border-box; outline: none; transition: 0.3s;
         }
         input:focus { border-color: var(--primary); }
 
         button {
-            width: 100%; padding: 18px; margin: 10px 0; border: none; border-radius: 12px;
+            width: 100%; padding: 16px; margin: 10px 0; border: none; border-radius: 12px;
             font-size: 18px; font-weight: 600; font-family: 'Poppins', sans-serif;
             cursor: pointer; transition: all 0.3s ease; box-sizing: border-box;
         }
 
-        .primary-btn { background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%); color: white; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
+        .primary-btn { background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); color: white; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
         .primary-btn:active { transform: scale(0.98); }
         .whatsapp-btn { background: #25D366; color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+        .text-btn { background: none; color: var(--primary); font-size: 15px; margin-top: 5px; padding: 10px; box-shadow: none; text-decoration: underline; }
         
-        .text-btn { background: none; color: var(--primary); font-size: 16px; margin-top: 10px; padding: 10px; box-shadow: none; text-decoration: underline; }
-
         .back-btn { background-color: #edf2f7; color: var(--text-dark); margin-top: 20px; }
         .option-btn { background-color: var(--card-bg); color: var(--text-dark); text-align: left; padding-left: 20px; border: 2px solid var(--input-border); display: flex; align-items: center; }
-        .locked-btn { background-color: #e2e8f0; color: #4a5568; cursor: pointer; border: 2px dashed #a0aec0; }
-        body.dark-mode .locked-btn { background-color: #4a5568; color: #cbd5e0; border-color: #718096; }
-
         .correct-ans { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
         .wrong-ans { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
 
-        .notice-box { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ffeeba; font-weight: 600; font-size: 16px; text-align: left; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .user-info-card {
+            background: #ffffff; border-radius: 15px; padding: 20px; margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: left;
+        }
+        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
+        .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .info-label { font-size: 16px; color: #4a5568; font-weight: 500; }
+        .info-value { font-size: 16px; color: #1a202c; font-weight: 700; }
 
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-bottom: 20px; }
+        .grid-item {
+            background: linear-gradient(135deg, #5b73df 0%, #3b52a5 100%);
+            border-radius: 20px; padding: 25px 10px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: #ffffff; font-weight: 600;
+            font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2); transition: 0.3s;
+        }
+        .grid-item:active { transform: scale(0.95); }
+        .grid-icon { font-size: 45px; margin-bottom: 12px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); }
+        
+        .locked-btn { background-color: #e2e8f0; color: #4a5568; cursor: pointer; border: 2px dashed #a0aec0; }
         .hidden { display: none; }
-        #message, #regMessage { margin-top: 15px; font-weight: 600; font-size: 16px; }
+        #message, #regMessage { margin-top: 15px; font-weight: 600; font-size: 14px; }
         
         .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; margin-bottom: 20px; }
         #quizTitle { font-size: 18px; color: var(--primary); margin: 0;}
@@ -112,12 +116,11 @@
 <body>
 
 <div class="container fade-in" id="appContainer">
-    <button id="themeBtn" class="theme-toggle" onclick="toggleTheme()">🌙</button>
 
     <!-- 1. Login Screen -->
     <div id="loginScreen">
-        <h2>विद्यार्थी लॉगिन</h2>
-        <p>क्विझ सुरू करण्यासाठी मोबाईल नंबर आणि पासवर्ड टाका.</p>
+        <h2 style="color: #1e3c72;">10th Winner</h2>
+        <p>विद्यार्थी लॉगिन करा</p>
         <input type="number" id="mobileInput" placeholder="मोबाईल नंबर (उदा. 9876543210)">
         <input type="password" id="passwordInput" placeholder="पासवर्ड">
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
@@ -127,22 +130,31 @@
 
     <!-- 2. Register Screen -->
     <div id="registerScreen" class="hidden">
-        <h2>नवीन खाते काढा</h2>
+        <h2 style="color: #1e3c72;">नवीन खाते काढा</h2>
         <p>स्वतःची नोंदणी करून फ्री टेस्ट सोडवा.</p>
         <input type="text" id="regNameInput" placeholder="तुमचे पूर्ण नाव">
-        <input type="number" id="regMobileInput" placeholder="मोबाईल नंबर">
+        <input type="number" id="regMobileInput" placeholder="मोबाईल नंबर (10 अंकी)">
+        <input type="email" id="regEmailInput" placeholder="ईमेल आयडी (फक्त @gmail.com)">
         <input type="password" id="regPasswordInput" placeholder="नवीन पासवर्ड तयार करा">
-        <button class="primary-btn" onclick="registerUser()">नोंदणी करा 📝</button>
+        
+        <input type="number" id="regOtpInput" class="hidden" placeholder="ईमेलवर आलेला 4 अंकी OTP टाका" style="border-color: #25D366; background: #f0fff4;">
+
+        <button class="primary-btn" id="sendOtpBtn" onclick="sendOtp()">OTP पाठवा 🚀</button>
+        <button class="primary-btn hidden" id="verifyRegisterBtn" onclick="verifyAndRegister()" style="background: #25D366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);">Verify & नोंदणी करा ✅</button>
+        
         <p id="regMessage"></p>
         <button class="text-btn" onclick="showScreen('loginScreen')">आधीच खाते आहे? लॉगिन करा</button>
     </div>
 
     <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
-        <h2 id="welcomeText">विषय निवडा</h2>
-        <div id="noticeBox" class="notice-box">📢 <span id="noticeText"></span></div>
-        <p>तुम्हाला कोणत्या विषयाची टेस्ट द्यायची आहे?</p>
-        <div id="subjectList"></div>
+        <div style="display: flex; align-items: center; margin-bottom: 20px; color: white;">
+            <span style="font-size: 24px; cursor: pointer; margin-right: 15px;" onclick="logout()">🔙</span>
+            <h2 style="margin: 0; font-size: 22px;">विषय निवडा</h2>
+        </div>
+        <div id="welcomeText"></div>
+        <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:15px; display:none;">📢 <span id="noticeText"></span></div>
+        <div class="grid-container" id="subjectList"></div>
     </div>
 
     <!-- 4. Chapter Selection Screen -->
@@ -165,7 +177,7 @@
 
     <!-- 6. Result Screen -->
     <div id="resultScreen" class="hidden">
-        <h2>निकाल (Result) 🏆</h2>
+        <h2 style="color: #1e3c72;">निकाल (Result) 🏆</h2>
         <p>अभिनंदन! तुम्ही टेस्ट पूर्ण केली आहे.</p>
         <div class="score-circle" id="scoreText">0 / 10</div>
         <button class="whatsapp-btn" onclick="shareOnWhatsApp()">📲 WhatsApp वर शेअर करा</button>
@@ -176,13 +188,11 @@
     <div id="priceScreen" class="hidden">
         <h2 style="color: #e52e71; font-weight: 800;">👑 VIP Premium</h2>
         <p>10th Board परीक्षेत 90%+ मार्क्स मिळवा!</p>
-        
         <div style="background: #fff5f5; border: 2px dashed #e52e71; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
             <h3 style="margin: 0; color: #a0aec0; text-decoration: line-through; font-size: 18px;">मूळ किंमत: ₹499</h3>
             <h1 style="margin: 10px 0; color: #e52e71; font-size: 40px; font-weight: 800;">फक्त ₹99</h1>
             <p style="margin: 0; font-size: 15px; font-weight: bold; color: #25D366;">🎉 आजची स्पेशल ऑफर (80% OFF)</p>
         </div>
-
         <div style="text-align: left; font-size: 16px; color: #2d3748; line-height: 1.8; margin-bottom: 25px; padding-left: 10px;">
             <b>तुम्हाला काय मिळेल?</b>
             <ul style="margin-top: 5px; padding-left: 20px;">
@@ -192,7 +202,6 @@
                 <li>✅ No Ads (कोणतीही जाहिरात नाही)</li>
             </ul>
         </div>
-
         <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); font-size: 20px; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4);" onclick="buyPaidPlan()">
             🚀 ₹99 मध्ये खरेदी करा
         </button>
@@ -200,39 +209,97 @@
     </div>
 </div>
 
-
-    <script>
-    // ⚠️ इथे तुमची नवीन Google Apps Script लिंक दिली आहे
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQto4Ws4BbDG8VBNajXiJpaurxpw5AKDVspwzhDIg7_XF_koHSBg/exec"; 
+<script>
+    // ⚠️ इथे तुमची Google Apps Script लिंक टाका
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; 
     const ADMIN_WHATSAPP = "917769020743"; 
     
     let allData = [], currentQuizData = [], currentQuestionIndex = 0, score = 0;
-    let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "";
-
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        document.getElementById('themeBtn').innerText = document.body.classList.contains('dark-mode') ? "☀️" : "🌙";
-    }
+    let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "", loggedInUser = "", loggedInMobile = "";
+    let generatedOTP = ""; 
 
     function showScreen(screenId) {
+        let appContainer = document.getElementById('appContainer');
         ['loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
+        
         let screen = document.getElementById(screenId);
         screen.classList.remove('hidden');
         screen.classList.add('fade-in'); 
+
+        if(screenId === 'subjectScreen') {
+            appContainer.classList.add('transparent-bg');
+        } else {
+            appContainer.classList.remove('transparent-bg');
+        }
     }
 
-    function registerUser() {
+    function logout() {
+        showScreen('loginScreen');
+        document.getElementById('mobileInput').value = "";
+        document.getElementById('passwordInput').value = "";
+    }
+
+    function sendOtp() {
         let name = document.getElementById('regNameInput').value;
         let mobile = document.getElementById('regMobileInput').value;
+        let email = document.getElementById('regEmailInput').value;
         let password = document.getElementById('regPasswordInput').value;
         let msgBox = document.getElementById('regMessage');
 
-        if(name === "" || mobile === "" || password === "") { msgBox.style.color = "red"; msgBox.innerText = "सर्व माहिती भरणे आवश्यक आहे!"; return; }
+        if(name === "" || mobile === "" || email === "" || password === "") { 
+            msgBox.style.color = "red"; msgBox.innerText = "सर्व माहिती भरणे आवश्यक आहे!"; return; 
+        }
+
+        let mobileRegex = /^[6-9]\d{9}$/;
+        if(!mobileRegex.test(mobile)) {
+            msgBox.style.color = "red"; msgBox.innerText = "कृपया योग्य 10 अंकी मोबाईल नंबर टाका! ❌"; return;
+        }
+
+        if(!email.toLowerCase().endsWith("@gmail.com")) {
+            msgBox.style.color = "red"; msgBox.innerText = "फक्त @gmail.com आयडी वापरता येईल! ❌"; return;
+        }
+
+        msgBox.style.color = "#4facfe"; msgBox.innerText = "ईमेलवर OTP पाठवत आहे... कृपया थांबा ⏳";
+        document.getElementById('sendOtpBtn').disabled = true;
+
+        fetch(`${SCRIPT_URL}?action=sendOTP&email=${encodeURIComponent(email)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                generatedOTP = data.otp; 
+                msgBox.style.color = "green"; msgBox.innerText = "तुमच्या ईमेलवर 4-अंकी OTP पाठवला आहे. (Spam फोल्डर पण तपासा) ✅";
+                
+                document.getElementById('regOtpInput').classList.remove('hidden');
+                document.getElementById('sendOtpBtn').classList.add('hidden');
+                document.getElementById('verifyRegisterBtn').classList.remove('hidden');
+            } else { 
+                msgBox.style.color = "red"; msgBox.innerText = data.message; 
+                document.getElementById('sendOtpBtn').disabled = false;
+            }
+        }).catch(err => { 
+            msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; 
+            document.getElementById('sendOtpBtn').disabled = false;
+        });
+    }
+
+    function verifyAndRegister() {
+        let userOtp = document.getElementById('regOtpInput').value;
+        let msgBox = document.getElementById('regMessage');
+
+        if(userOtp == "" || userOtp != generatedOTP) {
+            msgBox.style.color = "red"; msgBox.innerText = "चुकीचा OTP! कृपया पुन्हा तपासा. ❌"; return;
+        }
+
         msgBox.style.color = "#4facfe"; msgBox.innerText = "खाते तयार करत आहे... कृपया थांबा ⏳";
 
-        fetch(`${SCRIPT_URL}?action=register&name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&password=${encodeURIComponent(password)}`)
+        let name = document.getElementById('regNameInput').value;
+        let mobile = document.getElementById('regMobileInput').value;
+        let email = document.getElementById('regEmailInput').value;
+        let password = document.getElementById('regPasswordInput').value;
+
+        fetch(`${SCRIPT_URL}?action=register&name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`)
         .then(res => res.json())
         .then(data => {
             if(data.success) {
@@ -247,7 +314,16 @@
         let password = document.getElementById('passwordInput').value;
         let msgBox = document.getElementById('message');
 
-        if(mobile === "" || password === "") { msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड भरणे आवश्यक आहे!"; return; }
+        if(mobile === "" || password === "") { 
+            msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड भरणे आवश्यक आहे!"; return; 
+        }
+
+        let mobileRegex = /^[6-9]\d{9}$/;
+        if(!mobileRegex.test(mobile)) {
+            msgBox.style.color = "red"; msgBox.innerText = "कृपया योग्य 10 अंकी मोबाईल नंबर टाका! ❌"; 
+            return;
+        }
+
         msgBox.style.color = "#4facfe"; msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
 
         fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(mobile)}&password=${encodeURIComponent(password)}`)
@@ -255,24 +331,9 @@
         .then(data => {
             if(data.success) {
                 currentUserPlan = data.plan; 
-                
-                let planBadge = "";
-                if(currentUserPlan === "Free") {
-                    planBadge = "<br><span style='font-size: 14px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🔒 Free Plan</span> <br><button onclick='askForTrial()' style='background:#25D366; color:white; font-size:12px; padding:5px 10px; margin-top:8px; border-radius:8px; border:none; cursor:pointer;'>🎁 7 Days Free Trial मिळवा</button>";
-                } else if(currentUserPlan === "Trial") {
-                    planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Freemium Active</span>";
-                } else if(currentUserPlan === "Expired") {
-                    planBadge = "<br><span style='font-size: 14px; color: #e53e3e; background: #fed7d7; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>❌ Trial Expired</span>";
-                } else {
-                    planBadge = "<br><span style='font-size: 14px; color: #2f855a; background: #c6f6d5; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>🌟 Premium Plan</span>";
-                }
-
-                let upgradeBtn = "";
-                if(currentUserPlan !== "Paid") {
-                    upgradeBtn = `<br><button onclick="showScreen('priceScreen')" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:8px 15px; margin-top:12px; border-radius:8px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">👑 Upgrade to VIP (₹99)</button>`;
-                }
-
-                document.getElementById('welcomeText').innerHTML = "नमस्कार, " + (data.name || "विद्यार्थी") + "! " + planBadge + upgradeBtn;
+                loggedInUser = data.name || "विद्यार्थी";
+                loggedInMobile = mobile;
+                updateUserInfoCard();
                 
                 if (data.notice && data.notice.trim() !== "") {
                     document.getElementById('noticeBox').style.display = "block"; document.getElementById('noticeText').innerText = data.notice;
@@ -283,41 +344,56 @@
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
+    function updateUserInfoCard() {
+        let planBadge = "";
+        let upgradeBtnHtml = "";
+        
+        if(currentUserPlan === "Free") {
+            planBadge = `<span style="color: #e53e3e; background: #fed7d7; padding: 2px 8px; border-radius: 5px;">🔒 Free</span>`;
+            upgradeBtnHtml = `<button onclick="askForTrial()" style="width:100%; background:#25D366; color:white; font-size:14px; padding:10px; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">🎁 7 Days Free Trial मिळवा</button>`;
+        } else if(currentUserPlan === "Trial") {
+            planBadge = `<span style="color: #d69e2e; background: #fef08a; padding: 2px 8px; border-radius: 5px;">⏳ Freemium</span>`;
+            upgradeBtnHtml = `<button onclick="showScreen('priceScreen')" style="width:100%; background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:10px; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">👑 Upgrade to VIP (₹99)</button>`;
+        } else if(currentUserPlan === "Expired") {
+            planBadge = `<span style="color: #e53e3e; background: #fed7d7; padding: 2px 8px; border-radius: 5px;">❌ Expired</span>`;
+            upgradeBtnHtml = `<button onclick="showScreen('priceScreen')" style="width:100%; background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:10px; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">👑 Upgrade to VIP (₹99)</button>`;
+        } else {
+            planBadge = `<span style="color: #2f855a; background: #c6f6d5; padding: 2px 8px; border-radius: 5px;">🌟 Premium</span>`;
+        }
+
+        let cardHtml = `
+            <div class="user-info-card">
+                <div class="info-row"><span class="info-label">यूझर नेम</span> <span class="info-value">${loggedInUser}</span></div>
+                <div class="info-row"><span class="info-label">मोबाईल नंबर</span> <span class="info-value">${loggedInMobile}</span></div>
+                <div class="info-row"><span class="info-label">प्लॅन</span> <span class="info-value">${planBadge}</span></div>
+                ${upgradeBtnHtml}
+            </div>
+        `;
+        document.getElementById('welcomeText').innerHTML = cardHtml;
+    }
+
     function askForTrial() {
-        let userNumber = document.getElementById('mobileInput').value;
         let btn = event.target;
         btn.innerText = "प्रोसेस होत आहे... ⏳";
         btn.disabled = true;
-        btn.style.opacity = "0.7";
 
-        fetch(`${SCRIPT_URL}?action=activateTrial&mobile=${encodeURIComponent(userNumber)}`)
+        fetch(`${SCRIPT_URL}?action=activateTrial&mobile=${encodeURIComponent(loggedInMobile)}`)
         .then(res => res.json())
         .then(data => {
             if(data.success) {
-                alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Freemium सुरू झाले आहे. आता तुम्ही सर्व VIP टेस्ट देऊ शकता.");
-                
+                alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Freemium सुरू झाले आहे.");
                 currentUserPlan = "Trial"; 
-                let planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Freemium Active</span>";
-                let upgradeBtn = `<br><button onclick="showScreen('priceScreen')" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:8px 15px; margin-top:12px; border-radius:8px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">👑 Upgrade to VIP (₹99)</button>`;
-                
-                let userName = document.getElementById('welcomeText').innerText.split(", ")[1];
-                if(userName) userName = userName.split("!")[0];
-                else userName = "विद्यार्थी";
-                
-                document.getElementById('welcomeText').innerHTML = "नमस्कार, " + userName + "! " + planBadge + upgradeBtn;
-                
+                updateUserInfoCard();
                 fetchAllMCQs(); 
             } else {
                 alert("⚠️ काहीतरी चूक झाली आहे. (कदाचित तुम्ही आधीच Freemium वापरले आहे)");
                 btn.innerText = "🎁 7 Days Free Trial मिळवा";
                 btn.disabled = false;
-                btn.style.opacity = "1";
             }
         }).catch(err => {
             alert("कनेक्शन एरर! कृपया इंटरनेट तपासा.");
             btn.innerText = "🎁 7 Days Free Trial मिळवा";
             btn.disabled = false;
-            btn.style.opacity = "1";
         });
     }
 
@@ -325,17 +401,26 @@
         fetch(SCRIPT_URL + "?action=getMCQs")
         .then(res => res.json())
         .then(data => { allData = data; loadSubjects(); showScreen('subjectScreen'); })
-        .catch(err => console.log("Failed to load questions:", err));
+        .catch(err => console.log("Error loading questions"));
     }
 
     function loadSubjects() {
         let subjects = [...new Set(allData.map(item => item.subject))]; 
         let html = "";
-        subjects.forEach(sub => { html += `<button class="primary-btn" onclick="loadChapters('${sub}')">${sub}</button>`; });
+        const icons = ["📚", "📜", "📝", "🌍", "🔬", "📐", "🎨", "💻"]; 
+        
+        subjects.forEach((sub, index) => { 
+            let icon = icons[index % icons.length];
+            html += `
+                <div class="grid-item" onclick="loadChapters('${sub}')">
+                    <div class="grid-icon">${icon}</div>
+                    <div>${sub}</div>
+                </div>
+            `; 
+        });
         document.getElementById('subjectList').innerHTML = html;
     }
 
-    // ⚠️ MIT App Inventor साठी localStorage मध्ये Try-Catch लावले आहे
     function loadChapters(selectedSubject) {
         document.getElementById('subjectTitle').innerText = selectedSubject;
         let filteredData = allData.filter(item => item.subject === selectedSubject);
@@ -344,10 +429,7 @@
         let html = "";
         chapters.forEach((chap, index) => {
             let historyScore = null;
-            try {
-                historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap);
-            } catch(e) { console.log("localStorage blocked by MIT WebViewer"); }
-            
+            try { historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap); } catch(e) {}
             let scoreText = historyScore ? `<br><small style="font-size:14px; color: #e2e8f0;">(मागील स्कोर: ${historyScore})</small>` : "";
 
             if(currentUserPlan === "Paid" || currentUserPlan === "Trial") {
@@ -364,28 +446,10 @@
         showScreen('chapterScreen');
     }
 
-        function buyPaidPlan() {
-        let userNumber = document.getElementById('mobileInput').value || "";
-        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला 10th Winner ॲपचा संपूर्ण प्रीमियम प्लॅन (मूळ किंमत ₹499 ऐवजी *स्पेशल ऑफरमध्ये फक्त ₹99* ला) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
-        
-        // नेटिव्ह शेअर (Native Share) वापरणे जे MIT मध्ये काम करते
-        if (navigator.share) {
-            navigator.share({ text: text }).catch(e => console.log(e));
-        } else {
-            window.top.location.href = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}`;
-        }
+    function buyPaidPlan() {
+        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला 10th Winner ॲपचा संपूर्ण प्रीमियम प्लॅन (मूळ किंमत ₹499 ऐवजी *स्पेशल ऑफरमध्ये फक्त ₹99* ला) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
+        window.top.location.href = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}`;
     }
-
-    function shareOnWhatsApp() {
-        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
-        
-        if (navigator.share) {
-            navigator.share({ text: text }).catch(e => console.log(e));
-        } else {
-            window.top.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-        }
-    }
-
 
     function startQuiz(subject, chapter) {
         currentSubjectName = subject; currentChapterName = chapter;
@@ -427,18 +491,17 @@
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
 
-    // ⚠️ MIT App Inventor साठी localStorage मध्ये Try-Catch लावले आहे
     function endQuiz() {
         let finalScore = `${score} / ${currentQuizData.length}`;
         document.getElementById('scoreText').innerText = finalScore;
-        try {
-            localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScore);
-        } catch(e) { console.log("localStorage blocked by MIT WebViewer"); }
+        try { localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScore); } catch(e) {}
         showScreen('resultScreen');
     }
 
-    
+    function shareOnWhatsApp() {
+        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+        window.top.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    }
 </script>
-
 </body>
 </html>
