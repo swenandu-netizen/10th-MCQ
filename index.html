@@ -364,11 +364,28 @@
         showScreen('chapterScreen');
     }
 
-    function buyPaidPlan() {
+        function buyPaidPlan() {
         let userNumber = document.getElementById('mobileInput').value || "";
         let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${userNumber} आहे. मला 10th Winner ॲपचा संपूर्ण प्रीमियम प्लॅन (मूळ किंमत ₹499 ऐवजी *स्पेशल ऑफरमध्ये फक्त ₹99* ला) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
-        window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
+        
+        // नेटिव्ह शेअर (Native Share) वापरणे जे MIT मध्ये काम करते
+        if (navigator.share) {
+            navigator.share({ text: text }).catch(e => console.log(e));
+        } else {
+            window.top.location.href = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}`;
+        }
     }
+
+    function shareOnWhatsApp() {
+        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+        
+        if (navigator.share) {
+            navigator.share({ text: text }).catch(e => console.log(e));
+        } else {
+            window.top.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        }
+    }
+
 
     function startQuiz(subject, chapter) {
         currentSubjectName = subject; currentChapterName = chapter;
@@ -420,10 +437,7 @@
         showScreen('resultScreen');
     }
 
-    function shareOnWhatsApp() {
-        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
+    
 </script>
 
 </body>
