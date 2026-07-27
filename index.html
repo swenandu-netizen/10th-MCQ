@@ -200,8 +200,9 @@
     </div>
 </div>
 
-<script>
-    // ⚠️ जर तुम्ही Apps Script मध्ये New Deployment केले असेल, तर खालील SCRIPT_URL मध्ये तुमची नवीन लिंक नक्की टाका.
+
+    <script>
+    // ⚠️ इथे तुमची नवीन Google Apps Script लिंक दिली आहे
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby951XZQhu-lckKAOTQto4Ws4BbDG8VBNajXiJpaurxpw5AKDVspwzhDIg7_XF_koHSBg/exec"; 
     const ADMIN_WHATSAPP = "917769020743"; 
     
@@ -298,7 +299,12 @@
                 currentUserPlan = "Trial"; 
                 let planBadge = "<br><span style='font-size: 14px; color: #d69e2e; background: #fef08a; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px;'>⏳ 7-Days Freemium Active</span>";
                 let upgradeBtn = `<br><button onclick="showScreen('priceScreen')" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:8px 15px; margin-top:12px; border-radius:8px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">👑 Upgrade to VIP (₹99)</button>`;
-                document.getElementById('welcomeText').innerHTML = "नमस्कार! " + planBadge + upgradeBtn;
+                
+                let userName = document.getElementById('welcomeText').innerText.split(", ")[1];
+                if(userName) userName = userName.split("!")[0];
+                else userName = "विद्यार्थी";
+                
+                document.getElementById('welcomeText').innerHTML = "नमस्कार, " + userName + "! " + planBadge + upgradeBtn;
                 
                 fetchAllMCQs(); 
             } else {
@@ -329,6 +335,7 @@
         document.getElementById('subjectList').innerHTML = html;
     }
 
+    // ⚠️ MIT App Inventor साठी localStorage मध्ये Try-Catch लावले आहे
     function loadChapters(selectedSubject) {
         document.getElementById('subjectTitle').innerText = selectedSubject;
         let filteredData = allData.filter(item => item.subject === selectedSubject);
@@ -336,7 +343,11 @@
         
         let html = "";
         chapters.forEach((chap, index) => {
-            let historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap);
+            let historyScore = null;
+            try {
+                historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap);
+            } catch(e) { console.log("localStorage blocked by MIT WebViewer"); }
+            
             let scoreText = historyScore ? `<br><small style="font-size:14px; color: #e2e8f0;">(मागील स्कोर: ${historyScore})</small>` : "";
 
             if(currentUserPlan === "Paid" || currentUserPlan === "Trial") {
@@ -399,15 +410,18 @@
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
 
+    // ⚠️ MIT App Inventor साठी localStorage मध्ये Try-Catch लावले आहे
     function endQuiz() {
         let finalScore = `${score} / ${currentQuizData.length}`;
         document.getElementById('scoreText').innerText = finalScore;
-        localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScore);
+        try {
+            localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScore);
+        } catch(e) { console.log("localStorage blocked by MIT WebViewer"); }
         showScreen('resultScreen');
     }
 
     function shareOnWhatsApp() {
-        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केलीেলি आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 </script>
