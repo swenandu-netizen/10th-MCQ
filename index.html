@@ -498,10 +498,16 @@
         showScreen('resultScreen');
     }
 
-    function shareOnWhatsApp() {
-        let text = `🏆 मी 10th Winner ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
-        window.top.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        function shareOnWhatsApp() {
+        let text = `🏆 मी ShikharSpark ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+        
+        // 🌟 Universal WhatsApp App Scheme (हे लिंकला थेट ॲपमध्ये उघडेल)
+        let whatsappUrl = `whatsapp://send?text=` + encodeURIComponent(text);
+        
+        // जर फोनमध्ये ॲप नसेल तरच ब्राउज़र वाला लिंक उघडेल
+        window.location.href = whatsappUrl;
     }
+
 </script>
 </body>
 </html>
