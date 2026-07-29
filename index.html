@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>10th Winner App</title>
+    <title>`</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -118,9 +118,14 @@
 <div class="container fade-in" id="appContainer">
 
     <!-- 1. Login Screen -->
+       <!-- 1. Login Screen -->
     <div id="loginScreen">
-        <h2 style="color: #1e3c72;">10th Winner</h2>
-        <p>विद्यार्थी लॉगिन करा</p>
+        <h2 style="color: #1e3c72; margin-bottom: 2px;">Maha Board MCQ</h2>
+        <p style="font-size: 14px; color: #64748b; margin-top: 0; font-weight: 500;">परीक्षेची पूर्व तयारी</p>
+        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 15px; letter-spacing: 0.5px;">Powered by ShikharSpark ⚡</div>
+        
+        <p style="margin-top: 10px; font-weight: bold; color: #333;">विद्यार्थी लॉगिन करा</p>
+        
         <input type="number" id="mobileInput" placeholder="मोबाईल नंबर (उदा. 9876543210)">
         <input type="password" id="passwordInput" placeholder="पासवर्ड">
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
@@ -498,15 +503,16 @@
         showScreen('resultScreen');
     }
 
-        function shareOnWhatsApp() {
+            function shareOnWhatsApp() {
         let text = `🏆 मी ShikharSpark ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी आणि *Free VIP ऑफर* मिळवण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
         
-        // 🌟 Universal WhatsApp App Scheme (हे लिंकला थेट ॲपमध्ये उघडेल)
-        let whatsappUrl = `whatsapp://send?text=` + encodeURIComponent(text);
+        // 🌟 Official WhatsApp Web API (हे WebView आणि Browser दोनों में 100% काम करता है)
+        let whatsappUrl = `https://api.whatsapp.com/send?text=` + encodeURIComponent(text);
         
-        // जर फोनमध्ये ॲप नसेल तरच ब्राउज़र वाला लिंक उघडेल
-        window.location.href = whatsappUrl;
+        // सीधे WhatsApp चैट ओपन कर देगा
+        window.open(whatsappUrl, '_blank');
     }
+
 
 </script>
 </body>
