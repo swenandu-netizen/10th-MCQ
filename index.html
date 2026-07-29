@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>`</title>
+    <title>Maha Board MCQ</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -74,7 +74,7 @@
         .wrong-ans { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
 
         .user-info-card {
-            background: #ffffff; border-radius: 15px; padding: 20px; margin-bottom: 25px;
+            background: #ffffff; border-radius: 15px; padding: 20px; margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: left;
         }
         .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e2e8f0; }
@@ -111,6 +111,20 @@
         }
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Footer Branding Style */
+        .app-footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+            border-top: 1px dashed #e2e8f0;
+            padding-top: 10px;
+        }
+        .transparent-bg .app-footer {
+            color: #cbd5e1;
+            border-top: 1px dashed rgba(255,255,255,0.2);
+        }
     </style>
 </head>
 <body>
@@ -118,7 +132,6 @@
 <div class="container fade-in" id="appContainer">
 
     <!-- 1. Login Screen -->
-       <!-- 1. Login Screen -->
     <div id="loginScreen">
         <h2 style="color: #1e3c72; margin-bottom: 2px;">Maha Board MCQ</h2>
         <p style="font-size: 14px; color: #64748b; margin-top: 0; font-weight: 500;">परीक्षेची पूर्व तयारी</p>
@@ -131,6 +144,10 @@
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
         <button class="text-btn" onclick="showScreen('registerScreen')">नवीन आहात? इथे खाते काढा (Register)</button>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
     </div>
 
     <!-- 2. Register Screen -->
@@ -149,17 +166,30 @@
         
         <p id="regMessage"></p>
         <button class="text-btn" onclick="showScreen('loginScreen')">आधीच खाते आहे? लॉगिन करा</button>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
     </div>
 
     <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
-        <div style="display: flex; align-items: center; margin-bottom: 20px; color: white;">
-            <span style="font-size: 24px; cursor: pointer; margin-right: 15px;" onclick="logout()">🔙</span>
-            <h2 style="margin: 0; font-size: 22px;">विषय निवडा</h2>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+            <button onclick="logout()" style="width: auto; padding: 7px 12px; margin: 0; font-size: 13px; font-weight: 600; background: #e53e3e; color: white; border-radius: 8px; border: none; cursor: pointer;">🚪 बाहेर पडा</button>
+            <span style="font-size: 14px; cursor: pointer; text-decoration: underline; font-weight: 600; color: white; background: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 8px;" onclick="showScreen('policyScreen')">📜 नियम व अटी</span>
         </div>
+
         <div id="welcomeText"></div>
+
+        <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
+
         <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:15px; display:none;">📢 <span id="noticeText"></span></div>
+        
         <div class="grid-container" id="subjectList"></div>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
     </div>
 
     <!-- 4. Chapter Selection Screen -->
@@ -168,6 +198,10 @@
         <p>कोणता धडा वाचायचा आहे?</p>
         <div id="chapterList"></div>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा</button>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
     </div>
 
     <!-- 5. Quiz Screen -->
@@ -185,11 +219,18 @@
         <h2 style="color: #1e3c72;">निकाल (Result) 🏆</h2>
         <p>अभिनंदन! तुम्ही टेस्ट पूर्ण केली आहे.</p>
         <div class="score-circle" id="scoreText">0 / 10</div>
-        <button class="whatsapp-btn" onclick="shareOnWhatsApp()">📲 WhatsApp वर शेअर करा</button>
+        
+        <div id="detailedReport" style="background: #f7fafc; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; font-size: 15px; color: #2d3748;"></div>
+
+        <button class="whatsapp-btn" onclick="copyChallengeText()">📋 चॅलेंज कॉपी करा & मित्रांना पाठवा</button>
         <button class="primary-btn" onclick="showScreen('subjectScreen')" style="margin-top: 15px;">📚 दुसरे विषय निवडा</button>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
     </div>
 
-    <!-- 7. Price / Premium Screen -->
+    <!-- 7. Price / Premium Screen (Offer Page) -->
     <div id="priceScreen" class="hidden">
         <h2 style="color: #e52e71; font-weight: 800;">👑 VIP Premium</h2>
         <p>10th Board परीक्षेत 90%+ मार्क्स मिळवा!</p>
@@ -198,24 +239,43 @@
             <h1 style="margin: 10px 0; color: #e52e71; font-size: 40px; font-weight: 800;">फक्त ₹99</h1>
             <p style="margin: 0; font-size: 15px; font-weight: bold; color: #25D366;">🎉 आजची स्पेशल ऑफर (80% OFF)</p>
         </div>
-        <div style="text-align: left; font-size: 16px; color: #2d3748; line-height: 1.8; margin-bottom: 25px; padding-left: 10px;">
-            <b>तुम्हाला काय मिळेल?</b>
-            <ul style="margin-top: 5px; padding-left: 20px;">
-                <li>✅ सर्व विषयांच्या VIP Mock Tests</li>
-                <li>✅ पूर्ण वर्षाचा (परीक्षेपर्यंत) ॲक्सेस</li>
-                <li>✅ मित्रांसोबत स्कोर शेअरिंग</li>
-                <li>✅ No Ads (कोणतीही जाहिरात नाही)</li>
+        <div style="text-align: left; font-size: 15px; color: #2d3748; line-height: 1.8; margin-bottom: 20px; padding-left: 10px;">
+            <b>पेमेंट नियम (Payment Policy):</b>
+            <ul style="margin-top: 5px; padding-left: 20px; font-size: 14px; color: #4a5568;">
+                <li>QR कोडवर पेमेंट केल्यानंतर WhatsApp वर स्क्रीनशॉट पाठवा.</li>
+                <li>तपासणी केल्यानंतर **12 ते 24 तासांच्या आत** अकाउंट VIP मध्ये अपग्रेड होईल.</li>
+                <li>डिजिटल सर्व्हिस असल्यामुळे पेमेंट नॉन-रिफंडेबल आहे.</li>
             </ul>
         </div>
         <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); font-size: 20px; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4);" onclick="buyPaidPlan()">
-            🚀 ₹99 मध्ये खरेदी करा
+            🚀 ₹99 मध्ये खरेदी करा (WhatsApp)
         </button>
-        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ नंतर सांगेन (Back)</button>
+        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा (Back)</button>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
     </div>
+
+    <!-- 8. Policy & Terms Screen (About & Policy Page) -->
+    <div id="policyScreen" class="hidden">
+        <h2 style="color: #1e3c72;">📜 नियम व अटी (Policy)</h2>
+        <div style="text-align: left; font-size: 15px; color: #2d3748; line-height: 1.8; margin-bottom: 20px; max-height: 350px; overflow-y: auto; padding: 10px; background: #f8fafc; border-radius: 12px;">
+            <p style="margin: 0 0 10px 0; font-size: 14px;"><b>1. वापरकर्ता खाते:</b> तुमच्या खात्याची माहिती सुरक्षित ठेवा. एका वेळी एकाच मोबाईलवर वापरा.</p>
+            <p style="margin: 0 0 10px 0; font-size: 14px;"><b>2. VIP प्लॅन आणि अपग्रेड:</b> ₹99 भरल्यानंतर WhatsApp वर स्क्रीनशॉट पाठवल्यास **12 ते 24 तासांत** अकाउंट VIP केले जाईल.</p>
+            <p style="margin: 0 0 10px 0; font-size: 14px;"><b>3. रिफंड पॉलिसी:</b> एकदा VIP ॲक्सेस मिळाल्यानंतर पैसे परत (Refund) केले जाणार नाहीत.</p>
+            <p style="margin: 0; font-size: 14px;"><b>4. व्यवस्थापन व निर्मिती:</b> हे ॲप <b>MJ Gurnule & NR Sonwane</b> द्वारे मॅनेज आणि डेव्हलप केले जाते.</p>
+        </div>
+        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मुख्य पेजवर जा</button>
+
+        <div class="app-footer">
+            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    // ⚠️ इथे तुमची Google Apps Script लिंक टाका
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; 
     const ADMIN_WHATSAPP = "917769020743"; 
     
@@ -223,9 +283,21 @@
     let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "", loggedInUser = "", loggedInMobile = "";
     let generatedOTP = ""; 
 
+    window.onload = function() {
+        let savedMob = localStorage.getItem('savedMobile');
+        if (savedMob) {
+            loggedInMobile = savedMob;
+            loggedInUser = localStorage.getItem('savedName') || "विद्यार्थी";
+            currentUserPlan = localStorage.getItem('savedPlan') || "Free";
+            
+            updateUserInfoCard();
+            fetchAllMCQs();
+        }
+    };
+
     function showScreen(screenId) {
         let appContainer = document.getElementById('appContainer');
-        ['loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen'].forEach(id => {
+        ['loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
         
@@ -241,6 +313,9 @@
     }
 
     function logout() {
+        localStorage.removeItem('savedMobile');
+        localStorage.removeItem('savedName');
+        localStorage.removeItem('savedPlan');
         showScreen('loginScreen');
         document.getElementById('mobileInput').value = "";
         document.getElementById('passwordInput').value = "";
@@ -274,7 +349,7 @@
         .then(data => {
             if(data.success) {
                 generatedOTP = data.otp; 
-                msgBox.style.color = "green"; msgBox.innerText = "तुमच्या ईमेलवर 4-अंकी OTP पाठवला आहे. (Spam फोल्डर पण तपासा) ✅";
+                msgBox.style.color = "green"; msgBox.innerText = "तुमच्या ईमेलवर 4-अंकी OTP पाठवला आहे. ✅";
                 
                 document.getElementById('regOtpInput').classList.remove('hidden');
                 document.getElementById('sendOtpBtn').classList.add('hidden');
@@ -308,7 +383,7 @@
         .then(res => res.json())
         .then(data => {
             if(data.success) {
-                msgBox.style.color = "green"; msgBox.innerText = "अकाउंट यशस्वीरित्या तयार झाले! आता तुम्ही लॉगिन करू शकता.";
+                msgBox.style.color = "green"; msgBox.innerText = "अकाउंट यशस्वीरित्या तयार झाले! आता लॉगिन करा.";
                 setTimeout(() => { showScreen('loginScreen'); }, 2000);
             } else { msgBox.style.color = "red"; msgBox.innerText = data.message; }
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
@@ -320,13 +395,7 @@
         let msgBox = document.getElementById('message');
 
         if(mobile === "" || password === "") { 
-            msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड भरणे आवश्यक आहे!"; return; 
-        }
-
-        let mobileRegex = /^[6-9]\d{9}$/;
-        if(!mobileRegex.test(mobile)) {
-            msgBox.style.color = "red"; msgBox.innerText = "कृपया योग्य 10 अंकी मोबाईल नंबर टाका! ❌"; 
-            return;
+            msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड टाका!"; return; 
         }
 
         msgBox.style.color = "#4facfe"; msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
@@ -338,15 +407,29 @@
                 currentUserPlan = data.plan; 
                 loggedInUser = data.name || "विद्यार्थी";
                 loggedInMobile = mobile;
+
+                localStorage.setItem('savedMobile', loggedInMobile);
+                localStorage.setItem('savedName', loggedInUser);
+                localStorage.setItem('savedPlan', currentUserPlan);
+
                 updateUserInfoCard();
                 
                 if (data.notice && data.notice.trim() !== "") {
-                    document.getElementById('noticeBox').style.display = "block"; document.getElementById('noticeText').innerText = data.notice;
-                } else { document.getElementById('noticeBox').style.display = "none"; }
+                    document.getElementById('noticeBox').style.display = "block"; 
+                    document.getElementById('noticeText').innerText = data.notice;
+                } else { 
+                    document.getElementById('noticeBox').style.display = "none"; 
+                }
 
                 fetchAllMCQs(); 
-            } else { msgBox.style.color = "red"; msgBox.innerText = "चुकीचा नंबर किंवा पासवर्ड! ❌"; }
-        }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
+            } else { 
+                msgBox.style.color = "red"; 
+                msgBox.innerText = "चुकीचा नंबर किंवा पासवर्ड! ❌"; 
+            }
+        }).catch(err => { 
+            msgBox.style.color = "red"; 
+            msgBox.innerText = "कनेक्शन एरर!"; 
+        });
     }
 
     function updateUserInfoCard() {
@@ -388,15 +471,16 @@
             if(data.success) {
                 alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Freemium सुरू झाले आहे.");
                 currentUserPlan = "Trial"; 
+                localStorage.setItem('savedPlan', currentUserPlan);
                 updateUserInfoCard();
                 fetchAllMCQs(); 
             } else {
-                alert("⚠️ काहीतरी चूक झाली आहे. (कदाचित तुम्ही आधीच Freemium वापरले आहे)");
+                alert("⚠️ तुम्ही आधीच Freemium वापरले आहे.");
                 btn.innerText = "🎁 7 Days Free Trial मिळवा";
                 btn.disabled = false;
             }
         }).catch(err => {
-            alert("कनेक्शन एरर! कृपया इंटरनेट तपासा.");
+            alert("कनेक्शन एरर!");
             btn.innerText = "🎁 7 Days Free Trial मिळवा";
             btn.disabled = false;
         });
@@ -432,27 +516,36 @@
         let chapters = [...new Set(filteredData.map(item => item.lesson))]; 
         
         let html = "";
-        chapters.forEach((chap, index) => {
-            let historyScore = null;
-            try { historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap); } catch(e) {}
-            let scoreText = historyScore ? `<br><small style="font-size:14px; color: #e2e8f0;">(मागील स्कोर: ${historyScore})</small>` : "";
+        if (chapters.length === 0 || chapters[0] === "") {
+            html = `
+                <div style="background: #fff3cd; color: #856404; padding: 25px; border-radius: 15px; margin-top: 20px; border: 2px dashed #ffeeba; text-align: center;">
+                    <h3 style="margin: 0 0 10px 0; font-size: 20px;">⏳ लवकरच उपलब्ध होणार!</h3>
+                    <p style="margin: 0; font-size: 15px; color: #856404;">या विषयाचे प्रश्न लवकरच ॲपमध्ये जोडले जातील.</p>
+                </div>
+            `;
+        } else {
+            chapters.forEach((chap, index) => {
+                let historyScore = null;
+                try { historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap); } catch(e) {}
+                let scoreText = historyScore ? `<br><small style="font-size:14px; color: #e2e8f0;">(मागील स्कोर: ${historyScore})</small>` : "";
 
-            if(currentUserPlan === "Paid" || currentUserPlan === "Trial") {
-                html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
-            } else {
-                if(index === 0) {
+                if(currentUserPlan === "Paid" || currentUserPlan === "Trial") {
                     html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
                 } else {
-                    html += `<button class="locked-btn" onclick="showScreen('priceScreen')">🔒 ${chap} <br><small>(Unlock करण्यासाठी क्लिक करा)</small></button>`;
+                    if(index === 0) {
+                        html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
+                    } else {
+                        html += `<button class="locked-btn" onclick="showScreen('priceScreen')">🔒 ${chap} <br><small>(Unlock करण्यासाठी क्लिक करा)</small></button>`;
+                    }
                 }
-            }
-        });
+            });
+        }
         document.getElementById('chapterList').innerHTML = html;
         showScreen('chapterScreen');
     }
 
     function buyPaidPlan() {
-        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला 10th Winner ॲपचा संपूर्ण प्रीमियम प्लॅन (मूळ किंमत ₹499 ऐवजी *स्पेशल ऑफरमध्ये फक्त ₹99* ला) घ्यायचा आहे. कृपया पेमेंट करण्यासाठी QR कोड किंवा UPI ID पाठवा.`;
+        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला Maha Board MCQ ॲपचा VIP प्रीमियम प्लॅन (₹99) विकत घ्यायचा आहे. मी पेमेंट करत आहे, कृपया माझा नंबर तपासा.`;
         window.top.location.href = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}`;
     }
 
@@ -497,31 +590,35 @@
     }
 
     function endQuiz() {
-        let finalScore = `${score} / ${currentQuizData.length}`;
-        document.getElementById('scoreText').innerText = finalScore;
-        try { localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScore); } catch(e) {}
+        let totalQ = currentQuizData.length;
+        let wrongQ = totalQ - score;
+        let percentage = Math.round((score / totalQ) * 100);
+
+        let finalScoreText = `${score} / ${totalQ}`;
+        document.getElementById('scoreText').innerText = finalScoreText;
+
+        let reportHtml = `
+            <b>📊 सविस्तर निकाल अहवाल:</b><br>
+            • एकूण प्रश्न: <b>${totalQ}</b><br>
+            • बरोबर उत्तरे: <b style="color:green;">${score} ✅</b><br>
+            • चुकलेली उत्तरे: <b style="color:red;">${wrongQ} ❌</b><br>
+            • यश (Accuracy): <b>${percentage}%</b>
+        `;
+        document.getElementById('detailedReport').innerHTML = reportHtml;
+
+        try { localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScoreText); } catch(e) {}
         showScreen('resultScreen');
     }
 
-        function shareOnWhatsApp() {
-        let text = `🏆 मी Maha Board MCQ (ShikharSpark) ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
-        
-        // 🌟 Native Share (यह Kodular ऐप में सीधे मोबाइल का शेयर मेनू खोल देगा)
-        if (navigator.share) {
-            navigator.share({
-                title: 'Maha Board MCQ Challenge',
-                text: text,
-            }).catch((error) => console.log('Sharing dismissed', error));
-        } else {
-            // अगर किसी फोन में सपोर्ट न हो, तो सीधा वेब लिंक खुलेगा
-            let whatsappUrl = `https://api.whatsapp.com/send?text=` + encodeURIComponent(text);
-            window.open(whatsappUrl, '_system');
-        }
+    function copyChallengeText() {
+        let text = `🏆 मी Maha Board MCQ ॲपमध्ये टेस्ट पूर्ण केली!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? ॲप डाऊनलोड करण्यासाठी लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+
+        navigator.clipboard.writeText(text).then(() => {
+            alert("✅ चॅलेंज मेसेज कॉपी झाला! आता WhatsApp वर मित्राला पाठवा.");
+        }).catch(err => {
+            alert("कॉपी करण्यात अडचण आली.");
+        });
     }
-
-
-
-
 </script>
 </body>
 </html>
