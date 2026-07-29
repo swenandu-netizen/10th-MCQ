@@ -503,21 +503,22 @@
         showScreen('resultScreen');
     }
 
-               function shareOnWhatsApp() {
+        function shareOnWhatsApp() {
         let text = `🏆 मी Maha Board MCQ (ShikharSpark) ॲपमध्ये उत्कृष्ट कामगिरी केली आहे!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? हे चॅलेंज स्वीकारण्यासाठी खालील लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
         
-        // 🌟 Native Web Share (हे फोन के हर ऐप पर काम करेगा, कोई एरर नहीं आएगा)
+        // 🌟 Native Share (यह Kodular ऐप में सीधे मोबाइल का शेयर मेनू खोल देगा)
         if (navigator.share) {
             navigator.share({
                 title: 'Maha Board MCQ Challenge',
                 text: text,
-            }).catch((error) => console.log('Sharing failed', error));
+            }).catch((error) => console.log('Sharing dismissed', error));
         } else {
-            // अगर कोई पुराना ब्राउज़र हो तो सीधे WhatsApp Web खोल देगा
+            // अगर किसी फोन में सपोर्ट न हो, तो सीधा वेब लिंक खुलेगा
             let whatsappUrl = `https://api.whatsapp.com/send?text=` + encodeURIComponent(text);
-            window.open(whatsappUrl, '_blank');
+            window.open(whatsappUrl, '_system');
         }
     }
+
 
 
 
