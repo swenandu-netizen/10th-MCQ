@@ -173,7 +173,7 @@
 
         <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
 
-        <!-- Notice, Notification & Thought Boxes -->
+        <!-- Notice, Notification & Thought Boxes (innerHTML Used) -->
         <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">📢 <span id="noticeText"></span></div>
         <div id="notificationBox" style="background:#d1ecf1; color:#0c5460; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">🔔 <span id="notificationText"></span></div>
         <div id="thoughtBox" style="background:#d4edda; color:#155724; padding:10px; border-radius:10px; margin-bottom:15px; display:none; text-align:left;">💡 <span id="thoughtText"></span></div>
@@ -249,7 +249,7 @@
             <p style="margin: 0 0 10px 0; font-size: 14px;"><b>1. वापरकर्ता खाते:</b> तुमच्या खात्याची माहिती सुरक्षित ठेवा. एका वेळी एकाच मोबाईलवर वापरा.</p>
             <p style="margin: 0 0 10px 0; font-size: 14px;"><b>2. VIP प्लॅन आणि अपग्रेड:</b> ₹99 भरल्यानंतर WhatsApp वर स्क्रीनशॉट पाठवल्यास **12 ते 24 तासांत** अकाउंट VIP केले जाईल.</p>
             <p style="margin: 0 0 10px 0; font-size: 14px;"><b>3. रिफंड पॉलिसी:</b> एकदा VIP ॲक्सेस मिळाल्यानंतर पैसे परत (Refund) केले जाणार नाहीत.</p>
-            <p style="margin: 0; font-size: 14px;"><b>4. व्यवस्थापन व निर्मिती:</b> हे ॲप <b>MJ Gurnule & NR Sonwane</b> द्वारे मॅनेज आणि डेव्हलप केले जाते.</p>
+            <p style="margin: 0; font-size: 14px;"><b>4. व्यवस्थापन व निर्मिती:</b> हे ॲप <b>MJ Gurnule & NR Sonwane</b> द्वारे मॅनेज और डेव्हलप केले जाते.</p>
         </div>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मुख्य पेजवर जा</button>
 
@@ -267,14 +267,12 @@
     let generatedOTP = ""; 
     let cachedNotices = { notice: "", notification: "", thought: "" }; 
 
-    // 🌟 डिवाइस आईडी जनरेट करना
     let myDeviceId = localStorage.getItem('device_unique_id');
     if (!myDeviceId) {
         myDeviceId = 'dev_' + Math.random().toString(36).substr(2, 9) + Date.now();
         localStorage.setItem('device_unique_id', myDeviceId);
     }
 
-    // Auto-Login Check with Background Data Sync
     window.onload = function() {
         let savedMob = localStorage.getItem('savedMobile');
         let savedPass = localStorage.getItem('savedPassword');
@@ -307,19 +305,20 @@
     };
 
     function renderNotices() {
+        // 🌟 .innerText की जगह .innerHTML का इस्तेमाल किया गया है ताकि \n\n या HTML काम करे
         if (cachedNotices.notice.trim() !== "") {
             document.getElementById('noticeBox').style.display = "block"; 
-            document.getElementById('noticeText').innerText = cachedNotices.notice;
+            document.getElementById('noticeText').innerHTML = cachedNotices.notice;
         } else { document.getElementById('noticeBox').style.display = "none"; }
 
         if (cachedNotices.notification.trim() !== "") {
             document.getElementById('notificationBox').style.display = "block"; 
-            document.getElementById('notificationText').innerText = cachedNotices.notification;
+            document.getElementById('notificationText').innerHTML = cachedNotices.notification;
         } else { document.getElementById('notificationBox').style.display = "none"; }
 
         if (cachedNotices.thought.trim() !== "") {
             document.getElementById('thoughtBox').style.display = "block"; 
-            document.getElementById('thoughtText').innerText = cachedNotices.thought;
+            document.getElementById('thoughtText').innerHTML = cachedNotices.thought;
         } else { document.getElementById('thoughtBox').style.display = "none"; }
     }
 
@@ -430,7 +429,6 @@
 
         msgBox.style.color = "#4facfe"; msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
 
-        // 🌟 यहाँ DeviceID को API के साथ जोड़ दिया गया है
         fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(mobile)}&password=${encodeURIComponent(password)}&deviceId=${encodeURIComponent(myDeviceId)}`)
         .then(res => res.json())
         .then(data => {
@@ -613,7 +611,7 @@
             if(qData.optA == correct) document.getElementById("btnA").classList.add("correct-ans");
             if(qData.optB == correct) document.getElementById("btnB").classList.add("correct-ans");
             if(qData.optC == correct) document.getElementById("btnC").classList.add("correct-ans");
-            if(qData.optD == correct) document.edelete ? "" : document.getElementById("btnD").classList.add("correct-ans");
+            if(qData.optD == correct) document.getElementById("btnD").classList.add("correct-ans");
         }
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
