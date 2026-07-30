@@ -112,18 +112,12 @@
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Footer Branding Style */
         .app-footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #718096;
-            font-weight: 500;
-            border-top: 1px dashed #e2e8f0;
-            padding-top: 10px;
+            margin-top: 20px; font-size: 12px; color: #718096; font-weight: 500;
+            border-top: 1px dashed #e2e8f0; padding-top: 10px;
         }
         .transparent-bg .app-footer {
-            color: #cbd5e1;
-            border-top: 1px dashed rgba(255,255,255,0.2);
+            color: #cbd5e1; border-top: 1px dashed rgba(255,255,255,0.2);
         }
     </style>
 </head>
@@ -145,9 +139,7 @@
         <p id="message"></p>
         <button class="text-btn" onclick="showScreen('registerScreen')">नवीन आहात? इथे खाते काढा (Register)</button>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 2. Register Screen -->
@@ -167,9 +159,7 @@
         <p id="regMessage"></p>
         <button class="text-btn" onclick="showScreen('loginScreen')">आधीच खाते आहे? लॉगिन करा</button>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 3. Subject Selection Screen -->
@@ -183,13 +173,14 @@
 
         <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
 
-        <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:15px; display:none;">📢 <span id="noticeText"></span></div>
+        <!-- Notice, Notification & Thought Boxes -->
+        <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">📢 <span id="noticeText"></span></div>
+        <div id="notificationBox" style="background:#d1ecf1; color:#0c5460; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">🔔 <span id="notificationText"></span></div>
+        <div id="thoughtBox" style="background:#d4edda; color:#155724; padding:10px; border-radius:10px; margin-bottom:15px; display:none; text-align:left;">💡 <span id="thoughtText"></span></div>
         
         <div class="grid-container" id="subjectList"></div>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 4. Chapter Selection Screen -->
@@ -199,9 +190,7 @@
         <div id="chapterList"></div>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा</button>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 5. Quiz Screen -->
@@ -225,12 +214,10 @@
         <button class="whatsapp-btn" onclick="copyChallengeText()">📋 चॅलेंज कॉपी करा & मित्रांना पाठवा</button>
         <button class="primary-btn" onclick="showScreen('subjectScreen')" style="margin-top: 15px;">📚 दुसरे विषय निवडा</button>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 7. Price / Premium Screen (Offer Page) -->
+    <!-- 7. Price / Premium Screen -->
     <div id="priceScreen" class="hidden">
         <h2 style="color: #e52e71; font-weight: 800;">👑 VIP Premium</h2>
         <p>10th Board परीक्षेत 90%+ मार्क्स मिळवा!</p>
@@ -252,12 +239,10 @@
         </button>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा (Back)</button>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 8. Policy & Terms Screen (About & Policy Page) -->
+    <!-- 8. Policy & Terms Screen -->
     <div id="policyScreen" class="hidden">
         <h2 style="color: #1e3c72;">📜 नियम व अटी (Policy)</h2>
         <div style="text-align: left; font-size: 15px; color: #2d3748; line-height: 1.8; margin-bottom: 20px; max-height: 350px; overflow-y: auto; padding: 10px; background: #f8fafc; border-radius: 12px;">
@@ -268,9 +253,7 @@
         </div>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मुख्य पेजवर जा</button>
 
-        <div class="app-footer">
-            Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b>
-        </div>
+        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
 </div>
@@ -282,18 +265,63 @@
     let allData = [], currentQuizData = [], currentQuestionIndex = 0, score = 0;
     let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "", loggedInUser = "", loggedInMobile = "";
     let generatedOTP = ""; 
+    let cachedNotices = { notice: "", notification: "", thought: "" }; 
 
+    // 🌟 डिवाइस आईडी जनरेट करना
+    let myDeviceId = localStorage.getItem('device_unique_id');
+    if (!myDeviceId) {
+        myDeviceId = 'dev_' + Math.random().toString(36).substr(2, 9) + Date.now();
+        localStorage.setItem('device_unique_id', myDeviceId);
+    }
+
+    // Auto-Login Check with Background Data Sync
     window.onload = function() {
         let savedMob = localStorage.getItem('savedMobile');
+        let savedPass = localStorage.getItem('savedPassword');
+
         if (savedMob) {
             loggedInMobile = savedMob;
             loggedInUser = localStorage.getItem('savedName') || "विद्यार्थी";
             currentUserPlan = localStorage.getItem('savedPlan') || "Free";
-            
+
             updateUserInfoCard();
             fetchAllMCQs();
+
+            if(savedPass) {
+                fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(savedMob)}&password=${encodeURIComponent(savedPass)}&deviceId=${encodeURIComponent(myDeviceId)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) {
+                        currentUserPlan = data.plan;
+                        localStorage.setItem('savedPlan', currentUserPlan);
+                        updateUserInfoCard();
+
+                        cachedNotices.notice = data.notice || "";
+                        cachedNotices.notification = data.notification || "";
+                        cachedNotices.thought = data.thought || "";
+                        renderNotices();
+                    }
+                }).catch(err => console.log("Background sync error"));
+            }
         }
     };
+
+    function renderNotices() {
+        if (cachedNotices.notice.trim() !== "") {
+            document.getElementById('noticeBox').style.display = "block"; 
+            document.getElementById('noticeText').innerText = cachedNotices.notice;
+        } else { document.getElementById('noticeBox').style.display = "none"; }
+
+        if (cachedNotices.notification.trim() !== "") {
+            document.getElementById('notificationBox').style.display = "block"; 
+            document.getElementById('notificationText').innerText = cachedNotices.notification;
+        } else { document.getElementById('notificationBox').style.display = "none"; }
+
+        if (cachedNotices.thought.trim() !== "") {
+            document.getElementById('thoughtBox').style.display = "block"; 
+            document.getElementById('thoughtText').innerText = cachedNotices.thought;
+        } else { document.getElementById('thoughtBox').style.display = "none"; }
+    }
 
     function showScreen(screenId) {
         let appContainer = document.getElementById('appContainer');
@@ -307,6 +335,7 @@
 
         if(screenId === 'subjectScreen') {
             appContainer.classList.add('transparent-bg');
+            renderNotices(); 
         } else {
             appContainer.classList.remove('transparent-bg');
         }
@@ -316,6 +345,7 @@
         localStorage.removeItem('savedMobile');
         localStorage.removeItem('savedName');
         localStorage.removeItem('savedPlan');
+        localStorage.removeItem('savedPassword');
         showScreen('loginScreen');
         document.getElementById('mobileInput').value = "";
         document.getElementById('passwordInput').value = "";
@@ -400,7 +430,8 @@
 
         msgBox.style.color = "#4facfe"; msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
 
-        fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(mobile)}&password=${encodeURIComponent(password)}`)
+        // 🌟 यहाँ DeviceID को API के साथ जोड़ दिया गया है
+        fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(mobile)}&password=${encodeURIComponent(password)}&deviceId=${encodeURIComponent(myDeviceId)}`)
         .then(res => res.json())
         .then(data => {
             if(data.success) {
@@ -411,20 +442,18 @@
                 localStorage.setItem('savedMobile', loggedInMobile);
                 localStorage.setItem('savedName', loggedInUser);
                 localStorage.setItem('savedPlan', currentUserPlan);
+                localStorage.setItem('savedPassword', password);
 
                 updateUserInfoCard();
                 
-                if (data.notice && data.notice.trim() !== "") {
-                    document.getElementById('noticeBox').style.display = "block"; 
-                    document.getElementById('noticeText').innerText = data.notice;
-                } else { 
-                    document.getElementById('noticeBox').style.display = "none"; 
-                }
+                cachedNotices.notice = data.notice || "";
+                cachedNotices.notification = data.notification || "";
+                cachedNotices.thought = data.thought || "";
 
                 fetchAllMCQs(); 
             } else { 
                 msgBox.style.color = "red"; 
-                msgBox.innerText = "चुकीचा नंबर किंवा पासवर्ड! ❌"; 
+                msgBox.innerText = data.message || "चुकीचा नंबर किंवा पासवर्ड! ❌"; 
             }
         }).catch(err => { 
             msgBox.style.color = "red"; 
@@ -584,7 +613,7 @@
             if(qData.optA == correct) document.getElementById("btnA").classList.add("correct-ans");
             if(qData.optB == correct) document.getElementById("btnB").classList.add("correct-ans");
             if(qData.optC == correct) document.getElementById("btnC").classList.add("correct-ans");
-            if(qData.optD == correct) document.getElementById("btnD").classList.add("correct-ans");
+            if(qData.optD == correct) document.edelete ? "" : document.getElementById("btnD").classList.add("correct-ans");
         }
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
