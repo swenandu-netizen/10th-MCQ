@@ -143,6 +143,9 @@
             border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;
         }
     </style>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e3c72">
+
 </head>
 <body data-theme="light">
 
@@ -775,5 +778,12 @@ if (loggedInMobile) {
         });
     }
 </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log("Service Worker Registered Successfully"));
+  }
+</script>
+
 </body>
 </html>
