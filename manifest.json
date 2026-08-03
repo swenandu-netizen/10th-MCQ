@@ -1,10 +1,10 @@
 {
-  "name": "10th Master Quiz",
-  "short_name": "10th Quiz",
-  "start_url": "./index.html",
+  "name": "Maha Board MCQ",
+  "short_name": "Maha MCQ",
+  "start_url": "./index.html?source=pwa",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4facfe",
+  "background_color": "#1e3c72",
+  "theme_color": "#1e3c72",
   "icons": [
     {
       "src": "icon.png",
