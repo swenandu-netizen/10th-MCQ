@@ -144,17 +144,38 @@
         }
     </style>
     <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e3c72">
+    <meta name="theme-color" content="#1e3c72">
     <link rel="icon" type="image/png" href="icon.png">
 
-
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "6e963e80-fcd4-4c1a-a625-86c63fa8a161",
+        });
+      });
+    </script>
 </head>
 <body data-theme="light">
 
 <div class="container fade-in" id="appContainer">
 
+    <!-- 0. Splash / Loading Screen -->
+    <div id="splashScreen">
+        <div style="font-size: 60px; margin-bottom: 15px;">📚</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">Maha Board MCQ</h2>
+        <p style="font-size: 14px; font-weight: 500;">आपले स्वागत आहे...</p>
+        <div style="margin-top: 20px;">
+            <div style="width: 40px; height: 40px; border: 4px solid var(--input-border); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+        </div>
+        <style>
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        </style>
+    </div>
+
     <!-- 1. Login Screen -->
-    <div id="loginScreen">
+    <div id="loginScreen" class="hidden">
         <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
             <button class="theme-toggle" onclick="toggleTheme()" style="width: auto; background: #e2e8f0; color: #1a202c;" id="themeBtnLogin">🌙 Dark</button>
         </div>
@@ -338,32 +359,37 @@
         let savedMob = localStorage.getItem('savedMobile');
         let savedPass = localStorage.getItem('savedPassword');
 
-        if (savedMob) {
-            loggedInMobile = savedMob;
-            loggedInUser = localStorage.getItem('savedName') || "विद्यार्थी";
-            currentUserPlan = localStorage.getItem('savedPlan') || "Free";
+        // ⏳ 2 सेकंड का लोडिंग टाइमर (Splash Screen) के बाद आगे बढ़ना
+        setTimeout(() => {
+            if (savedMob) {
+                loggedInMobile = savedMob;
+                loggedInUser = localStorage.getItem('savedName') || "विद्यार्थी";
+                currentUserPlan = localStorage.getItem('savedPlan') || "Free";
 
-            updateUserInfoCard();
-            fetchAllMCQs();
-            checkInactivityNotice(); // 🌟 7 दिन से प्रैक्टिस न करने पर चेक
+                updateUserInfoCard();
+                fetchAllMCQs();
+                checkInactivityNotice();
 
-            if(savedPass) {
-                fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(savedMob)}&password=${encodeURIComponent(savedPass)}&deviceId=${encodeURIComponent(myDeviceId)}`)
-                .then(res => res.json())
-                .then(data => {
-                    if(data.success) {
-                        currentUserPlan = data.plan;
-                        localStorage.setItem('savedPlan', currentUserPlan);
-                        updateUserInfoCard();
+                if(savedPass) {
+                    fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(savedMob)}&password=${encodeURIComponent(savedPass)}&deviceId=${encodeURIComponent(myDeviceId)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success) {
+                            currentUserPlan = data.plan;
+                            localStorage.setItem('savedPlan', currentUserPlan);
+                            updateUserInfoCard();
 
-                        cachedNotices.notice = data.notice || "";
-                        cachedNotices.notification = data.notification || "";
-                        cachedNotices.thought = data.thought || "";
-                        renderNotices();
-                    }
-                }).catch(err => console.log("Background sync error"));
+                            cachedNotices.notice = data.notice || "";
+                            cachedNotices.notification = data.notification || "";
+                            cachedNotices.thought = data.thought || "";
+                            renderNotices();
+                        }
+                    }).catch(err => console.log("Background sync error"));
+                }
+            } else {
+                showScreen('loginScreen');
             }
-        }
+        }, 2000); // 2000 milliseconds = 2 seconds
     };
 
     // 🌟 7 दिन की इनएक्टिविटी चेक करने का फंक्शन
@@ -401,7 +427,7 @@
         clearInterval(timerInterval);
 
         let appContainer = document.getElementById('appContainer');
-        ['loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen'].forEach(id => {
+        ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
         
@@ -525,7 +551,7 @@
                 cachedNotices.notification = data.notification || "";
                 cachedNotices.thought = data.thought || "";
 
-                checkInactivityNotice(); // 7 दिन चेक
+                checkInactivityNotice(); 
                 fetchAllMCQs(); 
             } else { 
                 msgBox.style.color = "red"; 
@@ -745,7 +771,6 @@
         let finalScoreText = `${score} / ${totalQ}`;
         document.getElementById('scoreText').innerText = finalScoreText;
 
-        // 🌟 जैसे ही टेस्ट पूरी होगी, आज की तारीख सेव हो जाएगी (यानि यूज़र एक्टिव माना जाएगा)
         localStorage.setItem('last_practice_date', new Date().toISOString());
 
         let reportHtml = `
@@ -760,14 +785,12 @@
         try { localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScoreText); } catch(e) {}
         showScreen('resultScreen');
         
-        // Google Sheet में अंतिम प्रैक्टिस की तारीख भेजने के लिए
-if (loggedInMobile) {
-    fetch(`${SCRIPT_URL}?action=updateActivity&mobile=${encodeURIComponent(loggedInMobile)}`)
-    .then(res => res.json())
-    .then(data => console.log("Activity updated in sheet"))
-    .catch(err => console.log("Error updating activity"));
-}
-
+        if (loggedInMobile) {
+            fetch(`${SCRIPT_URL}?action=updateActivity&mobile=${encodeURIComponent(loggedInMobile)}`)
+            .then(res => res.json())
+            .then(data => console.log("Activity updated in sheet"))
+            .catch(err => console.log("Error updating activity"));
+        }
     }
 
     function copyChallengeText() {
