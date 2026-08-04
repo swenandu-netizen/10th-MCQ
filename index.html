@@ -145,7 +145,7 @@
             backdrop-filter: blur(10px);
         }
         .top-nav-btn {
-            flex: 1 1 calc(25% - 10px); 
+            flex: 1 1 calc(33% - 10px); 
             min-width: 75px; margin: 0; padding: 10px 5px; 
             border-radius: 12px; border: none; font-size: 13px; font-weight: 600; 
             display: flex; align-items: center; justify-content: center; gap: 5px; 
@@ -158,6 +158,7 @@
         .btn-connect { background: #007bff; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); }
         .btn-theme { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
         .btn-policy { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-video { background: #8a2be2; box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4); } /* Purple Video Button */
 
     </style>
     <link rel="manifest" href="manifest.json">
@@ -207,7 +208,7 @@
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
 
-        <!-- 🚨 Device Reset OTP Box (Hidden by Default) 🚨 -->
+        <!-- 🚨 Device Reset OTP Box -->
         <div id="resetDeviceBox" class="hidden" style="margin-top: 15px; background: #fff3cd; padding: 15px; border-radius: 12px; border: 1px solid #ffeeba; text-align: left;">
             <p id="resetMessage" style="color: #856404; font-size: 13px; font-weight: bold; margin-bottom: 10px;"></p>
             <input type="number" id="resetOtpInput" placeholder="ईमेलवर आलेला OTP टाका" style="border-color: #ffc107; background: #ffffff;">
@@ -242,10 +243,11 @@
     <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
         
-        <!-- 🚨 Top Navigation Bar (Beautiful Responsive Grid) 🚨 -->
+        <!-- 🚨 Top Navigation Bar -->
         <div class="top-nav-container">
             <button class="top-nav-btn btn-logout" onclick="logout()">🔐 LogOut</button>
             <button class="top-nav-btn btn-connect" onclick="showScreen('connectScreen')">🌐 Connect</button>
+            <button class="top-nav-btn btn-video" onclick="loadVideos()">📹 Updates</button>
             <button class="top-nav-btn btn-theme theme-toggle" onclick="toggleTheme()" id="themeBtnMain">🌙 Dark</button>
             <button class="top-nav-btn btn-policy" onclick="showScreen('policyScreen')">📜 नियम</button>
         </div>
@@ -366,6 +368,23 @@
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
+    <!-- 🚨 10. Video Updates Screen (NEW) 🚨 -->
+    <div id="videoScreen" class="hidden" style="padding: 10px;">
+        <div style="font-size: 40px; margin-bottom: 5px;">📹</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">नवीन व्हिडिओ अपडेट्स</h2>
+        <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">परीक्षेची रणनीती आणि नवीन माहितीचे व्हिडिओ येथे पहा.</p>
+        
+        <div id="videoListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+            <p style="text-align: center; color: var(--primary);">व्हिडिओ लोड होत आहेत... ⏳</p>
+        </div>
+
+        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">
+            ⬅ मुख्य पेजवर परत जा
+        </button>
+        
+        <div class="app-footer" style="text-align: center;">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
+    </div>
+
 </div>
 
 <script>
@@ -404,7 +423,7 @@
         document.getElementById('themeBtnMain').innerText = btnText;
     }
 
-    // 🚀 Super Fast Startup (Caching System)
+    // 🚀 Super Fast Startup 
     window.onload = function() {
         let savedTheme = localStorage.getItem('app_theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
@@ -486,10 +505,10 @@
 
     function showScreen(screenId) {
         clearInterval(timerInterval);
-        document.getElementById('resetDeviceBox').classList.add('hidden'); // Hide reset box when changing screens
+        document.getElementById('resetDeviceBox').classList.add('hidden'); 
 
         let appContainer = document.getElementById('appContainer');
-        ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen'].forEach(id => {
+        ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen', 'videoScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
         
@@ -515,7 +534,6 @@
         document.getElementById('passwordInput').value = "";
     }
 
-    // 🚨 REGISTER OTP LOGIC
     function sendOtp() {
         let name = document.getElementById('regNameInput').value;
         let mobile = document.getElementById('regMobileInput').value;
@@ -567,7 +585,7 @@
             msgBox.style.color = "red"; msgBox.innerText = "चुकीचा OTP! कृपया पुन्हा तपासा. ❌"; return;
         }
 
-        msgBox.style.color = "#4facfe"; msgBox.innerText = "खाते तयार करत आहे... कृपया थांबा ⏳";
+        msgBox.style.color = "#4facfe"; msgBox.innerText = "खाते तयार करत mindset करत आहे... कृपया थांबा ⏳";
 
         let name = document.getElementById('regNameInput').value;
         let mobile = document.getElementById('regMobileInput').value;
@@ -584,7 +602,6 @@
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
-    // 🚨 LOGIN LOGIC (WITH RESET OTP)
     function loginUser() {
         let mobile = document.getElementById('mobileInput').value;
         let password = document.getElementById('passwordInput').value;
@@ -601,7 +618,6 @@
         .then(res => res.json())
         .then(data => {
             if(data.success) {
-                // Success Login
                 currentUserPlan = data.plan; 
                 loggedInUser = data.name || "विद्यार्थी";
                 loggedInMobile = mobile;
@@ -621,7 +637,6 @@
                 checkInactivityNotice(); 
                 fetchAllMCQs(); 
             } else if (data.requireReset) {
-                // 🚨 Device Reset Flow Triggered
                 msgBox.style.color = "#d69e2e";
                 msgBox.innerText = "OTP पाठवत आहे... ⏳";
                 currentResetMobile = mobile;
@@ -641,7 +656,6 @@
                 });
 
             } else { 
-                // Regular Error (Wrong password or 30-Day Limit Crossed)
                 msgBox.style.color = "red"; 
                 msgBox.innerText = data.message || "चुकीचा नंबर किंवा पासवर्ड! ❌"; 
             }
@@ -651,7 +665,6 @@
         });
     }
 
-    // 🚨 CONFIRM DEVICE RESET FUNCTION
     function confirmDeviceReset() {
         let userOtp = document.getElementById('resetOtpInput').value;
         let msgBox = document.getElementById('resetMessage');
@@ -670,7 +683,7 @@
                 setTimeout(() => { 
                     document.getElementById('resetDeviceBox').classList.add('hidden');
                     document.getElementById('resetOtpInput').value = "";
-                    loginUser(); // Automatically login after reset
+                    loginUser(); 
                 }, 2000);
             } else { msgBox.style.color = "red"; msgBox.innerText = data.message; }
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
@@ -730,7 +743,6 @@
         });
     }
 
-    // 🚀 Super Fast Question Loading (Caching)
     function fetchAllMCQs() {
         let cachedMCQs = localStorage.getItem('cachedMCQs');
         if (cachedMCQs) {
@@ -751,6 +763,36 @@
             }
         })
         .catch(err => console.log("Error loading questions"));
+    }
+
+    // 🚨 FETCH VIDEOS LOGIC 🚨
+    function loadVideos() {
+        showScreen('videoScreen');
+        let vList = document.getElementById('videoListContainer');
+        vList.innerHTML = "<p style='text-align: center; color: var(--primary);'>व्हिडिओ लोड होत आहेत... ⏳</p>";
+        
+        fetch(SCRIPT_URL + "?action=getVideos")
+        .then(res => res.json())
+        .then(data => {
+            let html = "";
+            if(data.length === 0) {
+                html = "<p style='text-align: center; color: var(--p-color);'>सध्या कोणताही नवीन व्हिडिओ उपलब्ध नाही.</p>";
+            } else {
+                data.forEach(v => {
+                    let formattedDate = v.date ? new Date(v.date).toLocaleDateString('mr-IN') : "नवीन अपडेट";
+                    html += `
+                        <a href="${v.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s;">
+                            <div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">${v.title}</div>
+                            <div style="font-size: 12px; color: var(--p-color);">📅 ${formattedDate}</div>
+                            <div style="background: #ff0000; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">▶️ YouTube वर पहा</div>
+                        </a>
+                    `;
+                });
+            }
+            vList.innerHTML = html;
+        }).catch(err => {
+            vList.innerHTML = "<p style='color: red; text-align: center;'>कनेक्शन एरर! कृपया पुन्हा प्रयत्न करा.</p>";
+        });
     }
 
     function loadSubjects() {
@@ -805,7 +847,7 @@
     }
 
     function buyPaidPlan() {
-        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला Maha Board MCQ ॲपचा VIP प्रीमियम प्लॅन (₹99) विकत घ्यायचा आहे. मी पेमेंट करत आहे, कृपया माझा नंबर तपासा.`;
+        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला Maha Board MCQ ॲपचा VIP प्रीमियम प्लॅन (₹99) विकत घ्यायचा ভাগে खरेदी करायचा आहे. मी पेमेंट करत आहे, कृपया माझा नंबर तपासा.`;
         window.top.location.href = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}`;
     }
 
