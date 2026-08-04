@@ -145,14 +145,14 @@
             backdrop-filter: blur(10px);
         }
         .top-nav-btn {
-            flex: 1 1 calc(25% - 10px); /* Adjusts perfectly on all screens */
+            flex: 1 1 calc(25% - 10px); 
             min-width: 75px; margin: 0; padding: 10px 5px; 
             border-radius: 12px; border: none; font-size: 13px; font-weight: 600; 
             display: flex; align-items: center; justify-content: center; gap: 5px; 
             cursor: pointer; transition: 0.3s; color: white;
         }
         @media (max-width: 400px) {
-            .top-nav-btn { flex: 1 1 calc(50% - 10px); } /* 2x2 Grid for small phones */
+            .top-nav-btn { flex: 1 1 calc(50% - 10px); } 
         }
         .btn-logout { background: #e53e3e; box-shadow: 0 4px 10px rgba(229, 62, 62, 0.4); }
         .btn-connect { background: #007bff; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); }
@@ -206,6 +206,14 @@
         <input type="password" id="passwordInput" placeholder="पासवर्ड">
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
+
+        <!-- 🚨 Device Reset OTP Box (Hidden by Default) 🚨 -->
+        <div id="resetDeviceBox" class="hidden" style="margin-top: 15px; background: #fff3cd; padding: 15px; border-radius: 12px; border: 1px solid #ffeeba; text-align: left;">
+            <p id="resetMessage" style="color: #856404; font-size: 13px; font-weight: bold; margin-bottom: 10px;"></p>
+            <input type="number" id="resetOtpInput" placeholder="ईमेलवर आलेला OTP टाका" style="border-color: #ffc107; background: #ffffff;">
+            <button class="primary-btn" onclick="confirmDeviceReset()" style="background: #ffc107; color: #000; box-shadow: none;">Verify & Reset Device 🔄</button>
+        </div>
+
         <button class="text-btn" onclick="showScreen('registerScreen')">नवीन आहात? इथे खाते काढा (Register)</button>
 
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
@@ -342,12 +350,10 @@
         </p>
         
         <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
-            <!-- WhatsApp Channel Link -->
             <a href="https://whatsapp.com/channel/0029VbDOOLjATRSpU7rFN525" target="_blank" style="background: #25D366; color: white; padding: 12px 20px; border-radius: 10px; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);">
                 📱 WhatsApp चॅनेल जॉइन करा
             </a>
 
-            <!-- YouTube Channel Link -->
             <a href="https://youtube.com/@YOUR_YOUTUBE_HANDLE" target="_blank" style="background: #ff0000; color: white; padding: 12px 20px; border-radius: 10px; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);">
                 ▶️ YouTube चॅनेल सबस्क्राईब करा
             </a>
@@ -370,6 +376,11 @@
     let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "", loggedInUser = "", loggedInMobile = "";
     let generatedOTP = ""; 
     let cachedNotices = { notice: "", notification: "", thought: "" }; 
+    
+    // Reset Device Variables
+    let currentResetMobile = "";
+    let currentResetEmail = "";
+    let generatedResetOtp = "";
     
     // ⏳ Timer Variables
     let timerInterval;
@@ -404,13 +415,11 @@
         let savedMob = localStorage.getItem('savedMobile');
         let savedPass = localStorage.getItem('savedPassword');
 
-        // लोड जुने नोटीस (Cache)
         let savedNotices = localStorage.getItem('cachedNotices');
         if(savedNotices) {
             try { cachedNotices = JSON.parse(savedNotices); } catch(e){}
         }
 
-        // ⏳ 0.5 सेकंदात ॲप चालू!
         setTimeout(() => {
             if (savedMob) {
                 loggedInMobile = savedMob;
@@ -420,11 +429,9 @@
                 updateUserInfoCard();
                 checkInactivityNotice();
                 
-                // मेमरीमधून लगेच प्रश्न लोड करा
                 fetchAllMCQs(); 
 
                 if(savedPass) {
-                    // बॅकग्राउंडमध्ये नवीन माहिती सिंक करा (शांतपणे)
                     fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(savedMob)}&password=${encodeURIComponent(savedPass)}&deviceId=${encodeURIComponent(myDeviceId)}`)
                     .then(res => res.json())
                     .then(data => {
@@ -479,6 +486,7 @@
 
     function showScreen(screenId) {
         clearInterval(timerInterval);
+        document.getElementById('resetDeviceBox').classList.add('hidden'); // Hide reset box when changing screens
 
         let appContainer = document.getElementById('appContainer');
         ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen'].forEach(id => {
@@ -507,6 +515,7 @@
         document.getElementById('passwordInput').value = "";
     }
 
+    // 🚨 REGISTER OTP LOGIC
     function sendOtp() {
         let name = document.getElementById('regNameInput').value;
         let mobile = document.getElementById('regMobileInput').value;
@@ -575,13 +584,15 @@
         }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
+    // 🚨 LOGIN LOGIC (WITH RESET OTP)
     function loginUser() {
         let mobile = document.getElementById('mobileInput').value;
         let password = document.getElementById('passwordInput').value;
         let msgBox = document.getElementById('message');
+        document.getElementById('resetDeviceBox').classList.add('hidden'); 
 
         if(mobile === "" || password === "") { 
-            msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर और पासवर्ड टाका!"; return; 
+            msgBox.style.color = "red"; msgBox.innerText = "मोबाईल नंबर आणि पासवर्ड टाका!"; return; 
         }
 
         msgBox.style.color = "#4facfe"; msgBox.innerText = "तपासत आहे... कृपया थांबा ⏳";
@@ -590,6 +601,7 @@
         .then(res => res.json())
         .then(data => {
             if(data.success) {
+                // Success Login
                 currentUserPlan = data.plan; 
                 loggedInUser = data.name || "विद्यार्थी";
                 loggedInMobile = mobile;
@@ -604,11 +616,32 @@
                 cachedNotices.notice = data.notice || "";
                 cachedNotices.notification = data.notification || "";
                 cachedNotices.thought = data.thought || "";
-                localStorage.setItem('cachedNotices', JSON.stringify(cachedNotices)); // 🚨 Save new notices
+                localStorage.setItem('cachedNotices', JSON.stringify(cachedNotices)); 
 
                 checkInactivityNotice(); 
                 fetchAllMCQs(); 
+            } else if (data.requireReset) {
+                // 🚨 Device Reset Flow Triggered
+                msgBox.style.color = "#d69e2e";
+                msgBox.innerText = "OTP पाठवत आहे... ⏳";
+                currentResetMobile = mobile;
+                currentResetEmail = data.email;
+                
+                fetch(`${SCRIPT_URL}?action=sendResetOTP&email=${encodeURIComponent(data.email)}`)
+                .then(res => res.json())
+                .then(otpData => {
+                    if(otpData.success) {
+                        generatedResetOtp = otpData.otp;
+                        msgBox.innerText = "";
+                        document.getElementById('resetMessage').innerText = data.message + "\n(OTP " + currentResetEmail + " वर पाठवला आहे)";
+                        document.getElementById('resetDeviceBox').classList.remove('hidden');
+                    } else {
+                        msgBox.style.color = "red"; msgBox.innerText = "OTP पाठवण्यात अडचण आली.";
+                    }
+                });
+
             } else { 
+                // Regular Error (Wrong password or 30-Day Limit Crossed)
                 msgBox.style.color = "red"; 
                 msgBox.innerText = data.message || "चुकीचा नंबर किंवा पासवर्ड! ❌"; 
             }
@@ -616,6 +649,31 @@
             msgBox.style.color = "red"; 
             msgBox.innerText = "कनेक्शन एरर!"; 
         });
+    }
+
+    // 🚨 CONFIRM DEVICE RESET FUNCTION
+    function confirmDeviceReset() {
+        let userOtp = document.getElementById('resetOtpInput').value;
+        let msgBox = document.getElementById('resetMessage');
+
+        if(userOtp == "" || userOtp != generatedResetOtp) {
+            msgBox.style.color = "red"; msgBox.innerText = "चुकीचा OTP! कृपया पुन्हा तपासा. ❌"; return;
+        }
+
+        msgBox.style.color = "#155724"; msgBox.innerText = "डिव्हाइस बदलत आहे... कृपया थांबा ⏳";
+
+        fetch(`${SCRIPT_URL}?action=confirmDeviceReset&mobile=${encodeURIComponent(currentResetMobile)}&deviceId=${encodeURIComponent(myDeviceId)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                msgBox.style.color = "green"; msgBox.innerText = "✅ " + data.message;
+                setTimeout(() => { 
+                    document.getElementById('resetDeviceBox').classList.add('hidden');
+                    document.getElementById('resetOtpInput').value = "";
+                    loginUser(); // Automatically login after reset
+                }, 2000);
+            } else { msgBox.style.color = "red"; msgBox.innerText = data.message; }
+        }).catch(err => { msgBox.style.color = "red"; msgBox.innerText = "कनेक्शन एरर!"; });
     }
 
     function updateUserInfoCard() {
@@ -687,7 +745,6 @@
             allData = data; 
             localStorage.setItem('cachedMCQs', JSON.stringify(data)); 
             
-            // पहिली वेळ असेल तरच स्क्रीन अपडेट करा
             if (!cachedMCQs) {
                 loadSubjects(); 
                 showScreen('subjectScreen'); 
