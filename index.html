@@ -137,11 +137,28 @@
             color: #cbd5e1; border-top: 1px dashed rgba(255,255,255,0.2);
         }
         
-        /* 🌗 Theme Toggle Button Style */
-        .theme-toggle {
-            background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px;
-            border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;
+        /* 🚨 Top Navigation Buttons Style (Premium Grid) 🚨 */
+        .top-nav-container {
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; 
+            margin-bottom: 20px; background: rgba(255, 255, 255, 0.15); 
+            padding: 12px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(10px);
         }
+        .top-nav-btn {
+            flex: 1 1 calc(25% - 10px); /* Adjusts perfectly on all screens */
+            min-width: 75px; margin: 0; padding: 10px 5px; 
+            border-radius: 12px; border: none; font-size: 13px; font-weight: 600; 
+            display: flex; align-items: center; justify-content: center; gap: 5px; 
+            cursor: pointer; transition: 0.3s; color: white;
+        }
+        @media (max-width: 400px) {
+            .top-nav-btn { flex: 1 1 calc(50% - 10px); } /* 2x2 Grid for small phones */
+        }
+        .btn-logout { background: #e53e3e; box-shadow: 0 4px 10px rgba(229, 62, 62, 0.4); }
+        .btn-connect { background: #007bff; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); }
+        .btn-theme { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-policy { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
+
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3c72">
@@ -177,7 +194,7 @@
     <!-- 1. Login Screen -->
     <div id="loginScreen" class="hidden">
         <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
-            <button class="theme-toggle" onclick="toggleTheme()" style="width: auto; background: #e2e8f0; color: #1a202c;" id="themeBtnLogin">🌙 Dark</button>
+            <button class="top-nav-btn btn-theme" onclick="toggleTheme()" style="width: auto; background: #e2e8f0; color: #1a202c;" id="themeBtnLogin">🌙 Dark</button>
         </div>
         <h2 style="color: var(--text-dark); margin-bottom: 2px;">Maha Board MCQ</h2>
         <p style="font-size: 14px; margin-top: 0; font-weight: 500;">परीक्षेची पूर्व तयारी</p>
@@ -216,16 +233,13 @@
 
     <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <button onclick="logout()" style="width: auto; padding: 7px 12px; margin: 0; font-size: 13px; font-weight: 600; background: #e53e3e; color: white; border-radius: 8px; border: none; cursor: pointer;">🚪 बाहेर पडा</button>
-            <button onclick="showScreen('connectScreen')" style="background: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                🌐 Connect
-            </button>
-
-            <div style="display: flex; gap: 8px;">
-                <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnMain">🌙 Dark</button>
-                <span style="font-size: 14px; cursor: pointer; text-decoration: underline; font-weight: 600; color: white; background: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 8px; display: flex; align-items: center;" onclick="showScreen('policyScreen')">📜 नियम</span>
-            </div>
+        
+        <!-- 🚨 Top Navigation Bar (Beautiful Responsive Grid) 🚨 -->
+        <div class="top-nav-container">
+            <button class="top-nav-btn btn-logout" onclick="logout()">🔐 LogOut</button>
+            <button class="top-nav-btn btn-connect" onclick="showScreen('connectScreen')">🌐 Connect</button>
+            <button class="top-nav-btn btn-theme theme-toggle" onclick="toggleTheme()" id="themeBtnMain">🌙 Dark</button>
+            <button class="top-nav-btn btn-policy" onclick="showScreen('policyScreen')">📜 नियम</button>
         </div>
 
         <div id="welcomeText"></div>
@@ -357,7 +371,7 @@
     let generatedOTP = ""; 
     let cachedNotices = { notice: "", notification: "", thought: "" }; 
     
-    // ⏳ Timer Variables (15 Seconds)
+    // ⏳ Timer Variables
     let timerInterval;
     let timeLeft = 15;
 
@@ -379,7 +393,7 @@
         document.getElementById('themeBtnMain').innerText = btnText;
     }
 
-    // Load Saved Theme and Check Practice Inactivity on Startup
+    // 🚀 Super Fast Startup (Caching System)
     window.onload = function() {
         let savedTheme = localStorage.getItem('app_theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
@@ -390,7 +404,13 @@
         let savedMob = localStorage.getItem('savedMobile');
         let savedPass = localStorage.getItem('savedPassword');
 
-        // ⏳ 2 सेकंड का लोडिंग टाइमर (Splash Screen) के बाद आगे बढ़ना
+        // लोड जुने नोटीस (Cache)
+        let savedNotices = localStorage.getItem('cachedNotices');
+        if(savedNotices) {
+            try { cachedNotices = JSON.parse(savedNotices); } catch(e){}
+        }
+
+        // ⏳ 0.5 सेकंदात ॲप चालू!
         setTimeout(() => {
             if (savedMob) {
                 loggedInMobile = savedMob;
@@ -398,10 +418,13 @@
                 currentUserPlan = localStorage.getItem('savedPlan') || "Free";
 
                 updateUserInfoCard();
-                fetchAllMCQs();
                 checkInactivityNotice();
+                
+                // मेमरीमधून लगेच प्रश्न लोड करा
+                fetchAllMCQs(); 
 
                 if(savedPass) {
+                    // बॅकग्राउंडमध्ये नवीन माहिती सिंक करा (शांतपणे)
                     fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(savedMob)}&password=${encodeURIComponent(savedPass)}&deviceId=${encodeURIComponent(myDeviceId)}`)
                     .then(res => res.json())
                     .then(data => {
@@ -413,6 +436,7 @@
                             cachedNotices.notice = data.notice || "";
                             cachedNotices.notification = data.notification || "";
                             cachedNotices.thought = data.thought || "";
+                            localStorage.setItem('cachedNotices', JSON.stringify(cachedNotices));
                             renderNotices();
                         }
                     }).catch(err => console.log("Background sync error"));
@@ -420,10 +444,9 @@
             } else {
                 showScreen('loginScreen');
             }
-        }, 2000); // 2000 milliseconds = 2 seconds
+        }, 500); 
     };
 
-    // 🌟 7 दिन की इनएक्टिविटी चेक करने का फंक्शन
     function checkInactivityNotice() {
         let lastPractice = localStorage.getItem('last_practice_date');
         if (lastPractice) {
@@ -438,17 +461,17 @@
     }
 
     function renderNotices() {
-        if (cachedNotices.notice.trim() !== "") {
+        if (cachedNotices.notice && cachedNotices.notice.trim() !== "") {
             document.getElementById('noticeBox').style.display = "block"; 
             document.getElementById('noticeText').innerHTML = cachedNotices.notice;
         } else { document.getElementById('noticeBox').style.display = "none"; }
 
-        if (cachedNotices.notification.trim() !== "") {
+        if (cachedNotices.notification && cachedNotices.notification.trim() !== "") {
             document.getElementById('notificationBox').style.display = "block"; 
             document.getElementById('notificationText').innerHTML = cachedNotices.notification;
         } else { document.getElementById('notificationBox').style.display = "none"; }
 
-        if (cachedNotices.thought.trim() !== "") {
+        if (cachedNotices.thought && cachedNotices.thought.trim() !== "") {
             document.getElementById('thoughtBox').style.display = "block"; 
             document.getElementById('thoughtText').innerHTML = cachedNotices.thought;
         } else { document.getElementById('thoughtBox').style.display = "none"; }
@@ -458,7 +481,6 @@
         clearInterval(timerInterval);
 
         let appContainer = document.getElementById('appContainer');
-        // 🚨 यहाँ 'connectScreen' भी जोड़ दिया गया है 🚨
         ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
@@ -582,6 +604,7 @@
                 cachedNotices.notice = data.notice || "";
                 cachedNotices.notification = data.notification || "";
                 cachedNotices.thought = data.thought || "";
+                localStorage.setItem('cachedNotices', JSON.stringify(cachedNotices)); // 🚨 Save new notices
 
                 checkInactivityNotice(); 
                 fetchAllMCQs(); 
@@ -649,10 +672,27 @@
         });
     }
 
+    // 🚀 Super Fast Question Loading (Caching)
     function fetchAllMCQs() {
+        let cachedMCQs = localStorage.getItem('cachedMCQs');
+        if (cachedMCQs) {
+            allData = JSON.parse(cachedMCQs);
+            loadSubjects();
+            showScreen('subjectScreen');
+        }
+
         fetch(SCRIPT_URL + "?action=getMCQs")
         .then(res => res.json())
-        .then(data => { allData = data; loadSubjects(); showScreen('subjectScreen'); })
+        .then(data => { 
+            allData = data; 
+            localStorage.setItem('cachedMCQs', JSON.stringify(data)); 
+            
+            // पहिली वेळ असेल तरच स्क्रीन अपडेट करा
+            if (!cachedMCQs) {
+                loadSubjects(); 
+                showScreen('subjectScreen'); 
+            }
+        })
         .catch(err => console.log("Error loading questions"));
     }
 
@@ -721,7 +761,6 @@
         displayQuestion();
     }
 
-    // ⏳ 15 Seconds Timer Function
     function startTimer() {
         clearInterval(timerInterval);
         timeLeft = 15;
