@@ -255,8 +255,6 @@
 
         <div id="welcomeText"></div>
 
->
-
         <!-- 📩 Personal User Message Box -->
         <div id="personalMsgBox" style="background:#f8d7da; color:#721c24; padding:12px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; border: 1px solid #f5c6cb;">
             <strong>📩 खास तुमच्यासाठी:</strong> <br><span id="personalMsgText"></span>
@@ -266,15 +264,15 @@
         <div id="notificationBox" style="background:#d1ecf1; color:#0c5460; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">🔔 <span id="notificationText"></span></div>
         <div id="thoughtBox" style="background:#d4edda; color:#155724; padding:10px; border-radius:10px; margin-bottom:15px; display:none; text-align:left;">💡 <span id="thoughtText"></span></div>
         
-        <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2
+        <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
         
         <div class="grid-container" id="subjectList"></div>
-                <!-- 📱 ॲप इन्स्टॉल बॉक्स (फक्त इन्स्टॉल नसल्यासच दिसेल) -->
+        
+        <!-- 📱 ॲप इन्स्टॉल बॉक्स (फक्त इन्स्टॉल नसल्यासच दिसेल) -->
         <div id="installAppBox" style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); display: none;">
             <p style="color: white; font-size: 14px; margin: 0 0 10px 0; font-weight: 600;">रोजच्या सरावासाठी ॲप इन्स्टॉल करा 👇</p>
             <button onclick="installAppPrompt()" class="primary-btn" style="background: #25D366; margin: 0; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);">📲 होम स्क्रीनवर ॲप जोडा</button>
         </div>
-
 
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
@@ -449,7 +447,7 @@
         localStorage.setItem('device_unique_id', myDeviceId);
     }
 
-        let deferredPrompt;
+    let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -820,12 +818,17 @@
         });
     }
 
+    // 🚨 Lazy Loading Logic added here 🚨
     function fetchAllMCQs() {
         let cachedMCQs = localStorage.getItem('cachedMCQs');
+        
         if (cachedMCQs) {
             allData = JSON.parse(cachedMCQs);
             loadSubjects();
             showScreen('subjectScreen');
+        } else {
+            document.getElementById('subjectList').innerHTML = "<div style='grid-column: span 2; color: white; text-align: center; font-size: 14px; padding: 20px;'>प्रश्न डाउनलोड होत आहेत... कृपया थोडा वेळ थांबा ⏳</div>";
+            showScreen('subjectScreen'); 
         }
 
         fetch(SCRIPT_URL + "?action=getMCQs")
@@ -833,12 +836,12 @@
         .then(data => { 
             allData = data; 
             localStorage.setItem('cachedMCQs', JSON.stringify(data)); 
-            if (!cachedMCQs) {
-                loadSubjects(); 
-                showScreen('subjectScreen'); 
-            }
+            loadSubjects(); 
         })
-        .catch(err => console.log("Error loading questions"));
+        .catch(err => {
+            console.log("Error loading questions");
+            document.getElementById('subjectList').innerHTML = "<div style='grid-column: span 2; color: #ffcccc; text-align: center;'>डेटा लोड करण्यात अडचण आली. कृपया ॲप रिफ्रेश करा. 🔄</div>";
+        });
     }
 
     function loadVideos() {
@@ -900,6 +903,7 @@
     }
 
     function loadSubjects() {
+        if(allData.length === 0) return; // Prevent loading empty subjects
         let subjects = [...new Set(allData.map(item => item.subject))]; 
         let html = "";
         const icons = ["📚", "📜", "📝", "🌍", "🔬", "📐", "🎨", "💻"]; 
