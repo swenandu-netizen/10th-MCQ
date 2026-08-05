@@ -268,8 +268,8 @@
         
         <div class="grid-container" id="subjectList"></div>
         
-        <!-- 📱 ॲप इन्स्टॉल बॉक्स (फक्त इन्स्टॉल नसल्यासच दिसेल) -->
-        <div id="installAppBox" style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); display: none;">
+        <!-- 📱 ॲप इन्स्टॉल बॉक्स (नेहमी दिसेल) -->
+        <div id="installAppBox" style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
             <p style="color: white; font-size: 14px; margin: 0 0 10px 0; font-weight: 600;">रोजच्या सरावासाठी ॲप इन्स्टॉल करा 👇</p>
             <button onclick="installAppPrompt()" class="primary-btn" style="background: #25D366; margin: 0; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);">📲 होम स्क्रीनवर ॲप जोडा</button>
         </div>
@@ -451,9 +451,6 @@
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // बॉक्सला दाखवा (फक्त जेव्हा ॲप इन्स्टॉल नसेल)
-        let installBox = document.getElementById('installAppBox');
-        if(installBox) installBox.style.display = 'block'; 
     });
 
     function installAppPrompt() {
@@ -462,6 +459,8 @@
             deferredPrompt.userChoice.then((choiceResult) => {
                 deferredPrompt = null;
             });
+        } else {
+            alert("💡 ॲप इन्स्टॉल करण्यासाठी:\n\n1. वरच्या उजव्या कोपऱ्यातल्या '3 डॉट्स' (⋮) वर क्लिक करा.\n2. 'Add to Home screen' (किंवा Install App) वर क्लिक करा.");
         }
     }
 
@@ -818,7 +817,6 @@
         });
     }
 
-    // 🚨 Lazy Loading Logic added here 🚨
     function fetchAllMCQs() {
         let cachedMCQs = localStorage.getItem('cachedMCQs');
         
@@ -903,7 +901,7 @@
     }
 
     function loadSubjects() {
-        if(allData.length === 0) return; // Prevent loading empty subjects
+        if(allData.length === 0) return; 
         let subjects = [...new Set(allData.map(item => item.subject))]; 
         let html = "";
         const icons = ["📚", "📜", "📝", "🌍", "🔬", "📐", "🎨", "💻"]; 
@@ -1072,7 +1070,7 @@
     }
 
     function copyChallengeText() {
-        let text = `🏆 मी Maha Board MCQ ॲपमध्ये टेस्ट पूर्ण केली!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? ॲप डाऊनलोड करण्यासाठी लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/offer.html`;
+        let text = `🏆 मी Maha Board MCQ ॲपमध्ये टेस्ट पूर्ण केली!\n\nविषय: ${currentSubjectName} - ${currentChapterName}\nमाझा स्कोर: *${score}/${currentQuizData.length}*\n\nतू मला हरवू शकतोस का? ॲप डाऊनलोड करण्यासाठी लिंकवर क्लिक कर:\n\n👉 https://swenandu-netizen.github.io/10th-MCQ/index.html`;
 
         navigator.clipboard.writeText(text).then(() => {
             alert("✅ चॅलेंज मेसेज कॉपी झाला! आता WhatsApp वर मित्राला पाठवा.");
@@ -1080,6 +1078,7 @@
             alert("कॉपी करण्यात अडचण आली.");
         });
     }
+
 </script>
 <script>
   if ('serviceWorker' in navigator) {
