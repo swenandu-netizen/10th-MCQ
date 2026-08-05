@@ -158,7 +158,8 @@
         .btn-connect { background: #007bff; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); }
         .btn-theme { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
         .btn-policy { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
-        .btn-video { background: #8a2be2; box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4); } /* Purple Video Button */
+        .btn-video { background: #8a2be2; box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4); } 
+        .btn-notes { background: #ff8c00; box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4); } 
 
     </style>
     <link rel="manifest" href="manifest.json">
@@ -208,7 +209,6 @@
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
 
-        <!-- 🚨 Device Reset OTP Box -->
         <div id="resetDeviceBox" class="hidden" style="margin-top: 15px; background: #fff3cd; padding: 15px; border-radius: 12px; border: 1px solid #ffeeba; text-align: left;">
             <p id="resetMessage" style="color: #856404; font-size: 13px; font-weight: bold; margin-bottom: 10px;"></p>
             <input type="number" id="resetOtpInput" placeholder="ईमेलवर आलेला OTP टाका" style="border-color: #ffc107; background: #ffffff;">
@@ -248,19 +248,33 @@
             <button class="top-nav-btn btn-logout" onclick="logout()">🔐 LogOut</button>
             <button class="top-nav-btn btn-connect" onclick="showScreen('connectScreen')">🌐 Connect</button>
             <button class="top-nav-btn btn-video" onclick="loadVideos()">📹 Updates</button>
+            <button class="top-nav-btn btn-notes" onclick="loadNotes()">📖 Notes</button>
             <button class="top-nav-btn btn-theme theme-toggle" onclick="toggleTheme()" id="themeBtnMain">🌙 Dark</button>
             <button class="top-nav-btn btn-policy" onclick="showScreen('policyScreen')">📜 नियम</button>
         </div>
 
         <div id="welcomeText"></div>
 
-        <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
+>
+
+        <!-- 📩 Personal User Message Box -->
+        <div id="personalMsgBox" style="background:#f8d7da; color:#721c24; padding:12px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; border: 1px solid #f5c6cb;">
+            <strong>📩 खास तुमच्यासाठी:</strong> <br><span id="personalMsgText"></span>
+        </div>
 
         <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">📢 <span id="noticeText"></span></div>
         <div id="notificationBox" style="background:#d1ecf1; color:#0c5460; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">🔔 <span id="notificationText"></span></div>
         <div id="thoughtBox" style="background:#d4edda; color:#155724; padding:10px; border-radius:10px; margin-bottom:15px; display:none; text-align:left;">💡 <span id="thoughtText"></span></div>
         
+        <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2
+        
         <div class="grid-container" id="subjectList"></div>
+                <!-- 📱 ॲप इन्स्टॉल बॉक्स (फक्त इन्स्टॉल नसल्यासच दिसेल) -->
+        <div id="installAppBox" style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); display: none;">
+            <p style="color: white; font-size: 14px; margin: 0 0 10px 0; font-weight: 600;">रोजच्या सरावासाठी ॲप इन्स्टॉल करा 👇</p>
+            <button onclick="installAppPrompt()" class="primary-btn" style="background: #25D366; margin: 0; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);">📲 होम स्क्रीनवर ॲप जोडा</button>
+        </div>
+
 
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
@@ -361,6 +375,14 @@
             </a>
         </div>
 
+        <!-- ⚙️ ॲप सेटिंग्स (App Settings) -->
+        <div style="background: var(--input-bg); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--input-border); text-align: left;">
+            <h3 style="color: var(--text-dark); margin-top: 0; margin-bottom: 10px; font-size: 16px;">⚙️ ॲप सेटिंग्स</h3>
+            <p style="color: var(--p-color); font-size: 13px; margin-top: 0; margin-bottom: 15px;">ॲप नीट चालत नसल्यास किंवा नवीन अपडेट पाहण्यासाठी रिफ्रेश करा.</p>
+            
+            <button onclick="forceRefreshApp()" class="primary-btn" style="background: #e53e3e; margin: 0; box-shadow: 0 4px 10px rgba(229, 62, 62, 0.4);">🔄 ॲप रिफ्रेश / अपडेट करा</button>
+        </div>
+
         <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%;">
             ⬅ मुख्य पेजवर परत जा
         </button>
@@ -368,7 +390,7 @@
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 🚨 10. Video Updates Screen (NEW) 🚨 -->
+    <!-- 10. Video Updates Screen -->
     <div id="videoScreen" class="hidden" style="padding: 10px;">
         <div style="font-size: 40px; margin-bottom: 5px;">📹</div>
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">नवीन व्हिडिओ अपडेट्स</h2>
@@ -376,6 +398,23 @@
         
         <div id="videoListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
             <p style="text-align: center; color: var(--primary);">व्हिडिओ लोड होत आहेत... ⏳</p>
+        </div>
+
+        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">
+            ⬅ मुख्य पेजवर परत जा
+        </button>
+        
+        <div class="app-footer" style="text-align: center;">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
+    </div>
+    
+    <!-- 11. Study Notes Screen -->
+    <div id="notesScreen" class="hidden" style="padding: 10px;">
+        <div style="font-size: 40px; margin-bottom: 5px;">📖</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">अभ्यास नोट्स (Study Notes)</h2>
+        <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">महत्त्वाचे डॉक्युमेंट्स आणि नोट्स येथे वाचा.</p>
+        
+        <div id="notesListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+            <p style="text-align: center; color: var(--primary);">नोट्स लोड होत आहेत... ⏳</p>
         </div>
 
         <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">
@@ -395,13 +434,12 @@
     let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "", loggedInUser = "", loggedInMobile = "";
     let generatedOTP = ""; 
     let cachedNotices = { notice: "", notification: "", thought: "" }; 
+    let personalUserMessage = ""; 
     
-    // Reset Device Variables
     let currentResetMobile = "";
     let currentResetEmail = "";
     let generatedResetOtp = "";
     
-    // ⏳ Timer Variables
     let timerInterval;
     let timeLeft = 15;
 
@@ -411,7 +449,36 @@
         localStorage.setItem('device_unique_id', myDeviceId);
     }
 
-    // 🌗 Dark / Light Mode Toggle Logic
+        let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // बॉक्सला दाखवा (फक्त जेव्हा ॲप इन्स्टॉल नसेल)
+        let installBox = document.getElementById('installAppBox');
+        if(installBox) installBox.style.display = 'block'; 
+    });
+
+    function installAppPrompt() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                deferredPrompt = null;
+            });
+        }
+    }
+
+    function forceRefreshApp() {
+        if(confirm("तुम्हाला ॲп रिफ्रेश करायचे आहे का? सर्व जुना डेटा क्लियर करून नवीन अपडेट लोड होईल.")) {
+            localStorage.clear();
+            if ('caches' in window) {
+                caches.keys().then((names) => {
+                    names.forEach((name) => { caches.delete(name); });
+                });
+            }
+            window.location.reload(true);
+        }
+    }
+
     function toggleTheme() {
         let currentTheme = document.body.getAttribute('data-theme');
         let newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -423,7 +490,6 @@
         document.getElementById('themeBtnMain').innerText = btnText;
     }
 
-    // 🚀 Super Fast Startup 
     window.onload = function() {
         let savedTheme = localStorage.getItem('app_theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
@@ -438,6 +504,7 @@
         if(savedNotices) {
             try { cachedNotices = JSON.parse(savedNotices); } catch(e){}
         }
+        personalUserMessage = localStorage.getItem('savedPersonalMsg') || "";
 
         setTimeout(() => {
             if (savedMob) {
@@ -463,6 +530,10 @@
                             cachedNotices.notification = data.notification || "";
                             cachedNotices.thought = data.thought || "";
                             localStorage.setItem('cachedNotices', JSON.stringify(cachedNotices));
+                            
+                            personalUserMessage = data.personalMsg || "";
+                            localStorage.setItem('savedPersonalMsg', personalUserMessage);
+                            
                             renderNotices();
                         }
                     }).catch(err => console.log("Background sync error"));
@@ -487,6 +558,11 @@
     }
 
     function renderNotices() {
+        if (personalUserMessage && personalUserMessage.trim() !== "") {
+            document.getElementById('personalMsgBox').style.display = "block"; 
+            document.getElementById('personalMsgText').innerHTML = personalUserMessage;
+        } else { document.getElementById('personalMsgBox').style.display = "none"; }
+
         if (cachedNotices.notice && cachedNotices.notice.trim() !== "") {
             document.getElementById('noticeBox').style.display = "block"; 
             document.getElementById('noticeText').innerHTML = cachedNotices.notice;
@@ -508,7 +584,7 @@
         document.getElementById('resetDeviceBox').classList.add('hidden'); 
 
         let appContainer = document.getElementById('appContainer');
-        ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen', 'videoScreen'].forEach(id => {
+        ['splashScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen', 'videoScreen', 'notesScreen'].forEach(id => {
             document.getElementById(id).classList.add('hidden');
         });
         
@@ -529,6 +605,7 @@
         localStorage.removeItem('savedName');
         localStorage.removeItem('savedPlan');
         localStorage.removeItem('savedPassword');
+        localStorage.removeItem('savedPersonalMsg');
         showScreen('loginScreen');
         document.getElementById('mobileInput').value = "";
         document.getElementById('passwordInput').value = "";
@@ -544,12 +621,10 @@
         if(name === "" || mobile === "" || email === "" || password === "") { 
             msgBox.style.color = "red"; msgBox.innerText = "सर्व माहिती भरणे आवश्यक आहे!"; return; 
         }
-
         let mobileRegex = /^[6-9]\d{9}$/;
         if(!mobileRegex.test(mobile)) {
             msgBox.style.color = "red"; msgBox.innerText = "कृपया योग्य 10 अंकी मोबाईल नंबर टाका! ❌"; return;
         }
-
         if(!email.toLowerCase().endsWith("@gmail.com")) {
             msgBox.style.color = "red"; msgBox.innerText = "फक्त @gmail.com आयडी वापरता येईल! ❌"; return;
         }
@@ -563,7 +638,6 @@
             if(data.success) {
                 generatedOTP = data.otp; 
                 msgBox.style.color = "green"; msgBox.innerText = "तुमच्या ईमेलवर 4-अंकी OTP पाठवला आहे. ✅";
-                
                 document.getElementById('regOtpInput').classList.remove('hidden');
                 document.getElementById('sendOtpBtn').classList.add('hidden');
                 document.getElementById('verifyRegisterBtn').classList.remove('hidden');
@@ -585,7 +659,7 @@
             msgBox.style.color = "red"; msgBox.innerText = "चुकीचा OTP! कृपया पुन्हा तपासा. ❌"; return;
         }
 
-        msgBox.style.color = "#4facfe"; msgBox.innerText = "खाते तयार करत mindset करत आहे... कृपया थांबा ⏳";
+        msgBox.style.color = "#4facfe"; msgBox.innerText = "खाते तयार करत आहे... कृपया थांबा ⏳";
 
         let name = document.getElementById('regNameInput').value;
         let mobile = document.getElementById('regMobileInput').value;
@@ -633,6 +707,9 @@
                 cachedNotices.notification = data.notification || "";
                 cachedNotices.thought = data.thought || "";
                 localStorage.setItem('cachedNotices', JSON.stringify(cachedNotices)); 
+                
+                personalUserMessage = data.personalMsg || "";
+                localStorage.setItem('savedPersonalMsg', personalUserMessage);
 
                 checkInactivityNotice(); 
                 fetchAllMCQs(); 
@@ -756,7 +833,6 @@
         .then(data => { 
             allData = data; 
             localStorage.setItem('cachedMCQs', JSON.stringify(data)); 
-            
             if (!cachedMCQs) {
                 loadSubjects(); 
                 showScreen('subjectScreen'); 
@@ -765,7 +841,6 @@
         .catch(err => console.log("Error loading questions"));
     }
 
-    // 🚨 FETCH VIDEOS LOGIC 🚨
     function loadVideos() {
         showScreen('videoScreen');
         let vList = document.getElementById('videoListContainer');
@@ -792,6 +867,35 @@
             vList.innerHTML = html;
         }).catch(err => {
             vList.innerHTML = "<p style='color: red; text-align: center;'>कनेक्शन एरर! कृपया पुन्हा प्रयत्न करा.</p>";
+        });
+    }
+
+    function loadNotes() {
+        showScreen('notesScreen');
+        let nList = document.getElementById('notesListContainer');
+        nList.innerHTML = "<p style='text-align: center; color: var(--primary);'>नोट्स लोड होत आहेत... ⏳</p>";
+        
+        fetch(SCRIPT_URL + "?action=getNotes")
+        .then(res => res.json())
+        .then(data => {
+            let html = "";
+            if(data.length === 0) {
+                html = "<p style='text-align: center; color: var(--p-color);'>सध्या कोणतीही नोट्स उपलब्ध नाही.</p>";
+            } else {
+                data.forEach(n => {
+                    let formattedDate = n.date ? new Date(n.date).toLocaleDateString('mr-IN') : "नवीन नोट्स";
+                    html += `
+                        <a href="${n.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s;">
+                            <div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">📄 ${n.title}</div>
+                            <div style="font-size: 12px; color: var(--p-color);">📅 ${formattedDate}</div>
+                            <div style="background: #ff8c00; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">📖 नोट्स वाचा (Open Doc)</div>
+                        </a>
+                    `;
+                });
+            }
+            nList.innerHTML = html;
+        }).catch(err => {
+            nList.innerHTML = "<p style='color: red; text-align: center;'>कनेक्शन एरर! कृपया पुन्हा प्रयत्न करा.</p>";
         });
     }
 
@@ -847,7 +951,7 @@
     }
 
     function buyPaidPlan() {
-        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला Maha Board MCQ ॲपचा VIP प्रीमियम प्लॅन (₹99) विकत घ्यायचा ভাগে खरेदी करायचा आहे. मी पेमेंट करत आहे, कृपया माझा नंबर तपासा.`;
+        let text = `नमस्कार सर, \nमाझा मोबाईल नंबर ${loggedInMobile} आहे. मला Maha Board MCQ ॲपचा VIP प्रीमियम प्लॅन (₹99) विकत घ्यायचा आहे. मी पेमेंट करत आहे, कृपया माझा नंबर तपासा.`;
         window.top.location.href = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(text)}`;
     }
 
