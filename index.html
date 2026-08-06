@@ -80,10 +80,9 @@
         .primary-btn { background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); color: white; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
         .primary-btn:active { transform: scale(0.98); }
         .whatsapp-btn { background: #25D366; color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
-        .text-btn { background: none; color: var(--primary); font-size: 15px; margin-top: 5px; padding: 10px; box-shadow: none; text-decoration: underline; }
+        .text-btn { background: none; color: var(--primary); font-size: 15px; margin-top: 5px; padding: 10px; box-shadow: none; text-decoration: underline; display: block; width: 100%; }
         
         .back-btn { background-color: #edf2f7; color: #1a202c; margin-top: 20px; }
-        .option-btn { background-color: var(--card-bg); color: var(--text-dark); text-align: left; padding-left: 20px; border: 2px solid var(--input-border); display: flex; align-items: center; }
         .correct-ans { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
         .wrong-ans { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
 
@@ -111,13 +110,22 @@
         .hidden { display: none; }
         #message, #regMessage { margin-top: 15px; font-weight: 600; font-size: 14px; }
         
-        .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--input-border); padding-bottom: 10px; margin-bottom: 20px; }
-        #quizTitle { font-size: 18px; color: var(--primary); margin: 0; text-align: left;}
+        /* 🎯 Quiz Screen New Design (Tab, Mobile & PC Responsive) */
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .quiz-title-container { flex: 1; text-align: left; min-width: 150px; }
+        #quizTitle { font-size: 18px; color: #3b82f6; margin: 0; font-weight: 700; line-height: 1.4; }
         
-        .timer-badge { background: #fee2e2; color: #dc2626; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .quiz-meta-container { display: flex; gap: 10px; align-items: center; }
         
-        #questionCount { margin: 0; font-weight: 600; background: var(--input-border); color: var(--text-dark); padding: 5px 10px; border-radius: 8px;}
-        #questionText { text-align: left; font-size: 20px; font-weight: 600; color: var(--text-dark); margin-bottom: 25px; line-height: 1.6; }
+        .timer-badge { background: #fee2e2; color: #dc2626; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; margin: 0; }
+        
+        .q-count-badge { background: #e2e8f0; color: #1e293b; padding: 6px 14px; border-radius: 12px; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; margin: 0; }
+        
+        #questionText { text-align: left; font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; line-height: 1.5; }
+        
+        /* Options Design */
+        .option-btn { background-color: var(--card-bg); color: var(--text-dark); text-align: left; padding: 15px 20px; border: 1.5px solid var(--input-border); border-radius: 12px; display: flex; align-items: center; font-size: 16px; font-weight: 600; margin-bottom: 12px; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .option-label { color: #3b82f6; font-weight: 800; margin-right: 15px; font-size: 18px; }
 
         .score-circle {
             width: 120px; height: 120px; border-radius: 50%;
@@ -216,6 +224,9 @@
         </div>
 
         <button class="text-btn" onclick="showScreen('registerScreen')">नवीन आहात? इथे खाते काढा (Register)</button>
+        
+        <!-- 📲 Google Doc Install Guide -->
+        <button class="text-btn" onclick="window.open('https://docs.google.com/document/d/1jHiCMmwCHH9mfzzOYott2b4TgY5cU0O4oGDoElhG-Hs/view', '_blank')" style="color: #25D366; font-weight: bold; background: #f0fff4; border-radius: 8px; margin-top: 5px;">📲 ॲप कसे इन्स्टॉल करावे? (मार्गदर्शक वाचा)</button>
 
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
@@ -224,6 +235,13 @@
     <div id="registerScreen" class="hidden">
         <h2 style="color: var(--text-dark);">नवीन खाते काढा</h2>
         <p>स्वतःची नोंदणी करून फ्री टेस्ट सोडवा.</p>
+
+        <!-- 🚨 ॲप इन्स्टॉल बॉक्स (रजिस्ट्रेशनच्या आधी) -->
+        <div style="background: var(--input-bg); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 2px dashed #25D366; text-align: center;">
+            <p style="color: #155724; font-size: 14px; margin: 0 0 10px 0; font-weight: bold;">⚠️ नोंदणी करण्यापूर्वी ॲप इन्स्टॉल करा</p>
+            <button type="button" onclick="installAppPrompt()" class="primary-btn" style="background: #25D366; margin: 0; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);">📲 ॲप इन्स्टॉल करा (Install App)</button>
+        </div>
+
         <input type="text" id="regNameInput" placeholder="तुमचे पूर्ण नाव">
         <input type="number" id="regMobileInput" placeholder="मोबाईल नंबर (10 अंकी)">
         <input type="email" id="regEmailInput" placeholder="ईमेल आयडी (फक्त @gmail.com)">
@@ -237,13 +255,15 @@
         <p id="regMessage"></p>
         <button class="text-btn" onclick="showScreen('loginScreen')">आधीच खाते आहे? लॉगिन करा</button>
 
+        <!-- 📲 Google Doc Install Guide -->
+        <button class="text-btn" onclick="window.open('https://docs.google.com/document/d/1jHiCMmwCHH9mfzzOYott2b4TgY5cU0O4oGDoElhG-Hs/view', '_blank')" style="color: #25D366; font-weight: bold; background: #f0fff4; border-radius: 8px; margin-top: 5px;">📲 ॲप कसे इन्स्टॉल करावे? (मार्गदर्शक वाचा)</button>
+
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 3. Subject Selection Screen -->
     <div id="subjectScreen" class="hidden">
         
-        <!-- 🚨 Top Navigation Bar -->
         <div class="top-nav-container">
             <button class="top-nav-btn btn-logout" onclick="logout()">🔐 LogOut</button>
             <button class="top-nav-btn btn-connect" onclick="showScreen('connectScreen')">🌐 Connect</button>
@@ -255,7 +275,6 @@
 
         <div id="welcomeText"></div>
 
-        <!-- 📩 Personal User Message Box -->
         <div id="personalMsgBox" style="background:#f8d7da; color:#721c24; padding:12px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; border: 1px solid #f5c6cb;">
             <strong>📩 खास तुमच्यासाठी:</strong> <br><span id="personalMsgText"></span>
         </div>
@@ -268,12 +287,6 @@
         
         <div class="grid-container" id="subjectList"></div>
         
-        <!-- 📱 ॲप इन्स्टॉल बॉक्स (नेहमी दिसेल) -->
-        <div id="installAppBox" style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
-            <p style="color: white; font-size: 14px; margin: 0 0 10px 0; font-weight: 600;">रोजच्या सरावासाठी ॲप इन्स्टॉल करा 👇</p>
-            <button onclick="installAppPrompt()" class="primary-btn" style="background: #25D366; margin: 0; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);">📲 होम स्क्रीनवर ॲप जोडा</button>
-        </div>
-
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
@@ -287,15 +300,15 @@
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 5. Quiz Screen -->
+    <!-- 5. Quiz Screen (QnA) -->
     <div id="quizScreen" class="hidden">
         <div class="quiz-header">
-            <div>
+            <div class="quiz-title-container">
                 <h3 id="quizTitle"></h3>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <div class="timer-badge">⏳ <span id="timeLeft">15</span>s</div>
-                <p id="questionCount" style="margin:0;">1 / 10</p>
+            <div class="quiz-meta-container">
+                <div class="timer-badge">⏳ <span id="timeLeft">15</span> s</div>
+                <div class="q-count-badge" id="questionCount"></div>
             </div>
         </div>
         <h3 id="questionText">प्रश्न इथे दिसेल</h3>
@@ -355,7 +368,7 @@
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 9. Connect / Social Links Page -->
+    <!-- 9. Connect Screen -->
     <div id="connectScreen" class="hidden" style="text-align: center; padding: 20px;">
         <div style="font-size: 40px; margin-bottom: 10px;">🌐</div>
         <h2 style="color: var(--text-dark); margin-bottom: 8px;">आमच्याशी कनेक्ट व्हा</h2>
@@ -373,18 +386,13 @@
             </a>
         </div>
 
-        <!-- ⚙️ ॲप सेटिंग्स (App Settings) -->
         <div style="background: var(--input-bg); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--input-border); text-align: left;">
             <h3 style="color: var(--text-dark); margin-top: 0; margin-bottom: 10px; font-size: 16px;">⚙️ ॲप सेटिंग्स</h3>
             <p style="color: var(--p-color); font-size: 13px; margin-top: 0; margin-bottom: 15px;">ॲप नीट चालत नसल्यास किंवा नवीन अपडेट पाहण्यासाठी रिफ्रेश करा.</p>
-            
             <button onclick="forceRefreshApp()" class="primary-btn" style="background: #e53e3e; margin: 0; box-shadow: 0 4px 10px rgba(229, 62, 62, 0.4);">🔄 ॲप रिफ्रेश / अपडेट करा</button>
         </div>
 
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%;">
-            ⬅ मुख्य पेजवर परत जा
-        </button>
-        
+        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%;">⬅ मुख्य पेजवर परत जा</button>
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
@@ -393,15 +401,10 @@
         <div style="font-size: 40px; margin-bottom: 5px;">📹</div>
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">नवीन व्हिडिओ अपडेट्स</h2>
         <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">परीक्षेची रणनीती आणि नवीन माहितीचे व्हिडिओ येथे पहा.</p>
-        
         <div id="videoListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
             <p style="text-align: center; color: var(--primary);">व्हिडिओ लोड होत आहेत... ⏳</p>
         </div>
-
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">
-            ⬅ मुख्य पेजवर परत जा
-        </button>
-        
+        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">⬅ मुख्य पेजवर परत जा</button>
         <div class="app-footer" style="text-align: center;">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
     
@@ -410,15 +413,10 @@
         <div style="font-size: 40px; margin-bottom: 5px;">📖</div>
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">अभ्यास नोट्स (Study Notes)</h2>
         <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">महत्त्वाचे डॉक्युमेंट्स आणि नोट्स येथे वाचा.</p>
-        
         <div id="notesListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
             <p style="text-align: center; color: var(--primary);">नोट्स लोड होत आहेत... ⏳</p>
         </div>
-
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">
-            ⬅ मुख्य पेजवर परत जा
-        </button>
-        
+        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">⬅ मुख्य पेजवर परत जा</button>
         <div class="app-footer" style="text-align: center;">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
@@ -519,6 +517,25 @@
                     .then(res => res.json())
                     .then(data => {
                         if(data.success) {
+                            
+                            // 🚀 Auto Update Logic (Version Checking)
+                            let currentLocalVersion = localStorage.getItem('app_version') || "1.0";
+                            if(data.appVersion && data.appVersion !== currentLocalVersion) {
+                                let myDevId = localStorage.getItem('device_unique_id');
+                                if ('caches' in window) {
+                                    caches.keys().then((names) => { names.forEach((name) => { caches.delete(name); }); });
+                                }
+                                localStorage.clear();
+                                localStorage.setItem('savedMobile', savedMob);
+                                localStorage.setItem('savedPassword', savedPass);
+                                localStorage.setItem('device_unique_id', myDevId);
+                                localStorage.setItem('app_version', data.appVersion);
+                                
+                                alert("🚀 ॲपमध्ये नवीन फीचर्स आले आहेत! ॲप अपडेट होत आहे...");
+                                window.location.reload(true);
+                                return; 
+                            }
+                            
                             currentUserPlan = data.plan;
                             localStorage.setItem('savedPlan', currentUserPlan);
                             updateUserInfoCard();
@@ -689,6 +706,25 @@
         .then(res => res.json())
         .then(data => {
             if(data.success) {
+                
+                // 🚀 Auto Update Logic (Version Checking)
+                let currentLocalVersion = localStorage.getItem('app_version') || "1.0";
+                if(data.appVersion && data.appVersion !== currentLocalVersion) {
+                    let myDevId = localStorage.getItem('device_unique_id');
+                    if ('caches' in window) {
+                        caches.keys().then((names) => { names.forEach((name) => { caches.delete(name); }); });
+                    }
+                    localStorage.clear();
+                    localStorage.setItem('savedMobile', mobile);
+                    localStorage.setItem('savedPassword', password);
+                    localStorage.setItem('device_unique_id', myDevId);
+                    localStorage.setItem('app_version', data.appVersion);
+                    
+                    alert("🚀 ॲपमध्ये नवीन फीचर्स आले आहेत! ॲप अपडेट होत आहे...");
+                    window.location.reload(true);
+                    return; 
+                }
+                
                 currentUserPlan = data.plan; 
                 loggedInUser = data.name || "विद्यार्थी";
                 loggedInMobile = mobile;
@@ -1012,10 +1048,10 @@
         document.getElementById('questionText').innerText = qData.question;
 
         let optionsHtml = `
-            <button class="option-btn" id="btnA" onclick="checkAnswer('${qData.optA}', '${qData.answer}', 'btnA')"><b style="margin-right:15px; color:var(--primary);">A.</b> ${qData.optA}</button>
-            <button class="option-btn" id="btnB" onclick="checkAnswer('${qData.optB}', '${qData.answer}', 'btnB')"><b style="margin-right:15px; color:var(--primary);">B.</b> ${qData.optB}</button>
-            <button class="option-btn" id="btnC" onclick="checkAnswer('${qData.optC}', '${qData.answer}', 'btnC')"><b style="margin-right:15px; color:var(--primary);">C.</b> ${qData.optC}</button>
-            <button class="option-btn" id="btnD" onclick="checkAnswer('${qData.optD}', '${qData.answer}', 'btnD')"><b style="margin-right:15px; color:var(--primary);">D.</b> ${qData.optD}</button>
+            <button class="option-btn" id="btnA" onclick="checkAnswer('${qData.optA}', '${qData.answer}', 'btnA')"><span class="option-label">A.</span> ${qData.optA}</button>
+            <button class="option-btn" id="btnB" onclick="checkAnswer('${qData.optB}', '${qData.answer}', 'btnB')"><span class="option-label">B.</span> ${qData.optB}</button>
+            <button class="option-btn" id="btnC" onclick="checkAnswer('${qData.optC}', '${qData.answer}', 'btnC')"><span class="option-label">C.</span> ${qData.optC}</button>
+            <button class="option-btn" id="btnD" onclick="checkAnswer('${qData.optD}', '${qData.answer}', 'btnD')"><span class="option-label">D.</span> ${qData.optD}</button>
         `;
         document.getElementById('optionsList').innerHTML = optionsHtml;
     }
