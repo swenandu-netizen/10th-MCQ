@@ -133,7 +133,6 @@
             }
         });
     }
-
     function searchUser() {
         let mobile = document.getElementById('searchMobile').value;
         let pass = document.getElementById('adminPass').value;
@@ -147,8 +146,11 @@
         .then(data => {
             if(data.success) {
                 let planColor = data.plan === "Paid" ? "var(--success)" : (data.plan === "Trial" ? "var(--warning)" : "var(--danger)");
+                let joinedColor = data.joinedVia.includes("Self") ? "#94a3b8" : "#60a5fa"; // Self असल्यास राखाडी, रेफरल असल्यास निळा
+
                 resultBox.innerHTML = `
                     <b>नाव:</b> ${data.name}<br>
+                    <b>कसे जॉईन झाले:</b> <span style="color:${joinedColor}; font-weight:bold;">${data.joinedVia}</span><br>
                     <b>पासवर्ड:</b> <span style="color:var(--warning); font-weight:bold;">${data.password}</span><br>
                     <b>प्लॅन:</b> <span style="color:${planColor}; font-weight:bold;">${data.plan}</span><br>
                     <hr style="border: 0.5px solid #334155; margin: 15px 0;">
@@ -162,6 +164,7 @@
         });
     }
 
+    
     function updateNotice() {
         let msgText = document.getElementById('noticeText').value;
         let pass = document.getElementById('adminPass').value;
