@@ -6,24 +6,13 @@
     <title>Boss Panel - Maha Board MCQ</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-dark: #0f172a; --card-bg: #1e293b; --text-light: #f8fafc;
-            --primary: #3b82f6; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
-        }
-        body {
-            font-family: 'Poppins', sans-serif; background: var(--bg-dark); color: var(--text-light); margin: 0; padding: 15px;
-        }
-        .container {
-            width: 100%; max-width: 500px; background: var(--card-bg); padding: 25px; border-radius: 16px; margin: 20px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; box-sizing: border-box;
-        }
+        :root { --bg-dark: #0f172a; --card-bg: #1e293b; --text-light: #f8fafc; --primary: #3b82f6; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-dark); color: var(--text-light); margin: 0; padding: 15px; }
+        .container { width: 100%; max-width: 500px; background: var(--card-bg); padding: 25px; border-radius: 16px; margin: 20px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; box-sizing: border-box; }
         h2 { margin-top: 0; color: var(--primary); }
-        input, textarea {
-            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 15px; box-sizing: border-box; outline: none; font-family: 'Poppins', sans-serif;
-        }
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 15px; box-sizing: border-box; outline: none; font-family: 'Poppins', sans-serif; }
         input:focus, textarea:focus { border-color: var(--primary); }
-        button {
-            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
+        button { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-warning { background: var(--warning); color: white; }
@@ -37,8 +26,7 @@
         
         .section { background: #0f172a; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: left; border: 1px solid #334155; }
         .section h4 { margin: 0 0 10px 0; color: var(--text-light); font-size: 16px; }
-        
-        .result-box { background: #1e293b; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 14px; border: 1px dashed var(--primary); display: none; }
+        .result-box { background: #1e293b; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 14px; border: 1px dashed var(--primary); display: none; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -57,6 +45,10 @@
     
     <!-- 📊 Stats Dashboard -->
     <div class="stat-grid">
+        <div class="stat-box" style="grid-column: span 2; background: #0f766e; border-color: #0d9488;">
+            <p style="color: #ccfbf1;">आजचे नवीन रेफरल जॉईन्स (Today)</p>
+            <h3 id="todayJoins" style="color: #5eead4; font-size: 28px;">0</h3>
+        </div>
         <div class="stat-box">
             <h3 id="totalUsers" style="color: var(--primary);">0</h3>
             <p>एकूण विद्यार्थी</p>
@@ -71,9 +63,9 @@
         </div>
     </div>
 
-    <!-- 🔍 1. User Search (Password Finder) -->
+    <!-- 🔍 1. User Search (Password & Referral Stats) -->
     <div class="section">
-        <h4>🔍 विद्यार्थी शोधा (पासवर्ड / माहिती)</h4>
+        <h4>🔍 विद्यार्थी शोधा (पासवर्ड आणि रेफरल रेकॉर्ड)</h4>
         <div style="display: flex; gap: 10px;">
             <input type="number" id="searchMobile" placeholder="मोबाईल नंबर" style="margin: 0; flex: 2;">
             <button class="btn-primary" onclick="searchUser()" style="margin: 0; flex: 1;">शोधा</button>
@@ -109,7 +101,7 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; // जुनीच लिंक
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; 
     
     function adminLogin() {
         let pass = document.getElementById('adminPass').value;
@@ -125,9 +117,7 @@
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboardScreen').classList.remove('hidden');
                 loadDashboardStats(pass);
-            } else {
-                msg.style.color = "var(--danger)"; msg.innerText = "चुकीचा पासवर्ड! ❌";
-            }
+            } else { msg.style.color = "var(--danger)"; msg.innerText = "चुकीचा पासवर्ड! ❌"; }
         });
     }
 
@@ -139,6 +129,7 @@
                 document.getElementById('totalUsers').innerText = data.total;
                 document.getElementById('totalVIP').innerText = data.vip;
                 document.getElementById('pendingPayout').innerText = "₹" + data.pendingPayout;
+                document.getElementById('todayJoins').innerText = data.todayJoins;
             }
         });
     }
@@ -155,15 +146,19 @@
         .then(res => res.json())
         .then(data => {
             if(data.success) {
-                let planColor = data.plan === "Paid" ? "var(--success)" : "var(--danger)";
+                let planColor = data.plan === "Paid" ? "var(--success)" : (data.plan === "Trial" ? "var(--warning)" : "var(--danger)");
                 resultBox.innerHTML = `
                     <b>नाव:</b> ${data.name}<br>
                     <b>पासवर्ड:</b> <span style="color:var(--warning); font-weight:bold;">${data.password}</span><br>
-                    <b>प्लॅन:</b> <span style="color:${planColor}; font-weight:bold;">${data.plan}</span>
+                    <b>प्लॅन:</b> <span style="color:${planColor}; font-weight:bold;">${data.plan}</span><br>
+                    <hr style="border: 0.5px solid #334155; margin: 15px 0;">
+                    <b style="color: var(--primary); font-size: 15px;">📊 या युजरचे रेफरल रेकॉर्ड:</b><br>
+                    • एकूण रेफर केले: <b style="color: white;">${data.refTotal}</b><br>
+                    • 👑 Paid (VIP) जॉईन्स: <b style="color: var(--success);">${data.refPaid}</b><br>
+                    • ⏳ Trial जॉईन्स: <b style="color: var(--warning);">${data.refTrial}</b><br>
+                    • 🔒 Free जॉईन्स: <b style="color: var(--danger);">${data.refFree}</b>
                 `;
-            } else {
-                resultBox.innerHTML = `<span style="color:var(--danger);">❌ विद्यार्थी सापडला नाही.</span>`;
-            }
+            } else { resultBox.innerHTML = `<span style="color:var(--danger);">❌ विद्यार्थी सापडला नाही.</span>`; }
         });
     }
 
@@ -171,7 +166,6 @@
         let msgText = document.getElementById('noticeText').value;
         let pass = document.getElementById('adminPass').value;
         let msgBox = document.getElementById('noticeMsg');
-        
         if(msgText === "") { msgBox.style.color = "var(--danger)"; msgBox.innerText = "काहीतरी टाईप करा!"; return; }
         msgBox.style.color = "var(--warning)"; msgBox.innerText = "अपडेट करत आहे...";
         
@@ -190,7 +184,6 @@
         let pass = document.getElementById('adminPass').value;
         let msg = document.getElementById('vipMsg');
         if(mobile === "") { msg.style.color = "var(--danger)"; msg.innerText = "नंबर टाका!"; return; }
-        
         msg.style.color = "var(--warning)"; msg.innerText = "VIP करत आहे...";
         
         fetch(`${SCRIPT_URL}?action=makeVIP&mobile=${encodeURIComponent(mobile)}&pass=${encodeURIComponent(pass)}`)
@@ -198,8 +191,7 @@
         .then(data => {
             if(data.success) {
                 msg.style.color = "var(--success)"; msg.innerText = "✅ अकाउंट VIP झाले!";
-                document.getElementById('upgradeMobile').value = "";
-                loadDashboardStats(pass); // रिफ्रेश डॅशबोर्ड
+                document.getElementById('upgradeMobile').value = ""; loadDashboardStats(pass);
             } else { msg.style.color = "var(--danger)"; msg.innerText = data.message; }
         });
     }
@@ -209,15 +201,14 @@
         let pass = document.getElementById('adminPass').value;
         let msg = document.getElementById('payoutMsg');
         if(mobile === "") return;
-        
         msg.style.color = "var(--warning)"; msg.innerText = "अपडेट करत आहे...";
+        
         fetch(`${SCRIPT_URL}?action=clearPayout&mobile=${encodeURIComponent(mobile)}&pass=${encodeURIComponent(pass)}`)
         .then(res => res.json())
         .then(data => {
             if(data.success) {
                 msg.style.color = "var(--success)"; msg.innerText = "✅ पेमेंट क्लिअर झाले!";
-                document.getElementById('payoutMobile').value = "";
-                loadDashboardStats(pass); // रिफ्रेश पेंडिंग अमाऊंट
+                document.getElementById('payoutMobile').value = ""; loadDashboardStats(pass);
             } else { msg.style.color = "var(--danger)"; msg.innerText = data.message; }
         });
     }
