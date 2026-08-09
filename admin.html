@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin - Maha Board MCQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        body {
+            font-family: 'Poppins', sans-serif; background: var(--bg-dark);
+            color: var(--text-light); margin: 0; display: flex;
+            align-items: center; justify-content: center; min-height: 100vh;
+            padding: 15px;
+        }
+        .container {
+            width: 100%; max-width: 450px; background: var(--card-bg);
+            padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center; box-sizing: border-box;
+        }
+        h2 { margin-top: 0; color: var(--primary); }
+        input {
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px;
+            border: 1px solid #334155; background: #0f172a; color: white;
+            font-size: 16px; box-sizing: border-box; outline: none;
+        }
+        input:focus { border-color: var(--primary); }
+        button {
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px;
+            border: none; font-size: 16px; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-logout { background: #ef4444; color: white; margin-top: 20px; }
+        .hidden { display: none; }
+        
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: #334155; padding: 15px; border-radius: 12px; text-align: center; }
+        .stat-box h3 { margin: 0; font-size: 24px; color: var(--success); }
+        .stat-box p { margin: 5px 0 0 0; font-size: 12px; color: #94a3b8; }
+        
+        .section { background: #0f172a; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: left; border: 1px solid #334155; }
+        .section h4 { margin: 0 0 10px 0; color: var(--warning); }
+    </style>
+</head>
+<body>
+
+<div class="container" id="loginScreen">
+    <div style="font-size: 50px; margin-bottom: 10px;">🛡️</div>
+    <h2>Admin Panel</h2>
+    <p style="font-size: 14px; color: #94a3b8;">फक्त मालकांसाठी (Authorized Only)</p>
+    
+    <input type="password" id="adminPass" placeholder="Admin Password टाका">
+    <button class="btn-primary" onclick="adminLogin()">लॉगिन करा</button>
+    <p id="loginMsg" style="color: #ef4444; font-size: 14px;"></p>
+</div>
+
+<div class="container hidden" id="dashboardScreen">
+    <h2>👑 Admin Dashboard</h2>
+    
+    <div class="stat-grid">
+        <div class="stat-box">
+            <h3 id="totalUsers">0</h3>
+            <p>एकूण युजर्स</p>
+        </div>
+        <div class="stat-box">
+            <h3 id="totalVIP">0</h3>
+            <p>VIP युजर्स</p>
+        </div>
+    </div>
+
+    <!-- 1. VIP Approval Section -->
+    <div class="section">
+        <h4>🚀 युजरला VIP करा (Manual Upgrade)</h4>
+        <input type="number" id="upgradeMobile" placeholder="युजरचा मोबाईल नंबर">
+        <button class="btn-success" onclick="makeVIP()">VIP प्लॅन ॲक्टिव्हेट करा</button>
+        <p id="vipMsg" style="font-size: 13px; margin-bottom: 0;"></p>
+    </div>
+
+    <!-- 2. Payout Management Section -->
+    <div class="section">
+        <h4>💸 रेफरल पेमेंट क्लिअर करा</h4>
+        <input type="number" id="payoutMobile" placeholder="ज्याला पैसे पाठवले त्याचा नंबर">
+        <button class="btn-primary" style="background: var(--warning);" onclick="clearPayout()">पैसे पाठवले (Mark as Paid)</button>
+        <p id="payoutMsg" style="font-size: 13px; margin-bottom: 0;"></p>
+    </div>
+
+    <button class="btn-logout" onclick="logout()">🔐 लॉग आउट</button>
+</div>
+
+<script>
+    // तुमची आधीचीच SCRIPT_URL इथे टाका
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec";
+    
+    function adminLogin() {
+        let pass = document.getElementById('adminPass').value;
+        let msg = document.getElementById('loginMsg');
+        
+        if(pass === "") { msg.innerText = "पासवर्ड टाका!"; return; }
+        
+        msg.style.color = "var(--primary)";
+        msg.innerText = "तपासत आहे...";
+        
+        fetch(`${SCRIPT_URL}?action=adminLogin&pass=${encodeURIComponent(pass)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('dashboardScreen').classList.remove('hidden');
+                loadDashboardStats(pass);
+            } else {
+                msg.style.color = "#ef4444";
+                msg.innerText = "चुकीचा पासवर्ड! ❌";
+            }
+        }).catch(err => { msg.innerText = "कनेक्शन एरर!"; });
+    }
+
+    function loadDashboardStats(pass) {
+        fetch(`${SCRIPT_URL}?action=adminStats&pass=${encodeURIComponent(pass)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                document.getElementById('totalUsers').innerText = data.total;
+                document.getElementById('totalVIP').innerText = data.vip;
+            }
+        });
+    }
+
+    function makeVIP() {
+        let mobile = document.getElementById('upgradeMobile').value;
+        let pass = document.getElementById('adminPass').value;
+        let msg = document.getElementById('vipMsg');
+        
+        if(mobile === "") { msg.style.color = "#ef4444"; msg.innerText = "मोबाईल नंबर टाका!"; return; }
+        
+        msg.style.color = "var(--warning)"; msg.innerText = "अपडेट करत आहे...";
+        
+        fetch(`${SCRIPT_URL}?action=makeVIP&mobile=${encodeURIComponent(mobile)}&pass=${encodeURIComponent(pass)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                msg.style.color = "var(--success)"; msg.innerText = "✅ अकाउंट VIP झाले!";
+                document.getElementById('upgradeMobile').value = "";
+                loadDashboardStats(pass);
+            } else {
+                msg.style.color = "#ef4444"; msg.innerText = data.message;
+            }
+        });
+    }
+
+    function clearPayout() {
+        let mobile = document.getElementById('payoutMobile').value;
+        let pass = document.getElementById('adminPass').value;
+        let msg = document.getElementById('payoutMsg');
+        
+        if(mobile === "") { msg.style.color = "#ef4444"; msg.innerText = "मोबाईल नंबर टाका!"; return; }
+        
+        msg.style.color = "var(--warning)"; msg.innerText = "अपडेट करत आहे...";
+        
+        fetch(`${SCRIPT_URL}?action=clearPayout&mobile=${encodeURIComponent(mobile)}&pass=${encodeURIComponent(pass)}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                msg.style.color = "var(--success)"; msg.innerText = "✅ पेमेंट यशस्वीरित्या क्लिअर झाले!";
+                document.getElementById('payoutMobile').value = "";
+            } else {
+                msg.style.color = "#ef4444"; msg.innerText = data.message;
+            }
+        });
+    }
+
+    function logout() {
+        document.getElementById('adminPass').value = "";
+        document.getElementById('dashboardScreen').classList.add('hidden');
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('loginMsg').innerText = "";
+    }
+</script>
+
+</body>
+</html>
