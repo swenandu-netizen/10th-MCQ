@@ -527,6 +527,18 @@
 </div>
 
 <script>
+    // 🔄 ॲपचा ग्लोबल व्हर्जन (जेव्हा पण अपडेट कराल, इथे v2, v3 करा)
+    const APP_VERSION = "v2.0";
+    let storedVersion = localStorage.getItem('app_live_version');
+    if (storedVersion !== APP_VERSION) {
+        localStorage.clear();
+        localStorage.setItem('app_live_version', APP_VERSION);
+        if ('caches' in window) {
+            caches.keys().then((names) => { names.forEach((name) => { caches.delete(name); }); });
+        }
+        window.location.reload(true);
+    }
+
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; 
     const ADMIN_WHATSAPP = "917769020743"; 
     
@@ -983,9 +995,9 @@
                     else if(index === 2) { rankClass = "rank-3"; medal = "🥉"; }
                     else { medal = `#${index + 1}`; }
                     
-                    if (u.name === loggedInUser) {
+                    if ((u.name && u.name.trim() === loggedInUser.trim()) || (u.mobile && u.mobile.toString() === loggedInMobile.toString())) {
                         myFoundRank = `#${index + 1}`;
-                        myPts = u.score;
+                        myPts = Number(u.score) || 0;
                     }
 
                     html += `
@@ -1348,13 +1360,14 @@
         let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         window.open(whatsappUrl, '_blank');
     }
+
     function fetchHomeTop3() {
         fetch(SCRIPT_URL + "?action=getLeaderboard" + getCB())
         .then(res => res.json())
         .then(data => {
             let top3Html = "";
             let myFoundRank = "Top बाहेर";
-            let myLivePoints = 0; // 👈 Google Sheet मधून थेट लाईव्ह पॉइण्ट्स घेण्यासाठी
+            let myLivePoints = 0; 
             
             if(data && data.length > 0) {
                 let top3 = data.slice(0, 3);
@@ -1366,11 +1379,10 @@
                     </div>`;
                 });
 
-                // गूगल शीटच्या डेटा मधून युजरची रँक आणि अचूक पॉइण्ट्स शोधा
                 data.forEach((u, index) => {
-                    if (u.name === loggedInUser) {
+                    if ((u.name && u.name.trim() === loggedInUser.trim()) || (u.mobile && u.mobile.toString() === loggedInMobile.toString())) {
                         myFoundRank = `#${index + 1}`;
-                        myLivePoints = u.score; // 👈 शीटमधील खरे पॉइण्ट्स
+                        myLivePoints = Number(u.score) || 0;
                     }
                 });
             } else {
@@ -1380,22 +1392,17 @@
             let el = document.getElementById('homeTop3List');
             if(el) el.innerHTML = top3Html;
 
-            // होम कार्डवर लाईव्ह रँक अपडेट करा
             let cardRankEl = document.getElementById('cardRankVal');
             if(cardRankEl) cardRankEl.innerText = myFoundRank;
 
-            // ⚡ होम कार्डवर गूगल शीटमधील खरे लाईव्ह पॉइण्ट्स अपडेट करा (लोकल कॅशेवरून नाही!)
             let cardPtsEl = document.getElementById('cardPointsVal');
             if(cardPtsEl) cardPtsEl.innerText = myLivePoints + " pts";
             
-            // मेमरीमध्ये पण अपडेट करून ठेवा
             myTotalScore = myLivePoints;
             localStorage.setItem('myTotalScore', myLivePoints);
 
         }).catch(e => {});
     }
-
-   
 </script>
 <script>
   if ('serviceWorker' in navigator) {
