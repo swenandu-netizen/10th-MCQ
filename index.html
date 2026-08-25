@@ -93,7 +93,14 @@
         .grid-icon { font-size: 45px; margin-bottom: 12px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); }
         
         .locked-btn { background-color: #e2e8f0; color: #4a5568; cursor: pointer; border: 2px dashed #a0aec0; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
+        
+        /* Leaderboard Styles */
+        .rank-card { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 12px; background: var(--input-bg); margin-bottom: 10px; border: 1px solid var(--input-border); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .rank-1 { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); border: 1px solid #ffd8a8; }
+        .rank-2 { background: linear-gradient(90deg, #e2e2e2 0%, #c9d6ff 100%); border: 1px solid #cbd5e1; }
+        .rank-3 { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); filter: sepia(0.5); }
+        
         #message, #regMessage { margin-top: 15px; font-weight: 600; font-size: 14px; }
         
         .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
@@ -103,6 +110,10 @@
         .quiz-meta-container { display: flex; gap: 10px; align-items: center; }
         .timer-badge { background: #fee2e2; color: #dc2626; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; margin: 0; }
         .q-count-badge { background: #e2e8f0; color: #1e293b; padding: 6px 14px; border-radius: 12px; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; margin: 0; }
+        
+        /* ⭐️ Bookmark Button */
+        .bookmark-btn { background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; margin: 0; transition: 0.2s; color: #cbd5e1; }
+        .bookmark-btn.saved { color: #f59e0b; filter: drop-shadow(0 2px 4px rgba(245,158,11,0.4)); }
         
         #questionText { text-align: left; font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; line-height: 1.5; }
         
@@ -122,20 +133,36 @@
         .app-footer { margin-top: 20px; font-size: 12px; color: var(--p-color); font-weight: 500; border-top: 1px dashed var(--input-border); padding-top: 10px; }
         .transparent-bg .app-footer { color: #cbd5e1; border-top: 1px dashed rgba(255,255,255,0.2); }
         
-        /* 🚨 Top Navigation Buttons Style 🚨 */
-        .top-nav-container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-bottom: 20px; background: rgba(255, 255, 255, 0.15); padding: 12px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); }
-        .top-nav-btn { flex: 1 1 calc(33% - 10px); min-width: 75px; margin: 0; padding: 10px 5px; border-radius: 12px; border: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: 0.3s; color: white; }
-        @media (max-width: 400px) { .top-nav-btn { flex: 1 1 calc(50% - 10px); } }
-        
-        .btn-logout { background: #e53e3e; box-shadow: 0 4px 10px rgba(229, 62, 62, 0.4); }
-        .btn-connect { background: #007bff; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); }
-        .btn-policy { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.2); }
-        .btn-video { background: #8a2be2; box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4); } 
-        .btn-notes { background: #ff8c00; box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4); } 
-        .btn-mindset { background: #10b981; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
-        .btn-rewards { background: #ff8a00; box-shadow: 0 4px 10px rgba(255, 138, 0, 0.4); }
-
+        /* 📱 Bottom Navigation Bar Style (4 Pro Icons with Center Leaderboard) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            border-top: 1px solid var(--input-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #64748b;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 25%;
+        }
+        .nav-item:active { transform: scale(0.9); }
+        .nav-icon { font-size: 26px; margin: 0; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1)); }
+        .padding-bottom-for-nav { padding-bottom: 80px !important; }
     </style>
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1488cc">
     <link rel="icon" type="image/png" href="icon.png">
@@ -163,7 +190,7 @@
         <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
     </div>
 
-    <!-- 0.5 Welcome / Features Screen (For New Users & Referrals) -->
+    <!-- 0.5 Welcome / Features Screen -->
     <div id="featuresScreen" class="hidden" style="padding: 10px; max-height: 90vh; overflow-y: auto;">
         <div id="referralBanner" class="hidden" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">
             🎉 तुमच्या मित्राने तुम्हाला आमंत्रित केले आहे! (VIP प्लॅनवर ₹39 सूट)
@@ -215,9 +242,7 @@
         <input type="email" id="regEmailInput" placeholder="ईमेल आयडी (फक्त @gmail.com)">
         <input type="password" id="regPasswordInput" placeholder="नवीन पासवर्ड तयार करा">
         
-        <!-- Referral Logic Input -->
         <input type="text" id="regReferCodeInput" placeholder="मित्राचा रेफरल कोड (असल्यास टाका)" style="border-color: #ff8a00; background: #fff8f0; font-weight: bold;">
-
         <input type="number" id="regOtpInput" class="hidden" placeholder="ईमेलवर आलेला 4 अंकी OTP टाका" style="border-color: #25D366; background: #f0fff4;">
 
         <button class="primary-btn" id="sendOtpBtn" onclick="sendOtp()">OTP पाठवा 🚀</button>
@@ -228,19 +253,17 @@
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 3. Subject Selection Screen -->
+    <!-- 3. Subject Selection Screen (Home) -->
     <div id="subjectScreen" class="hidden">
-        <div class="top-nav-container">
-            <button class="top-nav-btn btn-logout" onclick="logout()">🔐 LogOut</button>
-            <button class="top-nav-btn btn-connect" onclick="showScreen('connectScreen')">🌐 Connect</button>
-            <button class="top-nav-btn btn-rewards" onclick="showRewardsScreen()">🎁 Rewards</button>
-            <button class="top-nav-btn btn-video" onclick="loadVideos()">📹 Updates</button>
-            <button class="top-nav-btn btn-notes" onclick="loadNotes()">📖 Notes</button>
-            <button class="top-nav-btn btn-mindset" onclick="loadAffirmations()">🌟 Mindset</button>
-            <button class="top-nav-btn btn-policy" onclick="showScreen('policyScreen')">📜 नियम</button>
-        </div>
-
         <div id="welcomeText"></div>
+
+        <!-- 🌟 Top 3 Quick Preview -->
+        <div id="homeTop3Card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 16px; padding: 15px; margin-bottom: 15px; color: white; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-weight: bold; font-size: 14px; color: #f59e0b;">🔥 महाराष्ट्र टॉप 3 स्टार्स</span>
+            </div>
+            <div id="homeTop3List" style="font-size: 13px; color: #cbd5e1;">लोड होत आहे... ⏳</div>
+        </div>
 
         <div id="personalMsgBox" style="background:#f8d7da; color:#721c24; padding:12px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; border: 1px solid #f5c6cb;">
             <strong>📩 खास तुमच्यासाठी:</strong> <br><span id="personalMsgText"></span>
@@ -255,12 +278,106 @@
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
+    <!-- 🏆 Leaderboard Screen -->
+    <div id="leaderboardScreen" class="hidden" style="padding: 10px;">
+        <div style="font-size: 40px; margin-bottom: 5px;">🏆</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">महाराष्ट्र टॉप 10 रँकर्स</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 20px;">सर्वाधिक स्कोर मिळवणारे विद्यार्थी</p>
+        
+        <!-- 👤 युजरची स्वतःची रँक आणि पॉइण्ट्स दाखवणारा मॉडर्न बॉक्स -->
+        <div id="myRankBox" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(255,255,255,0.15); color: white; padding: 12px 15px; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; justify-content: space-around; align-items: center; text-align: center;">
+            <div>
+                <span style="font-size: 11px; color: #94a3b8; font-weight: 600; display: block;">तुमची रँक</span>
+                <span id="myRankNumber" style="font-size: 16px; font-weight: 800; color: #38b2ac;">--</span>
+            </div>
+            <div style="width: 1px; height: 25px; background: rgba(255,255,255,0.2);"></div>
+            <div>
+                <span style="font-size: 11px; color: #94a3b8; font-weight: 600; display: block;">एकूण पॉइण्ट्स</span>
+                <span id="myPointsNumber" style="font-size: 16px; font-weight: 800; color: #f59e0b;">0 pts</span>
+            </div>
+        </div>
+
+        <div id="leaderboardList" style="text-align: left;">
+            <p style="text-align:center; color:var(--primary);">Loading... ⏳</p>
+        </div>
+    </div>
+
+    <!-- 3.1 Library Screen (📚 लायब्ररी) -->
+    <div id="libraryScreen" class="hidden" style="text-align: left; padding: 10px;">
+        <div style="text-align: center; font-size: 40px; margin-bottom: 5px;">📚</div>
+        <h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px;">अभ्यास लायब्ररी</h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div onclick="loadMegaTests()" style="background: linear-gradient(135deg, #e52e71, #ff8a00); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4); display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden;">
+                <span style="font-size: 35px;">👑</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 18px;">मेगा सराव परीक्षा</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #ffecd2;">40 मार्क्सची फुल बोर्ड पॅटर्न टेस्ट (VIP Only)</p>
+                </div>
+                <div style="position: absolute; top: 10px; right: -25px; background: white; color: #e52e71; font-size: 10px; font-weight: bold; padding: 3px 30px; transform: rotate(45deg);">PRO</div>
+            </div>
+
+            <div onclick="showBookmarks()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); display: flex; align-items: center; gap: 15px;">
+                <span style="font-size: 35px;">⭐</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 18px;">कठीण प्रश्न (Saved)</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #fef3c7;">तुमचे सेव्ह केलेले महत्त्वाचे प्रश्न वाचा</p>
+                </div>
+            </div>
+
+            <div onclick="loadVideos()" style="background: linear-gradient(135deg, #8a2be2, #4a00e0); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); display: flex; align-items: center; gap: 15px;">
+                <span style="font-size: 35px;">📹</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 18px;">व्हिडिओ अपडेट्स</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #e2e8f0;">बोर्ड परीक्षेचे महत्त्वाचे व्हिडिओ पहा</p>
+                </div>
+            </div>
+
+            <div onclick="loadNotes()" style="background: linear-gradient(135deg, #ff8c00, #ff4500); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3); display: flex; align-items: center; gap: 15px;">
+                <span style="font-size: 35px;">📖</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 18px;">स्टडी नोट्स</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #e2e8f0;">धडा-निहाय हस्तलिखित नोट्स वाचा</p>
+                </div>
+            </div>
+            
+            <div onclick="loadAffirmations()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); display: flex; align-items: center; gap: 15px;">
+                <span style="font-size: 35px;">🌟</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 18px;">Growth Mindset</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #e2e8f0;">सकारात्मक विचार आणि ऊर्जा</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 👑 Mega Test Screen -->
+    <div id="megaTestScreen" class="hidden" style="padding: 10px;">
+        <div style="font-size: 40px; margin-bottom: 5px;">👑</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">मेगा सराव परीक्षा</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 20px;">40 मार्क्सची फुल बोर्ड पॅटर्न टेस्ट</p>
+        <div id="megaTestList" style="text-align: left;">
+            <p style="text-align:center; color:var(--primary);">Loading... ⏳</p>
+        </div>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ मागे जा</button>
+    </div>
+
+    <!-- ⭐ Bookmarks Screen -->
+    <div id="bookmarkScreen" class="hidden" style="padding: 10px;">
+        <div style="font-size: 40px; margin-bottom: 5px;">⭐</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">कठीण प्रश्न (Saved)</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 20px;">परीक्षेपूर्वी रिव्हिजन करण्यासाठी</p>
+        <div id="bookmarkList" style="text-align: left; display:flex; flex-direction:column; gap:15px;">
+            <p style="text-align:center; color:var(--p-color);">तुम्ही अजून कोणतेही प्रश्न सेव्ह केलेले नाहीत.</p>
+        </div>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ लायब्ररीवर परत जा</button>
+    </div>
+
     <!-- 4. Chapter Selection Screen -->
     <div id="chapterScreen" class="hidden">
         <h2 id="subjectTitle">Chapter निवडा</h2>
         <p>कोणता धडा वाचायचा आहे?</p>
         <div id="chapterList"></div>
-        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा</button>
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
@@ -269,6 +386,7 @@
         <div class="quiz-header">
             <div class="quiz-title-container"><h3 id="quizTitle"></h3></div>
             <div class="quiz-meta-container">
+                <button id="bookmarkBtn" class="bookmark-btn" onclick="toggleBookmark()">⭐</button>
                 <div class="timer-badge">⏳ <span id="timeLeft">15</span> s</div>
                 <div class="q-count-badge" id="questionCount"></div>
             </div>
@@ -322,25 +440,32 @@
             <p style="margin: 0 0 10px 0; font-size: 14px;"><b>1. वापरकर्ता खाते:</b> तुमची माहिती सुरक्षित राहील. एका वेळी एकाच मोबाईलवर वापरा.</p>
             <p style="margin: 0 0 10px 0; font-size: 14px;"><b>2. रिफंड पॉलिसी:</b> एकदा VIP ॲक्सेस मिळाल्यानंतर पैसे परत (Refund) केले जाणार नाहीत.</p>
         </div>
-        <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मुख्य पेजवर जा</button>
+        <button class="back-btn" onclick="showScreen('profileScreen')" style="width: 100%;">⬅ प्रोफाईलवर परत जा</button>
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 9. Connect Screen -->
-    <div id="connectScreen" class="hidden" style="text-align: center; padding: 20px;">
-        <div style="font-size: 40px; margin-bottom: 10px;">🌐</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 8px;">आमच्याशी कनेक्ट व्हा</h2>
+    <!-- 9. Profile Screen (👤 प्रोफाईल + माझी कमाई / Rewards Integrated) -->
+    <div id="profileScreen" class="hidden" style="text-align: center; padding: 10px;">
+        <div style="font-size: 40px; margin-bottom: 5px;">👤</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 10px;">माझे प्रोफाईल</h2>
         
-        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
-            <a href="https://whatsapp.com/channel/0029VbDOOLjATRSpU7rFN525" target="_blank" style="background: #25D366; color: white; padding: 12px 20px; border-radius: 10px; font-weight: bold; text-decoration: none;">📱 WhatsApp चॅनेल जॉइन करा</a>
+        <div id="profileDetailsCard" style="background: var(--input-bg); border: 1px solid var(--input-border); padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+            <!-- Dynamic Data -->
         </div>
 
-        <div style="background: var(--input-bg); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--input-border); text-align: left;">
-            <h3 style="color: var(--text-dark); margin-top: 0; margin-bottom: 10px; font-size: 16px;">⚙️ ॲप सेटिंग्स</h3>
-            <p style="color: var(--p-color); font-size: 13px; margin-top: 0; margin-bottom: 15px;">ॲप नीट चालत नसल्यास किंवा नवीन अपडेट पाहण्यासाठी रिफ्रेश करा.</p>
-            <button onclick="forceRefreshApp()" class="primary-btn" style="background: #e53e3e; margin: 0;">🔄 ॲप रिफ्रेश / अपडेट करा</button>
+        <!-- 💸 Rewards & Referral Section Inside Profile -->
+        <div style="background: var(--input-bg); border: 2px dashed #ff8a00; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: center;">
+            <p style="margin: 0 0 5px 0; font-weight: bold; color: var(--text-dark); font-size: 14px;">🎁 माझी कमाई (रेफरल कोड)</p>
+            <h2 id="myReferralCodeDisplay" style="margin: 0 0 10px 0; color: #ff8a00; font-size: 24px; letter-spacing: 1px;">...</h2>
+            <button class="primary-btn" onclick="copyReferCode()" style="background: #ff8a00; box-shadow: 0 4px 10px rgba(255, 138, 0, 0.4); margin: 0; padding: 10px; font-size: 14px;">📋 कोड व लिंक कॉपी करा</button>
         </div>
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%;">⬅ मुख्य पेजवर परत जा</button>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+            <a href="https://whatsapp.com/channel/0029VbDOOLjATRSpU7rFN525" target="_blank" style="background: #25D366; color: white; padding: 12px; border-radius: 12px; font-weight: bold; text-decoration: none; display: block;">📱 WhatsApp चॅनेल जॉइन करा</a>
+            <button onclick="showScreen('policyScreen')" style="background: #475569; color: white; padding: 12px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer;">📜 नियम व अटी (Policy)</button>
+            <button onclick="forceRefreshApp()" class="primary-btn" style="background: #e53e3e; margin: 0; padding: 12px;">🔄 ॲप रिफ्रेश / अपडेट करा</button>
+            <button onclick="logout()" style="background: #1a202c; color: white; padding: 12px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer;">🔐 लॉग आउट (LogOut)</button>
+        </div>
     </div>
 
     <!-- 10. Video Updates Screen -->
@@ -348,7 +473,7 @@
         <div style="font-size: 40px; margin-bottom: 5px;">📹</div>
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">नवीन व्हिडिओ अपडेट्स</h2>
         <div id="videoListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;"></div>
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">⬅ मुख्य पेजवर परत जा</button>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 25px;">⬅ लायब्ररीवर परत जा</button>
     </div>
     
     <!-- 11. Study Notes Screen -->
@@ -356,7 +481,7 @@
         <div style="font-size: 40px; margin-bottom: 5px;">📖</div>
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">अभ्यास नोट्स (Study Notes)</h2>
         <div id="notesListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;"></div>
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">⬅ मुख्य पेजवर परत जा</button>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 25px;">⬅ लायब्ररीवर परत जा</button>
     </div>
 
     <!-- 12. Mindset & Affirmations Screen -->
@@ -365,55 +490,55 @@
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">Growth Mindset</h2>
         <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">रोज सकाळी अभ्यास सुरू करण्यापूर्वी हे सकारात्मक विचार नक्की वाचा.</p>
         <div id="affirmationsListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;"></div>
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%; margin-top: 25px;">⬅ मुख्य पेजवर परत जा</button>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 25px;">⬅ लायब्ररीवर परत जा</button>
+    </div>
+    
+    <!-- 🔥 Paywall Popup -->
+    <div id="paywallPopup" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; display:flex; align-items:center; justify-content:center;">
+        <div style="background:var(--card-bg); padding:30px 20px; border-radius:20px; width:90%; max-width:400px; text-align:center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+            <div style="font-size: 50px; margin-bottom: 10px;">🎯</div>
+            <h2 style="color:#e52e71; margin-top:0; font-weight: 800;">थांबा!</h2>
+            <p style="color:var(--text-dark); font-weight:600; font-size:15px; margin-bottom: 20px; line-height: 1.6;">
+                <span style="color:var(--primary); font-size:18px;">"प्रयत्नांती परमेश्वर!"</span><br>
+                शाबाश! तुम्ही 5 प्रश्न सोडवले आहेत.<br><br>
+                90%+ मार्क्स मिळवणे शक्य आहे. तुमची प्रॅक्टिस अपूर्ण सोडू नका, उरलेले सर्व प्रश्न सोडवण्यासाठी VIP अनलॉक करा.
+            </p>
+            <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); margin-bottom:12px; font-size: 16px;" onclick="closePaywallAndGoToPremium()">👑 Upgrade to VIP (₹111)</button>
+            <button style="background:#e2e8f0; color:#475569; width:100%; padding:14px; border:none; border-radius:12px; font-weight:bold; font-size:15px; cursor: pointer;" onclick="skipToResult()">⏭️ Skip & निकाल पहा</button>
+        </div>
     </div>
 
-    <!-- 13. Rewards Screen -->
-    <div id="rewardsScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">💸</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">माझी कमाई</h2>
-        <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">मित्रांना आमंत्रित करा आणि प्रत्येक VIP जॉयनिंगवर ₹21 कमवा!</p>
+</div>
 
-        <div style="background: var(--input-bg); border: 2px dashed #ff8a00; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-            <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--text-dark);">तुमचा रेफरल कोड:</p>
-            <h1 id="myReferralCodeDisplay" style="margin: 0 0 15px 0; color: #ff8a00; font-size: 32px; letter-spacing: 2px;">...</h1>
-            <button class="primary-btn" onclick="copyReferCode()" style="background: #ff8a00; box-shadow: 0 4px 10px rgba(255, 138, 0, 0.4); margin: 0; padding: 12px; font-size: 16px;">📋 कोड व लिंक कॉपी करा</button>
-        </div>
-
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <div style="flex: 1; background: #e6fffa; border: 1px solid #38b2ac; padding: 15px; border-radius: 12px;">
-                <p style="margin: 0; font-size: 12px; color: #2c7a7b; font-weight: bold;">मिळणे बाकी (Pending)</p>
-                <h3 style="margin: 5px 0 0 0; color: #234e52; font-size: 22px;">₹0</h3>
-            </div>
-            <div style="flex: 1; background: #ebf8ff; border: 1px solid #4299e1; padding: 15px; border-radius: 12px;">
-                <p style="margin: 0; font-size: 12px; color: #2b6cb0; font-weight: bold;">एकूण कमाई (Earned)</p>
-                <h3 style="margin: 5px 0 0 0; color: #2a4365; font-size: 22px;">₹0</h3>
-            </div>
-        </div>
-
-        <!-- 🚨 VIP Strict Rule Note -->
-        <div style="background: #fff3cd; color: #856404; padding: 12px; border-radius: 10px; text-align: left; border: 1px solid #ffeeba; font-size: 13px; line-height: 1.6; margin-bottom: 20px;">
-            <b>⚠️ महत्त्वाचा नियम:</b> रेफरल कॅशबॅक (₹21) थेट बँक खात्यात मिळवण्यासाठी तुमचे स्वतःचे अकाउंट <b>'VIP Premium'</b> असणे अनिवार्य आहे.
-        </div>
-
-        <button class="back-btn" onclick="showScreen('subjectScreen')" style="width: 100%;">⬅ मुख्य पेजवर परत जा</button>
-        <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
+<!-- 📱 Bottom Navigation Bar (4 Pro Icons with Center Leaderboard) -->
+<div id="bottomNav" class="bottom-nav hidden">
+    <div class="nav-item" onclick="showScreen('subjectScreen')">
+        <span class="nav-icon">🏠</span>
     </div>
-
+    <div class="nav-item" onclick="showScreen('libraryScreen')">
+        <span class="nav-icon">📚</span>
+    </div>
+    <div class="nav-item" onclick="loadLeaderboard()" style="background: rgba(79, 172, 254, 0.1); border-radius: 12px; padding: 2px;">
+        <span class="nav-icon">🏆</span>
+    </div>
+    <div class="nav-item" onclick="showProfileScreen()">
+        <span class="nav-icon">👤</span>
+    </div>
 </div>
 
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; 
     const ADMIN_WHATSAPP = "917769020743"; 
     
-    // 🚀 CACHE BUSTER - URL में लाइव टाइम लगाने के लिए, ताकि हमेशा नया डाटा आये
     const getCB = () => "&_t=" + new Date().getTime();
     
-    let allData = [], currentQuizData = [], currentQuestionIndex = 0, score = 0;
+    let allData = [], megaTestData = [], currentQuizData = [], currentQuestionIndex = 0, score = 0;
     let currentUserPlan = "Free", currentSubjectName = "", currentChapterName = "", loggedInUser = "", loggedInMobile = "";
     let generatedOTP = "", myReferralCode = ""; 
     let cachedNotices = { notice: "", notification: "", thought: "" }; 
     let personalUserMessage = ""; 
+    
+    let myTotalScore = 0;
     
     let currentResetMobile = "", currentResetEmail = "", generatedResetOtp = "";
     let timerInterval, timeLeft = 15;
@@ -440,7 +565,6 @@
     }
 
     window.onload = function() {
-        // 🔗 URL से Referral Code पकड़ना
         const urlParams = new URLSearchParams(window.location.search);
         const refCodeFromUrl = urlParams.get('ref');
         if (refCodeFromUrl) {
@@ -450,6 +574,7 @@
         let savedMob = localStorage.getItem('savedMobile');
         let savedPass = localStorage.getItem('savedPassword');
         myReferralCode = localStorage.getItem('myReferralCode') || "";
+        myTotalScore = parseInt(localStorage.getItem('myTotalScore')) || 0;
         let hasSeenFeatures = localStorage.getItem('hasSeenFeatures');
 
         let savedNotices = localStorage.getItem('cachedNotices');
@@ -465,6 +590,7 @@
                 updateUserInfoCard();
                 checkInactivityNotice();
                 fetchAllMCQs(); 
+                fetchHomeTop3();
 
                 if(savedPass) {
                     fetch(`${SCRIPT_URL}?action=login&mobile=${encodeURIComponent(savedMob)}&password=${encodeURIComponent(savedPass)}&deviceId=${encodeURIComponent(myDeviceId)}${getCB()}`)
@@ -495,7 +621,6 @@
                     }).catch(err => console.log("Background sync error"));
                 }
             } else {
-                // अगर नया यूज़र है तो फीचर्स दिखाएं
                 let storedRef = localStorage.getItem('referredByCode');
                 if (storedRef) {
                     document.getElementById('regReferCodeInput').value = storedRef; 
@@ -545,24 +670,65 @@
 
     function showScreen(screenId) {
         clearInterval(timerInterval);
-        document.getElementById('resetDeviceBox').classList.add('hidden'); 
+        let resetBox = document.getElementById('resetDeviceBox');
+        if(resetBox) resetBox.classList.add('hidden'); 
+        
+        let paywall = document.getElementById('paywallPopup');
+        if(paywall) paywall.classList.add('hidden');
 
         let appContainer = document.getElementById('appContainer');
-        ['splashScreen', 'featuresScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'connectScreen', 'videoScreen', 'notesScreen', 'mindsetScreen', 'rewardsScreen'].forEach(id => {
+        ['splashScreen', 'featuresScreen', 'loginScreen', 'registerScreen', 'subjectScreen', 'libraryScreen', 'progressScreen', 'megaTestScreen', 'bookmarkScreen', 'leaderboardScreen', 'chapterScreen', 'quizScreen', 'resultScreen', 'priceScreen', 'policyScreen', 'profileScreen', 'videoScreen', 'notesScreen', 'mindsetScreen'].forEach(id => {
             let el = document.getElementById(id);
             if(el) el.classList.add('hidden');
         });
         
         let screen = document.getElementById(screenId);
-        screen.classList.remove('hidden');
-        screen.classList.add('fade-in'); 
+        if(screen) {
+            screen.classList.remove('hidden');
+            screen.classList.add('fade-in'); 
+        }
+
+        let bNav = document.getElementById('bottomNav');
+        if (bNav) {
+            if(['loginScreen', 'registerScreen', 'splashScreen', 'featuresScreen', 'quizScreen'].includes(screenId)) {
+                bNav.classList.add('hidden'); 
+                appContainer.classList.remove('padding-bottom-for-nav');
+            } 
+            else {
+                bNav.classList.remove('hidden'); 
+                appContainer.classList.add('padding-bottom-for-nav');
+            }
+        }
 
         if(screenId === 'subjectScreen') {
             appContainer.classList.add('transparent-bg');
             renderNotices(); 
+            fetchHomeTop3();
         } else {
             appContainer.classList.remove('transparent-bg');
         }
+        
+        if(screenId === 'progressScreen') {
+            document.getElementById('totalScoreDisplay').innerText = myTotalScore;
+        }
+    }
+
+    function showProfileScreen() {
+        let planBadge = currentUserPlan;
+        if(currentUserPlan === "Free") planBadge = "🔒 Free";
+        else if(currentUserPlan === "Trial") planBadge = "⏳ Freemium (Trial)";
+        else if(currentUserPlan === "Expired") planBadge = "❌ Expired";
+        else planBadge = "🌟 VIP Premium";
+
+        let html = `
+            <div class="info-row"><span class="info-label">नाव:</span> <span class="info-value">${loggedInUser}</span></div>
+            <div class="info-row"><span class="info-label">मोबाईल नंबर:</span> <span class="info-value">${loggedInMobile}</span></div>
+            <div class="info-row"><span class="info-label">सध्याचा प्लॅन:</span> <span class="info-value">${planBadge}</span></div>
+        `;
+        document.getElementById('profileDetailsCard').innerHTML = html;
+        document.getElementById('progressPlanDisplay').innerText = planBadge;
+        document.getElementById('myReferralCodeDisplay').innerText = myReferralCode || "उपलब्ध नाही";
+        showScreen('profileScreen');
     }
 
     function logout() {
@@ -729,56 +895,49 @@
     }
 
     function updateUserInfoCard() {
-        let planBadge = "";
-        let upgradeBtnHtml = "";
-        
-        if(currentUserPlan === "Free") {
-            planBadge = `<span style="color: #e53e3e; background: #fed7d7; padding: 2px 8px; border-radius: 5px;">🔒 Free</span>`;
-            upgradeBtnHtml = `<button onclick="askForTrial()" style="width:100%; background:#25D366; color:white; font-size:14px; padding:10px; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">🎁 7 Days Free Trial मिळवा</button>`;
-        } else if(currentUserPlan === "Trial") {
-            planBadge = `<span style="color: #d69e2e; background: #fef08a; padding: 2px 8px; border-radius: 5px;">⏳ Freemium</span>`;
-            upgradeBtnHtml = `<button onclick="showScreen('priceScreen')" style="width:100%; background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:10px; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">👑 Upgrade to VIP</button>`;
-        } else if(currentUserPlan === "Expired") {
-            planBadge = `<span style="color: #e53e3e; background: #fed7d7; padding: 2px 8px; border-radius: 5px;">❌ Expired</span>`;
-            upgradeBtnHtml = `<button onclick="showScreen('priceScreen')" style="width:100%; background: linear-gradient(90deg, #ff8a00, #e52e71); color:white; font-size:14px; font-weight:bold; padding:10px; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">👑 Upgrade to VIP</button>`;
-        } else {
-            planBadge = `<span style="color: #2f855a; background: #c6f6d5; padding: 2px 8px; border-radius: 5px;">🌟 Premium</span>`;
-        }
+        let planBadge = currentUserPlan;
+        let badgeColor = "#2f855a";
+        let badgeBg = "#c6f6d5";
+
+        if(currentUserPlan === "Free") { planBadge = "🔒 Free"; badgeColor = "#e53e3e"; badgeBg = "#fed7d7"; }
+        else if(currentUserPlan === "Trial") { planBadge = "⏳ Freemium"; badgeColor = "#d69e2e"; badgeBg = "#fef08a"; }
+        else if(currentUserPlan === "Expired") { planBadge = "❌ Expired"; badgeColor = "#e53e3e"; badgeBg = "#fed7d7"; }
+        else { planBadge = "🌟 VIP Premium"; }
+
+        let userPts = myTotalScore || 0;
+        let latestLiveScore = localStorage.getItem('latestLiveScore') || "अद्याप नाही";
 
         let cardHtml = `
-            <div class="user-info-card">
-                <div class="info-row"><span class="info-label">नाव</span> <span class="info-value">${loggedInUser}</span></div>
-                <div class="info-row"><span class="info-label">प्लॅन</span> <span class="info-value">${planBadge}</span></div>
-                ${upgradeBtnHtml}
+            <div style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
+                    <div style="text-align: left;">
+                        <h3 style="margin: 0; font-size: 16px; color: var(--text-dark); font-weight: 700;">👤 ${loggedInUser}</h3>
+                        <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--p-color); font-weight: 500;">📞 ${loggedInMobile}</p>
+                    </div>
+                    <div>
+                        <span style="background: ${badgeBg}; color: ${badgeColor}; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">${planBadge}</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-around; align-items: center; padding-top: 5px;">
+                    <div>
+                        <span style="font-size: 11px; color: var(--p-color); font-weight: 600; display: block;">महाराष्ट्र रँक</span>
+                        <span id="cardRankVal" style="font-size: 16px; font-weight: 800; color: #3b82f6;">--</span>
+                    </div>
+                    <div style="width: 1px; height: 25px; background: #e2e8f0;"></div>
+                    <div>
+                        <span style="font-size: 11px; color: var(--p-color); font-weight: 600; display: block;">एकूण पॉइण्ट्स</span>
+                        <span id="cardPointsVal" style="font-size: 16px; font-weight: 800; color: #f59e0b;">${userPts} pts</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px; background: rgba(79, 172, 254, 0.1); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #1e3a8a; display: flex; justify-content: space-between; align-items: center;">
+                    <span>⚡ अलीकडील टेस्ट स्कोर:</span>
+                    <span id="liveScoreVal" style="color: #2563eb; font-weight: 700;">${latestLiveScore}</span>
+                </div>
             </div>
         `;
         document.getElementById('welcomeText').innerHTML = cardHtml;
-    }
-
-    function askForTrial() {
-        let btn = event.target;
-        btn.innerText = "प्रोसेस होत आहे... ⏳";
-        btn.disabled = true;
-
-        fetch(`${SCRIPT_URL}?action=activateTrial&mobile=${encodeURIComponent(loggedInMobile)}${getCB()}`)
-        .then(res => res.json())
-        .then(data => {
-            if(data.success) {
-                alert("🎉 अभिनंदन! तुमचे 7 दिवसांचे Freemium सुरू झाले आहे.");
-                currentUserPlan = "Trial"; 
-                localStorage.setItem('savedPlan', currentUserPlan);
-                updateUserInfoCard();
-                fetchAllMCQs(); 
-            } else {
-                alert("⚠️ तुम्ही आधीच Freemium वापरले आहे.");
-                btn.innerText = "🎁 7 Days Free Trial मिळवा";
-                btn.disabled = false;
-            }
-        }).catch(err => {
-            alert("कनेक्शन एरर!");
-            btn.innerText = "🎁 7 Days Free Trial मिळवा";
-            btn.disabled = false;
-        });
     }
 
     function fetchAllMCQs() {
@@ -801,11 +960,161 @@
         }).catch(err => { console.log("Error loading questions"); });
     }
 
+    // 🏆 FEATURE: Leaderboard
+    function loadLeaderboard() {
+        showScreen('leaderboardScreen');
+        let listDiv = document.getElementById('leaderboardList');
+        listDiv.innerHTML = "<p style='text-align:center; color:var(--primary); font-weight:bold;'>Loading... ⏳</p>";
+        
+        fetch(SCRIPT_URL + "?action=getLeaderboard" + getCB())
+        .then(res => res.json())
+        .then(data => {
+            let html = "";
+            let myFoundRank = "Top बाहेर";
+            let myPts = myTotalScore || 0;
+
+            if(data.length === 0) {
+                html = "<p style='text-align: center; color: var(--p-color);'>अद्याप कोणीही टेस्ट दिलेली नाही.</p>";
+            } else {
+                data.forEach((u, index) => {
+                    let rankClass = "";
+                    let medal = "";
+                    if(index === 0) { rankClass = "rank-1"; medal = "🥇"; }
+                    else if(index === 1) { rankClass = "rank-2"; medal = "🥈"; }
+                    else if(index === 2) { rankClass = "rank-3"; medal = "🥉"; }
+                    else { medal = `#${index + 1}`; }
+                    
+                    if (u.name === loggedInUser) {
+                        myFoundRank = `#${index + 1}`;
+                        myPts = u.score;
+                    }
+
+                    html += `
+                    <div class="rank-card ${rankClass}">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-size:22px; width:35px; text-align:center;">${medal}</span>
+                            <div>
+                                <h3 style="margin:0; font-size:16px; color:var(--text-dark);">${u.name}</h3>
+                                <small style="color:var(--p-color);">${u.tests} Tests</small>
+                            </div>
+                        </div>
+                        <div style="font-size:18px; font-weight:800; color:var(--primary);">${u.score} pts</div>
+                    </div>`;
+                });
+            }
+            listDiv.innerHTML = html;
+            document.getElementById('myRankNumber').innerText = myFoundRank;
+            document.getElementById('myPointsNumber').innerText = myPts;
+            
+            let cardRankEl = document.getElementById('cardRankVal');
+            if(cardRankEl) cardRankEl.innerText = myFoundRank;
+        }).catch(err => { listDiv.innerHTML = "<p style='color: red; text-align: center;'>कनेक्शन एरर!</p>"; });
+    }
+    
+    // 👑 FEATURE: Mega Test
+    function loadMegaTests() {
+        if(currentUserPlan !== "Paid" && currentUserPlan !== "Trial") {
+            showScreen('priceScreen');
+            return;
+        }
+        
+        showScreen('megaTestScreen');
+        let listDiv = document.getElementById('megaTestList');
+        listDiv.innerHTML = "<p style='text-align:center; color:var(--primary); font-weight:bold;'>Loading Tests... ⏳</p>";
+        
+        fetch(SCRIPT_URL + "?action=getMegaTests" + getCB())
+        .then(res => res.json())
+        .then(data => {
+            megaTestData = data;
+            let html = "";
+            if(data.length === 0) {
+                html = "<p style='text-align: center; color: var(--p-color);'>सध्या कोणतीही मेगा टेस्ट उपलब्ध नाही.</p>";
+            } else {
+                let testNames = [...new Set(data.map(item => item.testName))];
+                testNames.forEach(tName => {
+                    let testCount = data.filter(i => i.testName === tName).length;
+                    html += `
+                    <div onclick="startMegaQuiz('${tName}')" style="background: var(--card-bg); border: 1px solid var(--input-border); padding: 20px; border-radius: 15px; margin-bottom: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div>
+                            <h3 style="margin:0 0 5px 0; color:var(--text-dark); font-size:18px;">${tName}</h3>
+                            <span style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;">${testCount} Questions</span>
+                        </div>
+                        <span style="font-size:24px;">▶️</span>
+                    </div>`;
+                });
+            }
+            listDiv.innerHTML = html;
+        }).catch(err => { listDiv.innerHTML = "<p style='color: red; text-align: center;'>कनेक्शन एरर!</p>"; });
+    }
+    
+    function startMegaQuiz(testName) {
+        currentSubjectName = "Mega Test";
+        currentChapterName = testName;
+        document.getElementById('quizTitle').innerText = testName;
+        currentQuizData = megaTestData.filter(item => item.testName === testName);
+        currentQuestionIndex = 0; score = 0;
+        showScreen('quizScreen'); 
+        displayQuestion();
+    }
+
+    // ⭐ FEATURE: Bookmarks Logic
+    function toggleBookmark() {
+        let btn = document.getElementById('bookmarkBtn');
+        let qData = currentQuizData[currentQuestionIndex];
+        let savedBookmarks = JSON.parse(localStorage.getItem('myBookmarks') || "[]");
+        let isSaved = savedBookmarks.findIndex(b => b.question === qData.question);
+        
+        if (isSaved === -1) {
+            savedBookmarks.push({ subject: currentSubjectName, chapter: currentChapterName, question: qData.question, answer: qData.answer });
+            btn.classList.add('saved');
+        } else {
+            savedBookmarks.splice(isSaved, 1);
+            btn.classList.remove('saved');
+        }
+        localStorage.setItem('myBookmarks', JSON.stringify(savedBookmarks));
+    }
+    
+    function checkBookmarkStatus() {
+        let btn = document.getElementById('bookmarkBtn');
+        let qData = currentQuizData[currentQuestionIndex];
+        let savedBookmarks = JSON.parse(localStorage.getItem('myBookmarks') || "[]");
+        let isSaved = savedBookmarks.findIndex(b => b.question === qData.question);
+        if (isSaved !== -1) btn.classList.add('saved');
+        else btn.classList.remove('saved');
+    }
+    
+    function showBookmarks() {
+        showScreen('bookmarkScreen');
+        let listDiv = document.getElementById('bookmarkList');
+        let savedBookmarks = JSON.parse(localStorage.getItem('myBookmarks') || "[]");
+        let html = "";
+        if (savedBookmarks.length === 0) {
+            html = "<p style='text-align: center; color: var(--p-color);'>तुम्ही अजून कोणतेही प्रश्न सेव्ह केलेले नाहीत.</p>";
+        } else {
+            savedBookmarks.forEach((b, index) => {
+                html += `
+                <div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid #f59e0b; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                    <div style="font-size:12px; color:var(--p-color); margin-bottom:5px; font-weight:bold;">${b.subject} - ${b.chapter}</div>
+                    <h3 style="margin: 0 0 10px 0; color: var(--text-dark); font-size: 16px;">Q: ${b.question}</h3>
+                    <p style="margin: 0; color: #10b981; font-size: 15px; font-weight:bold;">Ans: ✅ ${b.answer}</p>
+                    <button onclick="removeBookmark(${index})" style="background:none; border:none; color:#ef4444; font-size:12px; font-weight:bold; margin-top:10px; cursor:pointer; padding:0; text-decoration:underline;">❌ Remove</button>
+                </div>`;
+            });
+        }
+        listDiv.innerHTML = html;
+    }
+    
+    function removeBookmark(index) {
+        let savedBookmarks = JSON.parse(localStorage.getItem('myBookmarks') || "[]");
+        savedBookmarks.splice(index, 1);
+        localStorage.setItem('myBookmarks', JSON.stringify(savedBookmarks));
+        showBookmarks();
+    }
+
     function loadVideos() {
         showScreen('videoScreen');
         let vList = document.getElementById('videoListContainer');
         vList.innerHTML = "<p style='text-align: center; color: var(--primary);'>व्हिडिओ लोड होत आहेत... ⏳</p>";
-        
         fetch(SCRIPT_URL + "?action=getVideos" + getCB())
         .then(res => res.json())
         .then(data => {
@@ -814,13 +1123,7 @@
             else {
                 data.forEach(v => {
                     let fDate = v.date ? new Date(v.date).toLocaleDateString('mr-IN') : "नवीन अपडेट";
-                    html += `
-                        <a href="${v.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">${v.title}</div>
-                            <div style="font-size: 12px; color: var(--p-color);">📅 ${fDate}</div>
-                            <div style="background: #ff0000; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">▶️ YouTube वर पहा</div>
-                        </a>
-                    `;
+                    html += `<a href="${v.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);"><div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">${v.title}</div><div style="font-size: 12px; color: var(--p-color);">📅 ${fDate}</div><div style="background: #ff0000; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">▶️ YouTube वर पहा</div></a>`;
                 });
             }
             vList.innerHTML = html;
@@ -831,7 +1134,6 @@
         showScreen('notesScreen');
         let nList = document.getElementById('notesListContainer');
         nList.innerHTML = "<p style='text-align: center; color: var(--primary);'>नोट्स लोड होत आहेत... ⏳</p>";
-        
         fetch(SCRIPT_URL + "?action=getNotes" + getCB())
         .then(res => res.json())
         .then(data => {
@@ -840,13 +1142,7 @@
             else {
                 data.forEach(n => {
                     let fDate = n.date ? new Date(n.date).toLocaleDateString('mr-IN') : "नवीन नोट्स";
-                    html += `
-                        <a href="${n.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">📄 ${n.title}</div>
-                            <div style="font-size: 12px; color: var(--p-color);">📅 ${fDate}</div>
-                            <div style="background: #ff8c00; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">📖 नोट्स वाचा</div>
-                        </a>
-                    `;
+                    html += `<a href="${n.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);"><div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">📄 ${n.title}</div><div style="font-size: 12px; color: var(--p-color);">📅 ${fDate}</div><div style="background: #ff8c00; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">📖 नोट्स वाचा</div></a>`;
                 });
             }
             nList.innerHTML = html;
@@ -857,7 +1153,6 @@
         showScreen('mindsetScreen');
         let aList = document.getElementById('affirmationsListContainer');
         aList.innerHTML = "<p style='text-align: center; color: var(--primary);'>सकारात्मक विचार लोड होत आहेत... ⏳</p>";
-        
         fetch(SCRIPT_URL + "?action=getAffirmations" + getCB())
         .then(res => res.json())
         .then(data => {
@@ -868,28 +1163,17 @@
                 const borders = ["#4facfe", "#25D366", "#ff8a00", "#e52e71", "#8a2be2"];
                 data.forEach((item, index) => {
                     let borderColor = borders[index % borders.length];
-                    html += `
-                        <div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid ${borderColor}; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-                            <h3 style="margin: 0 0 8px 0; color: var(--text-dark); font-size: 16px;">${item.title}</h3>
-                            <p style="margin: 0; color: var(--p-color); font-size: 14px; line-height: 1.5;">${item.message}</p>
-                        </div>
-                    `;
+                    html += `<div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid ${borderColor}; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);"><h3 style="margin: 0 0 8px 0; color: var(--text-dark); font-size: 16px;">${item.title}</h3><p style="margin: 0; color: var(--p-color); font-size: 14px; line-height: 1.5;">${item.message}</p></div>`;
                 });
             }
             aList.innerHTML = html;
         }).catch(err => { aList.innerHTML = "<p style='color: red; text-align: center;'>कनेक्शन एरर!</p>"; });
     }
 
-    function showRewardsScreen() {
-        document.getElementById('myReferralCodeDisplay').innerText = myReferralCode || "उपलब्ध नाही";
-        showScreen('rewardsScreen');
-    }
-
     function copyReferCode() {
         if(!myReferralCode) { alert("तुमचा रेफरल कोड लोड झालेला नाही!"); return; }
         let link = `https://swenandu-netizen.github.io/10th-MCQ/index.html?ref=${myReferralCode}`;
         let text = `🏆 Maha Board MCQ ॲप इन्स्टॉल कर आणि VIP प्लॅनवर मिळव ₹39 ची सूट!\n\nवापर माझा रेफरल कोड: *${myReferralCode}*\n\n👉 डाउनलोड लिंक: ${link}`;
-        
         navigator.clipboard.writeText(text).then(() => {
             alert("✅ रेफरल मेसेज कॉपी झाला! आता WhatsApp वर मित्रांना पाठवा.");
         });
@@ -897,9 +1181,9 @@
 
     function loadSubjects() {
         if(allData.length === 0) return; 
-        let subjects = [...new Set(allData.map(item => item.subject))]; 
+        let subjects = [...new Set(allData.map(item => item.subject))].filter(sub => sub.toLowerCase() !== "leaderboard"); 
         let html = "";
-        const icons = ["📚", "📜", "📝", "🌍", "🔬", "📐", "🎨", "💻"]; 
+        const icons = ["📜", "📝", "🌍", "🔬", "📐", "🎨", "💻", "📚"]; 
         
         subjects.forEach((sub, index) => { 
             let icon = icons[index % icons.length];
@@ -912,7 +1196,6 @@
         document.getElementById('subjectTitle').innerText = selectedSubject;
         let filteredData = allData.filter(item => item.subject === selectedSubject);
         let chapters = [...new Set(filteredData.map(item => item.lesson))]; 
-        
         let html = "";
         if (chapters.length === 0 || chapters[0] === "") {
             html = `<div style="background: #fff3cd; color: #856404; padding: 25px; border-radius: 15px; margin-top: 20px; text-align: center;"><h3 style="margin: 0 0 10px 0; font-size: 20px;">⏳ लवकरच उपलब्ध होणार!</h3></div>`;
@@ -921,12 +1204,7 @@
                 let historyScore = null;
                 try { historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap); } catch(e) {}
                 let scoreText = historyScore ? `<br><small style="font-size:14px; color: #a0aec0;">(मागील स्कोर: ${historyScore})</small>` : "";
-
-                if(currentUserPlan === "Paid" || currentUserPlan === "Trial" || index === 0) {
-                    html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
-                } else {
-                    html += `<button class="locked-btn" onclick="showScreen('priceScreen')">🔒 ${chap} <br><small>(Unlock करण्यासाठी क्लिक करा)</small></button>`;
-                }
+                html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
             });
         }
         document.getElementById('chapterList').innerHTML = html;
@@ -959,13 +1237,11 @@
     function handleTimeUp() {
         let allBtns = document.getElementsByClassName("option-btn");
         for(let btn of allBtns) { btn.disabled = true; }
-        
         let qData = currentQuizData[currentQuestionIndex];
         if(qData.optA == qData.answer) document.getElementById("btnA").classList.add("correct-ans");
         if(qData.optB == qData.answer) document.getElementById("btnB").classList.add("correct-ans");
         if(qData.optC == qData.answer) document.getElementById("btnC").classList.add("correct-ans");
         if(qData.optD == qData.answer) document.getElementById("btnD").classList.add("correct-ans");
-
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
 
@@ -973,7 +1249,16 @@
         if(currentQuestionIndex >= currentQuizData.length) { 
             clearInterval(timerInterval); endQuiz(); return; 
         }
+        
+        if (currentSubjectName !== "Mega Test" && (currentUserPlan === "Free" || currentUserPlan === "Expired") && currentQuestionIndex === 5) {
+            clearInterval(timerInterval);
+            document.getElementById('paywallPopup').classList.remove('hidden');
+            return;
+        }
+
         startTimer();
+        checkBookmarkStatus();
+        
         let qData = currentQuizData[currentQuestionIndex];
         document.getElementById('questionCount').innerText = `${currentQuestionIndex + 1} / ${currentQuizData.length}`;
         document.getElementById('questionText').innerText = qData.question;
@@ -1004,9 +1289,18 @@
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
 
+    function closePaywallAndGoToPremium() {
+        document.getElementById('paywallPopup').classList.add('hidden');
+        showScreen('priceScreen');
+    }
+
+    function skipToResult() {
+        document.getElementById('paywallPopup').classList.add('hidden');
+        endQuiz(); 
+    }
+
     function endQuiz() {
         let totalQ = currentQuizData.length;
-        let wrongQ = totalQ - score;
         let percentage = Math.round((score / totalQ) * 100);
 
         let finalScoreText = `${score} / ${totalQ}`;
@@ -1014,38 +1308,81 @@
         document.getElementById('congratsText').innerHTML = `अभिनंदन <b style="color: var(--primary); font-size: 18px;">${loggedInUser}</b>! <br>तुम्ही टेस्ट पूर्ण केली आहे.`;
 
         localStorage.setItem('last_practice_date', new Date().toISOString());
+        
+        myTotalScore += score;
+        localStorage.setItem('myTotalScore', myTotalScore);
+        
+        let liveScoreStr = `${score} / ${totalQ}`;
+        localStorage.setItem('latestLiveScore', liveScoreStr);
+
+        let warningHtml = "";
+        if (currentSubjectName !== "Mega Test" && (currentUserPlan === "Free" || currentUserPlan === "Expired") && currentQuestionIndex < totalQ) {
+            warningHtml = `<div style="color: #dc2626; font-size: 13px; font-weight: bold; background: #fee2e2; padding: 12px; border-radius: 8px; margin-top: 15px; border: 1px solid #f87171; text-align: center;">⚠️ तुमचा स्कोर खूप कमी आहे! कारण तुम्ही सर्व प्रश्न सोडवले नाहीत. पूर्ण प्रश्नांची प्रॅक्टिस करण्यासाठी VIP घ्या.</div>`;
+        }
 
         document.getElementById('detailedReport').innerHTML = `
             <div style="text-align: center; margin-bottom: 12px; border-bottom: 1px dashed var(--input-border); padding-bottom: 8px;">
                 <b style="font-size: 16px; color: var(--text-dark);">📊 सविस्तर निकाल अहवाल</b>
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• एकूण प्रश्न:</span> <b>${totalQ}</b></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• सोडवलेले प्रश्न:</span> <b>${currentQuestionIndex}</b></div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• बरोबर उत्तरे:</span> <b style="color:#28a745;">${score} ✅</b></div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• चुकलेली उत्तरे:</span> <b style="color:#dc2626;">${wrongQ} ❌</b></div>
             <div style="display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--input-border);">
                 <span style="font-weight: bold; color: var(--text-dark);">• यश (Accuracy):</span> <b style="color:var(--primary); font-size: 18px;">${percentage}%</b>
             </div>
+            ${warningHtml}
         `;
 
         try { localStorage.setItem('score_' + currentSubjectName + '_' + currentChapterName, finalScoreText); } catch(e) {}
         showScreen('resultScreen');
         
         if (loggedInMobile) {
-            fetch(`${SCRIPT_URL}?action=updateActivity&mobile=${encodeURIComponent(loggedInMobile)}${getCB()}`).catch(err => console.log("Error updating activity"));
+            fetch(`${SCRIPT_URL}?action=updateActivity&mobile=${encodeURIComponent(loggedInMobile)}${getCB()}`).catch(e => console.log(e));
+            fetch(`${SCRIPT_URL}?action=updateScore&mobile=${encodeURIComponent(loggedInMobile)}&name=${encodeURIComponent(loggedInUser)}&score=${score}${getCB()}`).catch(e => console.log(e));
         }
     }
 
-    // 📲 WhatsApp Share (with Referral Link)
     function shareOnWhatsApp() {
         let percentage = Math.round((score / currentQuizData.length) * 100);
         let link = myReferralCode ? `https://swenandu-netizen.github.io/10th-MCQ/index.html?ref=${myReferralCode}` : `https://swenandu-netizen.github.io/10th-MCQ/index.html`;
-        
         let text = `🏆 मी Maha Board MCQ ॲपमध्ये टेस्ट पूर्ण केली!\n\n👤 नाव: ${loggedInUser}\n📚 विषय: ${currentSubjectName} - ${currentChapterName}\n🎯 माझा स्कोर: *${score}/${currentQuizData.length}* (${percentage}%)\n\nतू मला हरवू शकतोस का? ॲप डाऊनलोड कर आणि VIP प्लॅनवर मिळव ₹39 ची सूट:\n\n👉 ${link}`;
-
         let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         window.open(whatsappUrl, '_blank');
     }
 
+    function fetchHomeTop3() {
+        fetch(SCRIPT_URL + "?action=getLeaderboard" + getCB())
+        .then(res => res.json())
+        .then(data => {
+            let top3Html = "";
+            let myFoundRank = "Top बाहेर";
+            
+            if(data && data.length > 0) {
+                let top3 = data.slice(0, 3);
+                top3.forEach((item, idx) => {
+                    let m = idx === 0 ? "🥇" : idx === 1 ? "🥈" : "🥉";
+                    top3Html += `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size: 14px;">
+                        <span style="font-weight: 500; color: #ffffff;">${m} &nbsp; ${item.name}</span>
+                        <span style="font-weight:bold; color:#38b2ac; background: rgba(56,178,172,0.15); padding: 2px 8px; border-radius: 6px;">${item.score} pts</span>
+                    </div>`;
+                });
+
+                data.forEach((u, index) => {
+                    if (u.name === loggedInUser) {
+                        myFoundRank = `#${index + 1}`;
+                    }
+                });
+            } else {
+                top3Html = "<div style='text-align:center; color:#94a3b8; padding:5px;'>अद्याप डेटा उपलब्ध नाही.</div>";
+            }
+            
+            let el = document.getElementById('homeTop3List');
+            if(el) el.innerHTML = top3Html;
+
+            let cardRankEl = document.getElementById('cardRankVal');
+            if(cardRankEl) cardRankEl.innerText = myFoundRank;
+        }).catch(e => {});
+    }
 </script>
 <script>
   if ('serviceWorker' in navigator) {
