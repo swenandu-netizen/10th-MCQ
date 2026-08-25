@@ -726,7 +726,6 @@
             <div class="info-row"><span class="info-label">सध्याचा प्लॅन:</span> <span class="info-value">${planBadge}</span></div>
         `;
         document.getElementById('profileDetailsCard').innerHTML = html;
-        document.getElementById('progressPlanDisplay').innerText = planBadge;
         document.getElementById('myReferralCodeDisplay').innerText = myReferralCode || "उपलब्ध नाही";
         showScreen('profileScreen');
     }
@@ -1349,13 +1348,13 @@
         let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         window.open(whatsappUrl, '_blank');
     }
-
     function fetchHomeTop3() {
         fetch(SCRIPT_URL + "?action=getLeaderboard" + getCB())
         .then(res => res.json())
         .then(data => {
             let top3Html = "";
             let myFoundRank = "Top बाहेर";
+            let myLivePoints = 0; // 👈 Google Sheet मधून थेट लाईव्ह पॉइण्ट्स घेण्यासाठी
             
             if(data && data.length > 0) {
                 let top3 = data.slice(0, 3);
@@ -1367,9 +1366,11 @@
                     </div>`;
                 });
 
+                // गूगल शीटच्या डेटा मधून युजरची रँक आणि अचूक पॉइण्ट्स शोधा
                 data.forEach((u, index) => {
                     if (u.name === loggedInUser) {
                         myFoundRank = `#${index + 1}`;
+                        myLivePoints = u.score; // 👈 शीटमधील खरे पॉइण्ट्स
                     }
                 });
             } else {
@@ -1379,10 +1380,22 @@
             let el = document.getElementById('homeTop3List');
             if(el) el.innerHTML = top3Html;
 
+            // होम कार्डवर लाईव्ह रँक अपडेट करा
             let cardRankEl = document.getElementById('cardRankVal');
             if(cardRankEl) cardRankEl.innerText = myFoundRank;
+
+            // ⚡ होम कार्डवर गूगल शीटमधील खरे लाईव्ह पॉइण्ट्स अपडेट करा (लोकल कॅशेवरून नाही!)
+            let cardPtsEl = document.getElementById('cardPointsVal');
+            if(cardPtsEl) cardPtsEl.innerText = myLivePoints + " pts";
+            
+            // मेमरीमध्ये पण अपडेट करून ठेवा
+            myTotalScore = myLivePoints;
+            localStorage.setItem('myTotalScore', myLivePoints);
+
         }).catch(e => {});
     }
+
+   
 </script>
 <script>
   if ('serviceWorker' in navigator) {
