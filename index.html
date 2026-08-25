@@ -28,117 +28,193 @@
             align-items: center;
             justify-content: center;
             padding: 15px;
+            box-sizing: border-box;
         }
 
+        /* 📱💻 Fully Responsive Container for Mobile, Tablet & Desktop */
         .container {
-            width: 100%; max-width: 550px; background: var(--card-bg);
-            padding: 30px 20px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            text-align: center; box-sizing: border-box; position: relative;
+            width: 100%; 
+            max-width: 500px; 
+            background: var(--card-bg);
+            padding: 25px 20px; 
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center; 
+            box-sizing: border-box; 
+            position: relative;
+            margin: auto;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 650px;
+                padding: 40px;
+            }
         }
 
         .container.transparent-bg {
             background: transparent;
             box-shadow: none;
             padding: 10px;
+            max-width: 750px;
         }
 
-        h2 { color: var(--text-dark); font-weight: 700; font-size: 26px; margin-bottom: 10px; }
-        .transparent-bg h2 { color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
-        p { color: var(--p-color); font-size: 16px; font-weight: 500; margin-bottom: 25px; line-height: 1.5; }
+        h2 { color: var(--text-dark); font-weight: 700; font-size: 24px; margin-bottom: 10px; }
+        .transparent-bg h2 { color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+        p { color: var(--p-color); font-size: 15px; font-weight: 500; margin-bottom: 20px; line-height: 1.5; }
         .transparent-bg p { color: #e2e8f0; }
 
         input[type="text"], input[type="number"], input[type="password"], input[type="email"] {
-            width: 100%; padding: 16px; margin: 10px 0 15px 0;
+            width: 100%; padding: 15px; margin: 8px 0 12px 0;
             background-color: var(--input-bg); color: var(--text-dark);
             border: 2px solid var(--input-border); border-radius: 12px;
-            font-size: 16px; font-family: 'Poppins', sans-serif;
+            font-size: 15px; font-family: 'Poppins', sans-serif;
             box-sizing: border-box; outline: none; transition: 0.3s;
         }
         input:focus { border-color: var(--primary); }
 
         button {
-            width: 100%; padding: 16px; margin: 10px 0; border: none; border-radius: 12px;
-            font-size: 18px; font-weight: 600; font-family: 'Poppins', sans-serif;
+            width: 100%; padding: 15px; margin: 8px 0; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600; font-family: 'Poppins', sans-serif;
             cursor: pointer; transition: all 0.3s ease; box-sizing: border-box;
         }
 
         .primary-btn { background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); color: white; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4); }
         .primary-btn:active { transform: scale(0.98); }
         .whatsapp-btn { background: #25D366; color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
-        .text-btn { background: none; color: var(--primary); font-size: 15px; margin-top: 5px; padding: 10px; box-shadow: none; text-decoration: underline; display: block; width: 100%; }
+        .text-btn { background: none; color: var(--primary); font-size: 14px; margin-top: 5px; padding: 8px; box-shadow: none; text-decoration: underline; display: block; width: 100%; }
         
-        .back-btn { background-color: #edf2f7; color: #1a202c; margin-top: 20px; }
+        .back-btn { background-color: #edf2f7; color: #1a202c; margin-top: 15px; }
         .correct-ans { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724 !important; }
         .wrong-ans { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24 !important; }
 
         .user-info-card {
-            background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; margin-bottom: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: left;
         }
         .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--input-border); }
         .info-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .info-label { font-size: 16px; color: var(--p-color); font-weight: 500; }
-        .info-value { font-size: 16px; color: var(--text-dark); font-weight: 700; }
+        .info-label { font-size: 15px; color: var(--p-color); font-weight: 500; }
+        .info-value { font-size: 15px; color: var(--text-dark); font-weight: 700; }
 
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-bottom: 20px; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding-bottom: 20px; }
         .grid-item {
             background: linear-gradient(135deg, #5b73df 0%, #3b52a5 100%);
-            border-radius: 20px; padding: 25px 10px; display: flex; flex-direction: column;
+            border-radius: 18px; padding: 20px 10px; display: flex; flex-direction: column;
             align-items: center; justify-content: center; color: #ffffff; font-weight: 600;
-            font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 15px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             border: 1px solid rgba(255,255,255,0.2); transition: 0.3s;
         }
         .grid-item:active { transform: scale(0.95); }
-        .grid-icon { font-size: 45px; margin-bottom: 12px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); }
+        .grid-icon { font-size: 40px; margin-bottom: 10px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); }
         
-        .locked-btn { background-color: #e2e8f0; color: #4a5568; cursor: pointer; border: 2px dashed #a0aec0; }
         .hidden { display: none !important; }
         
         /* Leaderboard Styles */
-        .rank-card { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 12px; background: var(--input-bg); margin-bottom: 10px; border: 1px solid var(--input-border); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .rank-card { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-radius: 12px; background: var(--input-bg); margin-bottom: 10px; border: 1px solid var(--input-border); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .rank-1 { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); border: 1px solid #ffd8a8; }
         .rank-2 { background: linear-gradient(90deg, #e2e2e2 0%, #c9d6ff 100%); border: 1px solid #cbd5e1; }
         .rank-3 { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); filter: sepia(0.5); }
         
-        #message, #regMessage { margin-top: 15px; font-weight: 600; font-size: 14px; }
+        #message, #regMessage { margin-top: 12px; font-weight: 600; font-size: 14px; }
         
-        .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-        .quiz-title-container { flex: 1; text-align: left; min-width: 150px; }
-        #quizTitle { font-size: 18px; color: #3b82f6; margin: 0; font-weight: 700; line-height: 1.4; }
+        /* 📱💻 परफेक्ट 2-लाइन क्विज़ हेडर (टायटल वर आणि स्टार/टायमर खाली - Grid Alignment) */
+        .quiz-header { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
+            border-bottom: 2px solid #f1f5f9; 
+            padding-bottom: 12px; 
+            margin-bottom: 20px; 
+            gap: 10px; 
+        }
+        .quiz-title-container { 
+            width: 100%; 
+            text-align: left; 
+        }
+        .quiz-title-container h3 { 
+            font-size: 15px; 
+            color: #3b82f6; 
+            margin: 0; 
+            font-weight: 700; 
+            word-break: break-word; 
+            line-height: 1.4;
+        }
+        .quiz-meta-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            width: 100%;
+        }
+        .quiz-meta-container { 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+            justify-self: end;
+        }
+        .timer-badge { 
+            background: #fee2e2; 
+            color: #dc2626; 
+            padding: 5px 10px; 
+            border-radius: 20px; 
+            font-weight: 700; 
+            font-size: 13px; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+        }
+        .q-count-badge { 
+            background: #e2e8f0; 
+            color: #1e293b; 
+            padding: 5px 10px; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            font-size: 13px; 
+        }
         
-        .quiz-meta-container { display: flex; gap: 10px; align-items: center; }
-        .timer-badge { background: #fee2e2; color: #dc2626; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; margin: 0; }
-        .q-count-badge { background: #e2e8f0; color: #1e293b; padding: 6px 14px; border-radius: 12px; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; margin: 0; }
+        /* ⭐ Bookmark Button Style */
+        .bookmark-btn { background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; transition: 0.2s; opacity: 0.3; justify-self: start; }
+        .bookmark-btn.saved { opacity: 1 !important; color: #f59e0b; filter: drop-shadow(0 2px 6px rgba(245,158,11,0.6)); }
         
-        /* ⭐️ Bookmark Button */
-        .bookmark-btn { background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; margin: 0; transition: 0.2s; color: #cbd5e1; }
-        .bookmark-btn.saved { color: #f59e0b; filter: drop-shadow(0 2px 4px rgba(245,158,11,0.4)); }
+        #questionText { 
+            text-align: left; 
+            font-size: 18px; 
+            font-weight: 700; 
+            color: var(--text-dark); 
+            margin-bottom: 20px; 
+            line-height: 1.5; 
+            word-break: break-word; 
+        }
+
+        @media (min-width: 768px) {
+            #questionText { font-size: 20px; }
+            .quiz-title-container h3 { font-size: 17px; }
+        }
         
-        #questionText { text-align: left; font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; line-height: 1.5; }
-        
-        .option-btn { background-color: var(--card-bg); color: var(--text-dark); text-align: left; padding: 15px 20px; border: 1.5px solid var(--input-border); border-radius: 12px; display: flex; align-items: center; font-size: 16px; font-weight: 600; margin-bottom: 12px; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .option-label { color: #3b82f6; font-weight: 800; margin-right: 15px; font-size: 18px; }
+        .option-btn { background-color: var(--card-bg); color: var(--text-dark); text-align: left; padding: 14px 18px; border: 1.5px solid var(--input-border); border-radius: 12px; display: flex; align-items: center; font-size: 15px; font-weight: 600; margin-bottom: 10px; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .option-label { color: #3b82f6; font-weight: 800; margin-right: 12px; font-size: 16px; }
 
         .score-circle {
-            width: 120px; height: 120px; border-radius: 50%;
+            width: 110px; height: 110px; border-radius: 50%;
             background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
             color: white; display: flex; align-items: center; justify-content: center;
-            font-size: 30px; font-weight: bold; margin: 20px auto;
+            font-size: 28px; font-weight: bold; margin: 15px auto;
             box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
         }
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .app-footer { margin-top: 20px; font-size: 12px; color: var(--p-color); font-weight: 500; border-top: 1px dashed var(--input-border); padding-top: 10px; }
+        .app-footer { margin-top: 15px; font-size: 12px; color: var(--p-color); font-weight: 500; border-top: 1px dashed var(--input-border); padding-top: 10px; }
         .transparent-bg .app-footer { color: #cbd5e1; border-top: 1px dashed rgba(255,255,255,0.2); }
         
-        /* 📱 Bottom Navigation Bar Style (4 Pro Icons with Center Leaderboard) */
+        /* 📱 Bottom Navigation Bar Style (Responsive & Centered) */
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
+            max-width: 550px;
             background: var(--card-bg);
             border-top: 1px solid var(--input-border);
             display: flex;
@@ -159,8 +235,13 @@
             width: 25%;
         }
         .nav-item:active { transform: scale(0.9); }
-        .nav-icon { font-size: 26px; margin: 0; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1)); }
+        .nav-icon { font-size: 24px; margin: 0; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1)); }
         .padding-bottom-for-nav { padding-bottom: 80px !important; }
+
+        @keyframes popupScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
     
     <link rel="manifest" href="manifest.json">
@@ -181,25 +262,25 @@
 
     <!-- 0. Splash / Loading Screen -->
     <div id="splashScreen">
-        <div style="font-size: 60px; margin-bottom: 15px;">📚</div>
+        <div style="font-size: 55px; margin-bottom: 12px;">📚</div>
         <h2 style="color: var(--text-dark); margin-bottom: 5px;">Maha Board MCQ</h2>
         <p style="font-size: 14px; font-weight: 500;">आपले स्वागत आहे...</p>
-        <div style="margin-top: 20px;">
-            <div style="width: 40px; height: 40px; border: 4px solid var(--input-border); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+        <div style="margin-top: 15px;">
+            <div style="width: 35px; height: 35px; border: 4px solid var(--input-border); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
         </div>
         <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
     </div>
 
     <!-- 0.5 Welcome / Features Screen -->
-    <div id="featuresScreen" class="hidden" style="padding: 10px; max-height: 90vh; overflow-y: auto;">
-        <div id="referralBanner" class="hidden" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">
+    <div id="featuresScreen" class="hidden" style="padding: 10px; max-height: 85vh; overflow-y: auto;">
+        <div id="referralBanner" class="hidden" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; padding: 12px; border-radius: 12px; margin-bottom: 15px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 10px rgba(229, 46, 113, 0.3);">
             🎉 तुमच्या मित्राने तुम्हाला आमंत्रित केले आहे! (VIP प्लॅनवर ₹39 सूट)
         </div>
-        <div style="font-size: 40px; margin-bottom: 5px;">🚀</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 10px;">Maha Board MCQ</h2>
-        <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px; font-weight:bold;">10वी बोर्ड परीक्षेत टॉप करण्यासाठी हे ॲप का वापरावे?</p>
+        <div style="font-size: 35px; margin-bottom: 5px;">🚀</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 8px;">Maha Board MCQ</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 15px; font-weight:bold;">10वी बोर्ड परीक्षेत टॉप करण्यासाठी हे ॲप का वापरावे?</p>
 
-        <div style="text-align: left; background: var(--input-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--input-border); font-size: 14px; color: var(--text-dark); line-height: 1.8; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <div style="text-align: left; background: var(--input-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--input-border); font-size: 13px; color: var(--text-dark); line-height: 1.7; margin-bottom: 15px;">
             ✅ <b>बोर्ड पॅटर्न:</b> परीक्षेच्या दृष्टीने अत्यंत महत्त्वाचे प्रश्न<br>
             ✅ <b>झटपट निकाल:</b> टेस्ट संपताच तुमचे गुण आणि चुका समजणार<br>
             ✅ <b>चॅप्टर-वाईज टेस्ट:</b> प्रत्येक धड्याची स्वतंत्र प्रॅक्टिस<br>
@@ -211,19 +292,19 @@
 
     <!-- 1. Login Screen -->
     <div id="loginScreen" class="hidden">
-        <div style="font-size: 60px; margin-bottom: 15px; margin-top: 15px;">📚</div>
+        <div style="font-size: 50px; margin-bottom: 10px; margin-top: 10px;">📚</div>
         <h2 style="color: var(--text-dark); margin-bottom: 2px;">Maha Board MCQ</h2>
-        <p style="font-size: 14px; margin-top: 0; font-weight: 500;">परीक्षेची पूर्व तयारी</p>
+        <p style="font-size: 13px; margin-top: 0; font-weight: 500;">परीक्षेची पूर्व तयारी</p>
         
-        <p style="margin-top: 10px; font-weight: bold;">विद्यार्थी लॉगिन करा</p>
+        <p style="margin-top: 8px; font-weight: bold; font-size: 14px;">विद्यार्थी लॉगिन करा</p>
         
         <input type="number" id="mobileInput" placeholder="मोबाईल नंबर (उदा. 9876543210)">
         <input type="password" id="passwordInput" placeholder="पासवर्ड">
         <button class="primary-btn" onclick="loginUser()">लॉगिन करा 🚀</button>
         <p id="message"></p>
 
-        <div id="resetDeviceBox" class="hidden" style="margin-top: 15px; background: #fff3cd; padding: 15px; border-radius: 12px; border: 1px solid #ffeeba; text-align: left;">
-            <p id="resetMessage" style="color: #856404; font-size: 13px; font-weight: bold; margin-bottom: 10px;"></p>
+        <div id="resetDeviceBox" class="hidden" style="margin-top: 12px; background: #fff3cd; padding: 12px; border-radius: 12px; border: 1px solid #ffeeba; text-align: left;">
+            <p id="resetMessage" style="color: #856404; font-size: 12px; font-weight: bold; margin-bottom: 8px;"></p>
             <input type="number" id="resetOtpInput" placeholder="ईमेलवर आलेला OTP टाका" style="border-color: #ffc107; background: #ffffff;">
             <button class="primary-btn" onclick="confirmDeviceReset()" style="background: #ffc107; color: #000; box-shadow: none;">Verify & Reset Device 🔄</button>
         </div>
@@ -234,8 +315,8 @@
 
     <!-- 2. Register Screen -->
     <div id="registerScreen" class="hidden">
-        <h2 style="color: var(--text-dark);">नवीन खाते काढा</h2>
-        <p>स्वतःची नोंदणी करून फ्री टेस्ट सोडवा.</p>
+        <h2 style="color: var(--text-dark); font-size: 22px;">नवीन खाते काढा</h2>
+        <p style="font-size: 13px;">स्वतःची नोंदणी करून फ्री टेस्ट सोडवा.</p>
 
         <input type="text" id="regNameInput" placeholder="तुमचे पूर्ण नाव">
         <input type="number" id="regMobileInput" placeholder="मोबाईल नंबर (10 अंकी)">
@@ -257,43 +338,50 @@
     <div id="subjectScreen" class="hidden">
         <div id="welcomeText"></div>
 
+        <!-- ⚡ 10X Upgrade Banner (महाराष्ट्र टॉप 3 स्टार्स च्या वर) -->
+        <div style="background: linear-gradient(135deg, #ff8a00 0%, #e52e71 100%); border-radius: 16px; padding: 14px 15px; margin-bottom: 15px; color: white; text-align: left; box-shadow: 0 6px 20px rgba(229, 46, 113, 0.35); border: 1px solid rgba(255,255,255,0.2);">
+            <div style="font-size: 14px; font-weight: 800; margin-bottom: 4px;">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</div>
+            <div style="font-size: 12px; color: #fef3c7; line-height: 1.4; margin-bottom: 10px;">बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.</div>
+            <button onclick="handleVipOrTrialClick()" style="background: white; color: #e52e71; border: none; padding: 8px 12px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: auto;">👑 VIP किंवा Trial घ्या</button>
+        </div>
+
         <!-- 🌟 Top 3 Quick Preview -->
         <div id="homeTop3Card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 16px; padding: 15px; margin-bottom: 15px; color: white; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-weight: bold; font-size: 14px; color: #f59e0b;">🔥 महाराष्ट्र टॉप 3 स्टार्स</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-weight: bold; font-size: 13px; color: #f59e0b;">🔥 महाराष्ट्र टॉप 3 स्टार्स</span>
             </div>
             <div id="homeTop3List" style="font-size: 13px; color: #cbd5e1;">लोड होत आहे... ⏳</div>
         </div>
 
-        <div id="personalMsgBox" style="background:#f8d7da; color:#721c24; padding:12px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; border: 1px solid #f5c6cb;">
+        <div id="personalMsgBox" style="background:#f8d7da; color:#721c24; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; border: 1px solid #f5c6cb; font-size: 13px;">
             <strong>📩 खास तुमच्यासाठी:</strong> <br><span id="personalMsgText"></span>
         </div>
 
-        <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">📢 <span id="noticeText"></span></div>
-        <div id="notificationBox" style="background:#d1ecf1; color:#0c5460; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left;">🔔 <span id="notificationText"></span></div>
-        <div id="thoughtBox" style="background:#d4edda; color:#155724; padding:10px; border-radius:10px; margin-bottom:15px; display:none; text-align:left;">💡 <span id="thoughtText"></span></div>
+        <div id="noticeBox" style="background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; font-size: 13px;">📢 <span id="noticeText"></span></div>
+        <div id="notificationBox" style="background:#d1ecf1; color:#0c5460; padding:10px; border-radius:10px; margin-bottom:10px; display:none; text-align:left; font-size: 13px;">🔔 <span id="notificationText"></span></div>
+        <div id="thoughtBox" style="background:#d4edda; color:#155724; padding:10px; border-radius:10px; margin-bottom:15px; display:none; text-align:left; font-size: 13px;">💡 <span id="thoughtText"></span></div>
         
-        <h2 style="color: #ffffff; font-size: 24px; margin: 20px 0 15px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
+        <h2 style="color: #ffffff; font-size: 22px; margin: 15px 0 12px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">📚 विषय निवडा</h2>
         <div class="grid-container" id="subjectList"></div>
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 🏆 Leaderboard Screen -->
     <div id="leaderboardScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">🏆</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">महाराष्ट्र टॉप 10 रँकर्स</h2>
-        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 20px;">सर्वाधिक स्कोर मिळवणारे विद्यार्थी</p>
+        <div style="font-size: 35px; margin-bottom: 5px;">🏆</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px; font-size: 22px;">महाराष्ट्र टॉप 10 रँकर्स</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 15px;">सर्वाधिक स्कोर मिळवणारे विद्यार्थी</p>
         
         <!-- 👤 युजरची स्वतःची रँक आणि पॉइण्ट्स दाखवणारा मॉडर्न बॉक्स -->
         <div id="myRankBox" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(255,255,255,0.15); color: white; padding: 12px 15px; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; justify-content: space-around; align-items: center; text-align: center;">
             <div>
                 <span style="font-size: 11px; color: #94a3b8; font-weight: 600; display: block;">तुमची रँक</span>
-                <span id="myRankNumber" style="font-size: 16px; font-weight: 800; color: #38b2ac;">--</span>
+                <span id="myRankNumber" style="font-size: 15px; font-weight: 800; color: #38b2ac;">--</span>
             </div>
             <div style="width: 1px; height: 25px; background: rgba(255,255,255,0.2);"></div>
             <div>
                 <span style="font-size: 11px; color: #94a3b8; font-weight: 600; display: block;">एकूण पॉइण्ट्स</span>
-                <span id="myPointsNumber" style="font-size: 16px; font-weight: 800; color: #f59e0b;">0 pts</span>
+                <span id="myPointsNumber" style="font-size: 15px; font-weight: 800; color: #f59e0b;">0 pts</span>
             </div>
         </div>
 
@@ -304,48 +392,48 @@
 
     <!-- 3.1 Library Screen (📚 लायब्ररी) -->
     <div id="libraryScreen" class="hidden" style="text-align: left; padding: 10px;">
-        <div style="text-align: center; font-size: 40px; margin-bottom: 5px;">📚</div>
-        <h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px;">अभ्यास लायब्ररी</h2>
+        <div style="text-align: center; font-size: 35px; margin-bottom: 5px;">📚</div>
+        <h2 style="color: var(--text-dark); text-align: center; margin-bottom: 15px; font-size: 22px;">अभ्यास लायब्ररी</h2>
         
-        <div style="display: flex; flex-direction: column; gap: 15px;">
-            <div onclick="loadMegaTests()" style="background: linear-gradient(135deg, #e52e71, #ff8a00); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4); display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden;">
-                <span style="font-size: 35px;">👑</span>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div onclick="loadMegaTests()" style="background: linear-gradient(135deg, #e52e71, #ff8a00); color: white; padding: 16px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4); display: flex; align-items: center; gap: 12px; position: relative; overflow: hidden;">
+                <span style="font-size: 30px;">👑</span>
                 <div>
-                    <h3 style="margin: 0; font-size: 18px;">मेगा सराव परीक्षा</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #ffecd2;">40 मार्क्सची फुल बोर्ड पॅटर्न टेस्ट (VIP Only)</p>
+                    <h3 style="margin: 0; font-size: 16px;">मेगा सराव परीक्षा</h3>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #ffecd2;">40 मार्क्सची फुल बोर्ड पॅटर्न टेस्ट (VIP Only)</p>
                 </div>
-                <div style="position: absolute; top: 10px; right: -25px; background: white; color: #e52e71; font-size: 10px; font-weight: bold; padding: 3px 30px; transform: rotate(45deg);">PRO</div>
+                <div style="position: absolute; top: 10px; right: -25px; background: white; color: #e52e71; font-size: 9px; font-weight: bold; padding: 3px 30px; transform: rotate(45deg);">PRO</div>
             </div>
 
-            <div onclick="showBookmarks()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); display: flex; align-items: center; gap: 15px;">
-                <span style="font-size: 35px;">⭐</span>
+            <div onclick="showBookmarks()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 16px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 30px;">⭐</span>
                 <div>
-                    <h3 style="margin: 0; font-size: 18px;">कठीण प्रश्न (Saved)</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #fef3c7;">तुमचे सेव्ह केलेले महत्त्वाचे प्रश्न वाचा</p>
-                </div>
-            </div>
-
-            <div onclick="loadVideos()" style="background: linear-gradient(135deg, #8a2be2, #4a00e0); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); display: flex; align-items: center; gap: 15px;">
-                <span style="font-size: 35px;">📹</span>
-                <div>
-                    <h3 style="margin: 0; font-size: 18px;">व्हिडिओ अपडेट्स</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #e2e8f0;">बोर्ड परीक्षेचे महत्त्वाचे व्हिडिओ पहा</p>
+                    <h3 style="margin: 0; font-size: 16px;">कठीण प्रश्न (Saved)</h3>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #fef3c7;">तुमचे सेव्ह केलेले महत्त्वाचे प्रश्न वाचा</p>
                 </div>
             </div>
 
-            <div onclick="loadNotes()" style="background: linear-gradient(135deg, #ff8c00, #ff4500); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3); display: flex; align-items: center; gap: 15px;">
-                <span style="font-size: 35px;">📖</span>
+            <div onclick="loadVideos()" style="background: linear-gradient(135deg, #8a2be2, #4a00e0); color: white; padding: 16px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 30px;">📹</span>
                 <div>
-                    <h3 style="margin: 0; font-size: 18px;">स्टडी नोट्स</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #e2e8f0;">धडा-निहाय हस्तलिखित नोट्स वाचा</p>
+                    <h3 style="margin: 0; font-size: 16px;">व्हिडिओ अपडेट्स</h3>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #e2e8f0;">बोर्ड परीक्षेचे महत्त्वाचे व्हिडिओ पहा</p>
+                </div>
+            </div>
+
+            <div onclick="loadNotes()" style="background: linear-gradient(135deg, #ff8c00, #ff4500); color: white; padding: 16px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3); display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 30px;">📖</span>
+                <div>
+                    <h3 style="margin: 0; font-size: 16px;">स्टडी नोट्स</h3>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #e2e8f0;">धडा-निहाय हस्तलिखित नोट्स वाचा</p>
                 </div>
             </div>
             
-            <div onclick="loadAffirmations()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); display: flex; align-items: center; gap: 15px;">
-                <span style="font-size: 35px;">🌟</span>
+            <div onclick="loadAffirmations()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px; border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 30px;">🌟</span>
                 <div>
-                    <h3 style="margin: 0; font-size: 18px;">Growth Mindset</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 13px; color: #e2e8f0;">सकारात्मक विचार आणि ऊर्जा</p>
+                    <h3 style="margin: 0; font-size: 16px;">Growth Mindset</h3>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #e2e8f0;">सकारात्मक विचार आणि ऊर्जा</p>
                 </div>
             </div>
         </div>
@@ -353,42 +441,48 @@
     
     <!-- 👑 Mega Test Screen -->
     <div id="megaTestScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">👑</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">मेगा सराव परीक्षा</h2>
-        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 20px;">40 मार्क्सची फुल बोर्ड पॅटर्न टेस्ट</p>
+        <div style="font-size: 35px; margin-bottom: 5px;">👑</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px; font-size: 22px;">मेगा सराव परीक्षा</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 15px;">40 मार्क्सची फुल बोर्ड पॅटर्न टेस्ट</p>
         <div id="megaTestList" style="text-align: left;">
             <p style="text-align:center; color:var(--primary);">Loading... ⏳</p>
         </div>
-        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ मागे जा</button>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 15px;">⬅ मागे जा</button>
     </div>
 
     <!-- ⭐ Bookmarks Screen -->
     <div id="bookmarkScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">⭐</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">कठीण प्रश्न (Saved)</h2>
-        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 20px;">परीक्षेपूर्वी रिव्हिजन करण्यासाठी</p>
-        <div id="bookmarkList" style="text-align: left; display:flex; flex-direction:column; gap:15px;">
+        <div style="font-size: 35px; margin-bottom: 5px;">⭐</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px; font-size: 22px;">कठीण प्रश्न (Saved)</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 15px;">परीक्षेपूर्वी रिव्हिजन करण्यासाठी</p>
+        <div id="bookmarkList" style="text-align: left; display:flex; flex-direction:column; gap:12px;">
             <p style="text-align:center; color:var(--p-color);">तुम्ही अजून कोणतेही प्रश्न सेव्ह केलेले नाहीत.</p>
         </div>
-        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ लायब्ररीवर परत जा</button>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 15px;">⬅ लायब्ररीवर परत जा</button>
     </div>
 
     <!-- 4. Chapter Selection Screen -->
     <div id="chapterScreen" class="hidden">
-        <h2 id="subjectTitle">Chapter निवडा</h2>
-        <p>कोणता धडा वाचायचा आहे?</p>
+        <h2 id="subjectTitle" style="font-size: 22px;">Chapter निवडा</h2>
+        <p style="font-size: 13px;">कोणता धडा वाचायचा आहे?</p>
         <div id="chapterList"></div>
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
-    <!-- 5. Quiz Screen (QnA) -->
+    <!-- 5. Quiz Screen (QnA) - 2 Line Perfect Header Layout -->
     <div id="quizScreen" class="hidden">
         <div class="quiz-header">
-            <div class="quiz-title-container"><h3 id="quizTitle"></h3></div>
-            <div class="quiz-meta-container">
+            <!-- 1st Line: Chapter Title (Full width, wraps nicely) -->
+            <div class="quiz-title-container">
+                <h3 id="quizTitle"></h3>
+            </div>
+            <!-- 2nd Line: Star, Timer & Question Count -->
+            <div class="quiz-meta-row">
                 <button id="bookmarkBtn" class="bookmark-btn" onclick="toggleBookmark()">⭐</button>
-                <div class="timer-badge">⏳ <span id="timeLeft">15</span> s</div>
-                <div class="q-count-badge" id="questionCount"></div>
+                <div class="quiz-meta-container">
+                    <div class="timer-badge">⏳ <span id="timeLeft">15</span> s</div>
+                    <div class="q-count-badge" id="questionCount"></div>
+                </div>
             </div>
         </div>
         <h3 id="questionText">प्रश्न इथे दिसेल</h3>
@@ -397,36 +491,43 @@
 
     <!-- 6. Result Screen -->
     <div id="resultScreen" class="hidden">
-        <h2 style="color: var(--text-dark); font-size: 28px; margin-bottom: 5px;">निकाल 🏆</h2>
-        <p id="congratsText" style="font-size: 16px; color: var(--p-color); font-weight: 500;">अभिनंदन! तुम्ही टेस्ट पूर्ण केली आहे.</p>
+        <h2 style="color: var(--text-dark); font-size: 24px; margin-bottom: 5px;">निकाल 🏆</h2>
+        <p id="congratsText" style="font-size: 14px; color: var(--p-color); font-weight: 500;">अभिनंदन! तुम्ही टेस्ट पूर्ण केली आहे.</p>
         
-        <div class="score-circle" id="scoreText" style="box-shadow: 0 10px 25px rgba(0, 242, 254, 0.4); border: 4px solid #fff; font-size: 36px;">0 / 10</div>
+        <div class="score-circle" id="scoreText">0 / 10</div>
         
-        <div id="detailedReport" style="background: var(--input-bg); border: 1.5px solid var(--input-border); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; font-size: 15px; color: var(--text-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.03);"></div>
+        <div id="detailedReport" style="background: var(--input-bg); border: 1.5px solid var(--input-border); padding: 12px; border-radius: 12px; margin-bottom: 15px; text-align: left; font-size: 14px; color: var(--text-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.03);"></div>
 
-        <button class="whatsapp-btn" onclick="shareOnWhatsApp()" style="display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 16px;">📲 WhatsApp वर मित्राला चॅलेंज करा</button>
-        <button class="primary-btn" onclick="showScreen('subjectScreen')" style="margin-top: 15px; font-size: 16px;">📚 दुसरे विषय निवडा</button>
+        <!-- ⚡ Result Page 10X Upgrade Prompt Box -->
+        <div style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 14px; border-radius: 14px; margin-bottom: 15px; text-align: center; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);">
+            <div style="font-weight: 800; font-size: 14px; margin-bottom: 4px;">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</div>
+            <div style="font-size: 12px; color: #e0e7ff; margin-bottom: 10px;">बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.</div>
+            <button onclick="handleVipOrTrialClick()" style="background: white; color: #1d4ed8; border: none; padding: 8px 15px; border-radius: 10px; font-weight: 800; font-size: 13px; cursor: pointer;">👑 VIP किंवा Trial मिळवा</button>
+        </div>
+
+        <button class="whatsapp-btn" onclick="shareOnWhatsApp()" style="display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 15px;">📲 WhatsApp वर मित्राला चॅलेंज करा</button>
+        <button class="primary-btn" onclick="showScreen('subjectScreen')" style="margin-top: 12px; font-size: 15px;">📚 दुसरे विषय निवडा</button>
 
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
     </div>
 
     <!-- 7. Price / Premium Screen -->
     <div id="priceScreen" class="hidden">
-        <h2 style="color: #e52e71; font-weight: 800;">👑 VIP Premium</h2>
-        <p>10th Board परीक्षेत 90%+ मार्क्स मिळवा!</p>
-        <div style="background: var(--input-bg); border: 2px dashed #e52e71; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-            <h3 style="margin: 0; color: #a0aec0; text-decoration: line-through; font-size: 18px;">मूळ किंमत: ₹499</h3>
-            <h1 style="margin: 10px 0; color: #e52e71; font-size: 40px; font-weight: 800;">₹150</h1>
-            <p style="margin: 0; font-size: 14px; font-weight: bold; color: #25D366;" id="discountMsg">🎉 मित्राचा रेफरल कोड वापरल्यास: फक्त ₹111</p>
+        <h2 style="color: #e52e71; font-weight: 800; font-size: 24px;">👑 VIP Premium</h2>
+        <p style="font-size: 13px;">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</p>
+        <div style="background: var(--input-bg); border: 2px dashed #e52e71; padding: 15px; border-radius: 15px; margin-bottom: 15px;">
+            <h3 style="margin: 0; color: #a0aec0; text-decoration: line-through; font-size: 16px;">मूळ किंमत: ₹499</h3>
+            <h1 style="margin: 8px 0; color: #e52e71; font-size: 35px; font-weight: 800;">₹150</h1>
+            <p style="margin: 0; font-size: 13px; font-weight: bold; color: #25D366;" id="discountMsg">🎉 मित्राचा रेफरल कोड वापरल्यास: फक्त ₹111</p>
         </div>
-        <div style="text-align: left; font-size: 15px; color: var(--text-dark); line-height: 1.8; margin-bottom: 20px; padding-left: 10px;">
+        <div style="text-align: left; font-size: 14px; color: var(--text-dark); line-height: 1.7; margin-bottom: 15px; padding-left: 5px;">
             <b>पेमेंट नियम (Payment Policy):</b>
-            <ul style="margin-top: 5px; padding-left: 20px; font-size: 14px; color: var(--p-color);">
+            <ul style="margin-top: 4px; padding-left: 18px; font-size: 13px; color: var(--p-color);">
                 <li>QR कोडवर पेमेंट केल्यानंतर WhatsApp वर स्क्रीनशॉट पाठवा.</li>
                 <li>तपासणी केल्यानंतर **12 ते 24 तासांच्या आत** अकाउंट VIP होईल.</li>
             </ul>
         </div>
-        <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); font-size: 18px; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4);" onclick="buyPaidPlan()">
+        <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); font-size: 16px; box-shadow: 0 4px 15px rgba(229, 46, 113, 0.4);" onclick="buyPaidPlan()">
             🚀 VIP प्लॅन खरेदी करा (WhatsApp)
         </button>
         <button class="back-btn" onclick="showScreen('subjectScreen')">⬅ मागे जा (Back)</button>
@@ -435,10 +536,10 @@
 
     <!-- 8. Policy & Terms Screen -->
     <div id="policyScreen" class="hidden">
-        <h2 style="color: var(--text-dark);">📜 नियम व अटी (Policy)</h2>
-        <div style="text-align: left; font-size: 15px; color: var(--text-dark); line-height: 1.8; margin-bottom: 20px; max-height: 350px; overflow-y: auto; padding: 10px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px;">
-            <p style="margin: 0 0 10px 0; font-size: 14px;"><b>1. वापरकर्ता खाते:</b> तुमची माहिती सुरक्षित राहील. एका वेळी एकाच मोबाईलवर वापरा.</p>
-            <p style="margin: 0 0 10px 0; font-size: 14px;"><b>2. रिफंड पॉलिसी:</b> एकदा VIP ॲक्सेस मिळाल्यानंतर पैसे परत (Refund) केले जाणार नाहीत.</p>
+        <h2 style="color: var(--text-dark); font-size: 22px;">📜 नियम व अटी (Policy)</h2>
+        <div style="text-align: left; font-size: 14px; color: var(--text-dark); line-height: 1.7; margin-bottom: 15px; max-height: 300px; overflow-y: auto; padding: 10px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px;">
+            <p style="margin: 0 0 8px 0; font-size: 13px;"><b>1. वापरकर्ता खाते:</b> तुमची माहिती सुरक्षित राहील. एका वेळी एकाच मोबाईलवर वापरा.</p>
+            <p style="margin: 0 0 8px 0; font-size: 13px;"><b>2. रिफंड पॉलिसी:</b> एकदा VIP ॲक्सेस मिळाल्यानंतर पैसे परत (Refund) केले जाणार नाहीत.</p>
         </div>
         <button class="back-btn" onclick="showScreen('profileScreen')" style="width: 100%;">⬅ प्रोफाईलवर परत जा</button>
         <div class="app-footer">Managed & Developed by: <b>MJ Gurnule & NR Sonwane</b></div>
@@ -446,71 +547,103 @@
 
     <!-- 9. Profile Screen (👤 प्रोफाईल + माझी कमाई / Rewards Integrated) -->
     <div id="profileScreen" class="hidden" style="text-align: center; padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">👤</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 10px;">माझे प्रोफाईल</h2>
+        <div style="font-size: 35px; margin-bottom: 5px;">👤</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 10px; font-size: 22px;">माझे प्रोफाईल</h2>
         
-        <div id="profileDetailsCard" style="background: var(--input-bg); border: 1px solid var(--input-border); padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+        <div id="profileDetailsCard" style="background: var(--input-bg); border: 1px solid var(--input-border); padding: 12px; border-radius: 15px; margin-bottom: 12px; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
             <!-- Dynamic Data -->
         </div>
 
-        <!-- 💸 Rewards & Referral Section Inside Profile -->
-        <div style="background: var(--input-bg); border: 2px dashed #ff8a00; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: center;">
-            <p style="margin: 0 0 5px 0; font-weight: bold; color: var(--text-dark); font-size: 14px;">🎁 माझी कमाई (रेफरल कोड)</p>
-            <h2 id="myReferralCodeDisplay" style="margin: 0 0 10px 0; color: #ff8a00; font-size: 24px; letter-spacing: 1px;">...</h2>
-            <button class="primary-btn" onclick="copyReferCode()" style="background: #ff8a00; box-shadow: 0 4px 10px rgba(255, 138, 0, 0.4); margin: 0; padding: 10px; font-size: 14px;">📋 कोड व लिंक कॉपी करा</button>
+        <!-- ⚡ Profile 10X Upgrade Banner -->
+        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 14px; border-radius: 14px; margin-bottom: 12px; text-align: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+            <div style="font-weight: 800; font-size: 14px; margin-bottom: 4px;">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</div>
+            <div style="font-size: 12px; color: #d1fae5; margin-bottom: 8px;">बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.</div>
+            <button onclick="handleVipOrTrialClick()" style="background: white; color: #059669; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer;">👑 VIP किंवा Trial घ्या</button>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
-            <a href="https://whatsapp.com/channel/0029VbDOOLjATRSpU7rFN525" target="_blank" style="background: #25D366; color: white; padding: 12px; border-radius: 12px; font-weight: bold; text-decoration: none; display: block;">📱 WhatsApp चॅनेल जॉइन करा</a>
-            <button onclick="showScreen('policyScreen')" style="background: #475569; color: white; padding: 12px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer;">📜 नियम व अटी (Policy)</button>
-            <button onclick="forceRefreshApp()" class="primary-btn" style="background: #e53e3e; margin: 0; padding: 12px;">🔄 ॲप रिफ्रेश / अपडेट करा</button>
-            <button onclick="logout()" style="background: #1a202c; color: white; padding: 12px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer;">🔐 लॉग आउट (LogOut)</button>
+        <!-- 💸 Rewards & Referral Section Inside Profile -->
+        <div style="background: var(--input-bg); border: 2px dashed #ff8a00; padding: 12px; border-radius: 15px; margin-bottom: 12px; text-align: center;">
+            <p style="margin: 0 0 4px 0; font-weight: bold; color: var(--text-dark); font-size: 13px;">🎁 माझी कमाई (रेफरल कोड)</p>
+            <h2 id="myReferralCodeDisplay" style="margin: 0 0 8px 0; color: #ff8a00; font-size: 20px; letter-spacing: 1px;">...</h2>
+            <button class="primary-btn" onclick="copyReferCode()" style="background: #ff8a00; box-shadow: 0 4px 10px rgba(255, 138, 0, 0.4); margin: 0; padding: 8px; font-size: 13px;">📋 कोड व लिंक कॉपी करा</button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+            <a href="https://whatsapp.com/channel/0029VbDOOLjATRSpU7rFN525" target="_blank" style="background: #25D366; color: white; padding: 10px; border-radius: 12px; font-weight: bold; text-decoration: none; display: block; font-size: 14px;">📱 WhatsApp चॅनेल जॉइन करा</a>
+            <button onclick="showScreen('policyScreen')" style="background: #475569; color: white; padding: 10px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer; font-size: 14px;">📜 नियम व अटी (Policy)</button>
+            <button onclick="forceRefreshApp()" class="primary-btn" style="background: #e53e3e; margin: 0; padding: 10px; font-size: 14px;">🔄 ॲप रिफ्रेश / अपडेट करा</button>
+            <button onclick="logout()" style="background: #1a202c; color: white; padding: 10px; border-radius: 12px; font-weight: bold; border: none; cursor: pointer; font-size: 14px;">🔐 लॉग आउट (LogOut)</button>
         </div>
     </div>
 
     <!-- 10. Video Updates Screen -->
     <div id="videoScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">📹</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">नवीन व्हिडिओ अपडेट्स</h2>
-        <div id="videoListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;"></div>
-        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 25px;">⬅ लायब्ररीवर परत जा</button>
+        <div style="font-size: 35px; margin-bottom: 5px;">📹</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px; font-size: 22px;">नवीन व्हिडिओ अपडेट्स</h2>
+        <div id="videoListContainer" style="display: flex; flex-direction: column; gap: 12px; text-align: left;"></div>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ लायब्ररीवर परत जा</button>
     </div>
     
     <!-- 11. Study Notes Screen -->
     <div id="notesScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">📖</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">अभ्यास नोट्स (Study Notes)</h2>
-        <div id="notesListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;"></div>
-        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 25px;">⬅ लायब्ररीवर परत जा</button>
+        <div style="font-size: 35px; margin-bottom: 5px;">📖</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px; font-size: 22px;">अभ्यास नोट्स (Study Notes)</h2>
+        <div id="notesListContainer" style="display: flex; flex-direction: column; gap: 12px; text-align: left;"></div>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ लायब्ररीवर परत जा</button>
     </div>
 
     <!-- 12. Mindset & Affirmations Screen -->
     <div id="mindsetScreen" class="hidden" style="padding: 10px;">
-        <div style="font-size: 40px; margin-bottom: 5px;">🌟</div>
-        <h2 style="color: var(--text-dark); margin-bottom: 5px;">Growth Mindset</h2>
-        <p style="color: var(--p-color); font-size: 14px; margin-bottom: 20px;">रोज सकाळी अभ्यास सुरू करण्यापूर्वी हे सकारात्मक विचार नक्की वाचा.</p>
-        <div id="affirmationsListContainer" style="display: flex; flex-direction: column; gap: 15px; text-align: left;"></div>
-        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 25px;">⬅ लायब्ररीवर परत जा</button>
+        <div style="font-size: 35px; margin-bottom: 5px;">🌟</div>
+        <h2 style="color: var(--text-dark); margin-bottom: 5px; font-size: 22px;">Growth Mindset</h2>
+        <p style="color: var(--p-color); font-size: 13px; margin-bottom: 15px;">रोज सकाळी अभ्यास सुरू करण्यापूर्वी हे सकारात्मक विचार नक्की वाचा.</p>
+        <div id="affirmationsListContainer" style="display: flex; flex-direction: column; gap: 12px; text-align: left;"></div>
+        <button class="back-btn" onclick="showScreen('libraryScreen')" style="width: 100%; margin-top: 20px;">⬅ लायब्ररीवर परत जा</button>
     </div>
     
-    <!-- 🔥 Paywall Popup -->
-    <div id="paywallPopup" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; display:flex; align-items:center; justify-content:center;">
-        <div style="background:var(--card-bg); padding:30px 20px; border-radius:20px; width:90%; max-width:400px; text-align:center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
-            <div style="font-size: 50px; margin-bottom: 10px;">🎯</div>
-            <h2 style="color:#e52e71; margin-top:0; font-weight: 800;">थांबा!</h2>
-            <p style="color:var(--text-dark); font-weight:600; font-size:15px; margin-bottom: 20px; line-height: 1.6;">
-                <span style="color:var(--primary); font-size:18px;">"प्रयत्नांती परमेश्वर!"</span><br>
-                शाबाश! तुम्ही 5 प्रश्न सोडवले आहेत.<br><br>
-                90%+ मार्क्स मिळवणे शक्य आहे. तुमची प्रॅक्टिस अपूर्ण सोडू नका, उरलेले सर्व प्रश्न सोडवण्यासाठी VIP अनलॉक करा.
-            </p>
-            <button class="primary-btn" style="background: linear-gradient(90deg, #ff8a00, #e52e71); margin-bottom:12px; font-size: 16px;" onclick="closePaywallAndGoToPremium()">👑 Upgrade to VIP (₹111)</button>
-            <button style="background:#e2e8f0; color:#475569; width:100%; padding:14px; border:none; border-radius:12px; font-weight:bold; font-size:15px; cursor: pointer;" onclick="skipToResult()">⏭️ Skip & निकाल पहा</button>
+    <!-- 🔥 Ultra Modern Glassmorphism Paywall Popup -->
+    <div id="paywallPopup" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(2, 6, 23, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index:2000; display:flex; align-items:center; justify-content:center; padding: 20px; box-sizing: border-box;">
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(255, 255, 255, 0.15); padding: 30px 22px; border-radius: 30px; width:100%; max-width:390px; text-align:center; box-shadow: 0 25px 60px rgba(0,0,0,0.6); animation: popupScale 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            
+            <!-- Glowing Crown / Rocket Badge -->
+            <div style="width: 75px; height: 75px; background: linear-gradient(135deg, #f59e0b, #ef4444); border-radius: 50%; display: flex; align-items:center; justify-content:center; font-size: 34px; margin: 0 auto 18px auto; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4); border: 2px solid rgba(255,255,255,0.3);">
+                👑
+            </div>
+
+            <h2 style="color:#ffffff; margin-top:0; font-weight: 800; font-size: 24px; margin-bottom: 6px; letter-spacing: 0.5px;">मर्यादित प्रवेश!</h2>
+            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 16px;">तुम्ही ५ फ्री प्रश्न यशस्वीरित्या पूर्ण केले आहेत.</p>
+            
+            <!-- Highlight Box -->
+            <div style="background: rgba(59, 130, 246, 0.12); padding: 14px; border-radius: 16px; margin-bottom: 22px; border: 1px solid rgba(59, 130, 246, 0.3); text-align: left;">
+                <div style="color:#60a5fa; font-weight:800; font-size:13px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                    <span>⚡</span> स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!
+                </div>
+                <div style="color:#cbd5e1; font-weight:500; font-size:12px; line-height: 1.5;">
+                    बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी खालीलपैकी एक पर्याय निवडा:
+                </div>
+            </div>
+            
+            <!-- Option 1: Start Trial (Glowing Blue) -->
+            <button class="primary-btn" style="background: linear-gradient(90deg, #3b82f6, #2563eb); margin-bottom: 12px; font-size: 14px; padding: 14px; border-radius: 16px; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); font-weight: 700; border: 1px solid rgba(255,255,255,0.2);" onclick="activateTrialFromPopup()">
+                ⏳ ७ दिवसांची फ्री ट्रायल सुरु करा
+            </button>
+
+            <!-- Option 2: Buy VIP (Glowing Orange/Pink) -->
+            <button class="primary-btn" style="background: linear-gradient(90deg, #f59e0b, #e52e71); margin-bottom: 16px; font-size: 14px; padding: 14px; border-radius: 16px; box-shadow: 0 8px 20px rgba(229, 46, 113, 0.4); font-weight: 700; border: 1px solid rgba(255,255,255,0.2);" onclick="closePaywallAndGoToPremium()">
+                👑 VIP प्लॅन घ्या (फक्त ₹१११)
+            </button>
+
+            <!-- Skip Button -->
+            <button style="background: transparent; color: #94a3b8; width: 100%; padding: 8px; border: none; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s;" onclick="skipToResult()" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#94a3b8'">
+                ⏭️ सध्या नको, निकाल पहा
+            </button>
         </div>
     </div>
+    
 
 </div>
 
-<!-- 📱 Bottom Navigation Bar (4 Pro Icons with Center Leaderboard) -->
+<!-- 📱 Bottom Navigation Bar -->
 <div id="bottomNav" class="bottom-nav hidden">
     <div class="nav-item" onclick="showScreen('subjectScreen')">
         <span class="nav-icon">🏠</span>
@@ -527,16 +660,24 @@
 </div>
 
 <script>
-    // 🔄 ॲपचा ग्लोबल व्हर्जन (जेव्हा पण अपडेट कराल, इथे v2, v3 करा)
-    const APP_VERSION = "v2.0";
+    // 🔄 ॲपचा ग्लोबल व्हर्जन चेक (लूप आणि लॉगिन डिलीट होण्यापासून सुरक्षित)
+    const APP_VERSION = "v2.8";
     let storedVersion = localStorage.getItem('app_live_version');
     if (storedVersion !== APP_VERSION) {
+        let savedMob = localStorage.getItem('savedMobile');
+        let savedPass = localStorage.getItem('savedPassword');
+        let savedName = localStorage.getItem('savedName');
+        
         localStorage.clear();
+        
+        if(savedMob) localStorage.setItem('savedMobile', savedMob);
+        if(savedPass) localStorage.setItem('savedPassword', savedPass);
+        if(savedName) localStorage.setItem('savedName', savedName);
+        
         localStorage.setItem('app_live_version', APP_VERSION);
         if ('caches' in window) {
             caches.keys().then((names) => { names.forEach((name) => { caches.delete(name); }); });
         }
-        window.location.reload(true);
     }
 
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby83CF_8FA8k86UxKHhhCpCZjjHfnn6o7nsByF9CR01RHzrVejG18SdXo-V64S0jyfVRw/exec"; 
@@ -933,12 +1074,12 @@
                 <div style="display: flex; justify-content: space-around; align-items: center; padding-top: 5px;">
                     <div>
                         <span style="font-size: 11px; color: var(--p-color); font-weight: 600; display: block;">महाराष्ट्र रँक</span>
-                        <span id="cardRankVal" style="font-size: 16px; font-weight: 800; color: #3b82f6;">--</span>
+                        <span id="cardRankVal" style="font-size: 15px; font-weight: 800; color: #3b82f6;">--</span>
                     </div>
                     <div style="width: 1px; height: 25px; background: #e2e8f0;"></div>
                     <div>
                         <span style="font-size: 11px; color: var(--p-color); font-weight: 600; display: block;">एकूण पॉइण्ट्स</span>
-                        <span id="cardPointsVal" style="font-size: 16px; font-weight: 800; color: #f59e0b;">${userPts} pts</span>
+                        <span id="cardPointsVal" style="font-size: 15px; font-weight: 800; color: #f59e0b;">${userPts} pts</span>
                     </div>
                 </div>
 
@@ -1005,11 +1146,11 @@
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span style="font-size:22px; width:35px; text-align:center;">${medal}</span>
                             <div>
-                                <h3 style="margin:0; font-size:16px; color:var(--text-dark);">${u.name}</h3>
+                                <h3 style="margin:0; font-size:15px; color:var(--text-dark);">${u.name}</h3>
                                 <small style="color:var(--p-color);">${u.tests} Tests</small>
                             </div>
                         </div>
-                        <div style="font-size:18px; font-weight:800; color:var(--primary);">${u.score} pts</div>
+                        <div style="font-size:16px; font-weight:800; color:var(--primary);">${u.score} pts</div>
                     </div>`;
                 });
             }
@@ -1045,12 +1186,12 @@
                 testNames.forEach(tName => {
                     let testCount = data.filter(i => i.testName === tName).length;
                     html += `
-                    <div onclick="startMegaQuiz('${tName}')" style="background: var(--card-bg); border: 1px solid var(--input-border); padding: 20px; border-radius: 15px; margin-bottom: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                    <div onclick="startMegaQuiz('${tName}')" style="background: var(--card-bg); border: 1px solid var(--input-border); padding: 18px; border-radius: 15px; margin-bottom: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
                         <div>
-                            <h3 style="margin:0 0 5px 0; color:var(--text-dark); font-size:18px;">${tName}</h3>
-                            <span style="background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;">${testCount} Questions</span>
+                            <h3 style="margin:0 0 4px 0; color:var(--text-dark); font-size:16px;">${tName}</h3>
+                            <span style="background: #fee2e2; color: #dc2626; padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: bold;">${testCount} Questions</span>
                         </div>
-                        <span style="font-size:24px;">▶️</span>
+                        <span style="font-size:22px;">▶️</span>
                     </div>`;
                 });
             }
@@ -1068,7 +1209,7 @@
         displayQuestion();
     }
 
-    // ⭐ FEATURE: Bookmarks Logic
+    // ⭐ Bookmark Toggle & Status Logic
     function toggleBookmark() {
         let btn = document.getElementById('bookmarkBtn');
         let qData = currentQuizData[currentQuestionIndex];
@@ -1083,15 +1224,21 @@
             btn.classList.remove('saved');
         }
         localStorage.setItem('myBookmarks', JSON.stringify(savedBookmarks));
+        checkBookmarkStatus();
     }
     
     function checkBookmarkStatus() {
         let btn = document.getElementById('bookmarkBtn');
+        if(!btn) return;
         let qData = currentQuizData[currentQuestionIndex];
         let savedBookmarks = JSON.parse(localStorage.getItem('myBookmarks') || "[]");
         let isSaved = savedBookmarks.findIndex(b => b.question === qData.question);
-        if (isSaved !== -1) btn.classList.add('saved');
-        else btn.classList.remove('saved');
+        
+        if (isSaved !== -1) {
+            btn.classList.add('saved');
+        } else {
+            btn.classList.remove('saved');
+        }
     }
     
     function showBookmarks() {
@@ -1104,11 +1251,11 @@
         } else {
             savedBookmarks.forEach((b, index) => {
                 html += `
-                <div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid #f59e0b; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-                    <div style="font-size:12px; color:var(--p-color); margin-bottom:5px; font-weight:bold;">${b.subject} - ${b.chapter}</div>
-                    <h3 style="margin: 0 0 10px 0; color: var(--text-dark); font-size: 16px;">Q: ${b.question}</h3>
-                    <p style="margin: 0; color: #10b981; font-size: 15px; font-weight:bold;">Ans: ✅ ${b.answer}</p>
-                    <button onclick="removeBookmark(${index})" style="background:none; border:none; color:#ef4444; font-size:12px; font-weight:bold; margin-top:10px; cursor:pointer; padding:0; text-decoration:underline;">❌ Remove</button>
+                <div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid #f59e0b; border-radius: 12px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                    <div style="font-size:11px; color:var(--p-color); margin-bottom:4px; font-weight:bold;">${b.subject} - ${b.chapter}</div>
+                    <h3 style="margin: 0 0 8px 0; color: var(--text-dark); font-size: 15px;">Q: ${b.question}</h3>
+                    <p style="margin: 0; color: #10b981; font-size: 14px; font-weight:bold;">Ans: ✅ ${b.answer}</p>
+                    <button onclick="removeBookmark(${index})" style="background:none; border:none; color:#ef4444; font-size:12px; font-weight:bold; margin-top:8px; cursor:pointer; padding:0; text-decoration:underline;">❌ Remove</button>
                 </div>`;
             });
         }
@@ -1134,7 +1281,7 @@
             else {
                 data.forEach(v => {
                     let fDate = v.date ? new Date(v.date).toLocaleDateString('mr-IN') : "नवीन अपडेट";
-                    html += `<a href="${v.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);"><div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">${v.title}</div><div style="font-size: 12px; color: var(--p-color);">📅 ${fDate}</div><div style="background: #ff0000; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">▶️ YouTube वर पहा</div></a>`;
+                    html += `<a href="${v.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 12px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);"><div style="font-weight: 700; color: var(--text-dark); font-size: 14px;">${v.title}</div><div style="font-size: 11px; color: var(--p-color);">📅 ${fDate}</div><div style="background: #ff0000; color: white; text-align: center; padding: 6px; border-radius: 8px; font-weight: bold; font-size: 12px; margin-top: 4px;">▶️ YouTube वर पहा</div></a>`;
                 });
             }
             vList.innerHTML = html;
@@ -1153,7 +1300,7 @@
             else {
                 data.forEach(n => {
                     let fDate = n.date ? new Date(n.date).toLocaleDateString('mr-IN') : "नवीन नोट्स";
-                    html += `<a href="${n.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);"><div style="font-weight: 700; color: var(--text-dark); font-size: 15px;">📄 ${n.title}</div><div style="font-size: 12px; color: var(--p-color);">📅 ${fDate}</div><div style="background: #ff8c00; color: white; text-align: center; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-top: 5px;">📖 नोट्स वाचा</div></a>`;
+                    html += `<a href="${n.link}" target="_blank" style="background: var(--card-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 12px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);"><div style="font-weight: 700; color: var(--text-dark); font-size: 14px;">📄 ${n.title}</div><div style="font-size: 11px; color: var(--p-color);">📅 ${fDate}</div><div style="background: #ff8c00; color: white; text-align: center; padding: 6px; border-radius: 8px; font-weight: bold; font-size: 12px; margin-top: 4px;">📖 नोट्स वाचा</div></a>`;
                 });
             }
             nList.innerHTML = html;
@@ -1174,7 +1321,7 @@
                 const borders = ["#4facfe", "#25D366", "#ff8a00", "#e52e71", "#8a2be2"];
                 data.forEach((item, index) => {
                     let borderColor = borders[index % borders.length];
-                    html += `<div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid ${borderColor}; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);"><h3 style="margin: 0 0 8px 0; color: var(--text-dark); font-size: 16px;">${item.title}</h3><p style="margin: 0; color: var(--p-color); font-size: 14px; line-height: 1.5;">${item.message}</p></div>`;
+                    html += `<div style="background: var(--input-bg); border: 1px solid var(--input-border); border-left: 5px solid ${borderColor}; border-radius: 12px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);"><h3 style="margin: 0 0 6px 0; color: var(--text-dark); font-size: 15px;">${item.title}</h3><p style="margin: 0; color: var(--p-color); font-size: 13px; line-height: 1.5;">${item.message}</p></div>`;
                 });
             }
             aList.innerHTML = html;
@@ -1209,12 +1356,12 @@
         let chapters = [...new Set(filteredData.map(item => item.lesson))]; 
         let html = "";
         if (chapters.length === 0 || chapters[0] === "") {
-            html = `<div style="background: #fff3cd; color: #856404; padding: 25px; border-radius: 15px; margin-top: 20px; text-align: center;"><h3 style="margin: 0 0 10px 0; font-size: 20px;">⏳ लवकरच उपलब्ध होणार!</h3></div>`;
+            html = `<div style="background: #fff3cd; color: #856404; padding: 20px; border-radius: 15px; margin-top: 15px; text-align: center;"><h3 style="margin: 0 0 8px 0; font-size: 18px;">⏳ लवकरच उपलब्ध होणार!</h3></div>`;
         } else {
             chapters.forEach((chap, index) => {
                 let historyScore = null;
                 try { historyScore = localStorage.getItem('score_' + selectedSubject + '_' + chap); } catch(e) {}
-                let scoreText = historyScore ? `<br><small style="font-size:14px; color: #a0aec0;">(मागील स्कोर: ${historyScore})</small>` : "";
+                let scoreText = historyScore ? `<br><small style="font-size:13px; color: #a0aec0;">(मागील स्कोर: ${historyScore})</small>` : "";
                 html += `<button class="primary-btn" onclick="startQuiz('${selectedSubject}', '${chap}')">📖 ${chap} ${scoreText}</button>`;
             });
         }
@@ -1261,6 +1408,7 @@
             clearInterval(timerInterval); endQuiz(); return; 
         }
         
+        // ⚡ फ्री युजरसाठी ५ प्रश्नांनंतर ट्रायल / व्हीआयपी पॉपअप (Paywall)
         if (currentSubjectName !== "Mega Test" && (currentUserPlan === "Free" || currentUserPlan === "Expired") && currentQuestionIndex === 5) {
             clearInterval(timerInterval);
             document.getElementById('paywallPopup').classList.remove('hidden');
@@ -1268,7 +1416,6 @@
         }
 
         startTimer();
-        checkBookmarkStatus();
         
         let qData = currentQuizData[currentQuestionIndex];
         document.getElementById('questionCount').innerText = `${currentQuestionIndex + 1} / ${currentQuizData.length}`;
@@ -1280,6 +1427,8 @@
             <button class="option-btn" id="btnC" onclick="checkAnswer('${qData.optC}', '${qData.answer}', 'btnC')"><span class="option-label">C.</span> ${qData.optC}</button>
             <button class="option-btn" id="btnD" onclick="checkAnswer('${qData.optD}', '${qData.answer}', 'btnD')"><span class="option-label">D.</span> ${qData.optD}</button>
         `;
+
+        checkBookmarkStatus();
     }
 
     function checkAnswer(selected, correct, btnId) {
@@ -1300,6 +1449,27 @@
         setTimeout(() => { currentQuestionIndex++; displayQuestion(); }, 1500);
     }
 
+    // ⏳ पॉपअपमधून थेट ७ दिवसांची फ्री ट्रायल सुरू करणे
+    function activateTrialFromPopup() {
+        currentUserPlan = "Trial";
+        localStorage.setItem('savedPlan', "Trial");
+        
+        let paywall = document.getElementById('paywallPopup');
+        if(paywall) paywall.classList.add('hidden');
+        
+        // Google Sheet वर ट्रायल अपडेट करण्यासाठी रिक्वेस्ट पाठवत आहे
+        fetch(`${SCRIPT_URL}?action=setTrial&mobile=${encodeURIComponent(loggedInMobile)}${getCB()}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                console.log("Sheet updated to Trial successfully");
+            }
+        }).catch(err => console.log("Trial update error"));
+
+        alert("🎉 अभिनंदन! तुमची ७ दिवसांची फ्री ट्रायल यशस्वीरित्या सुरू झाली आहे!");
+        displayQuestion();
+    }
+
     function closePaywallAndGoToPremium() {
         document.getElementById('paywallPopup').classList.add('hidden');
         showScreen('priceScreen');
@@ -1316,7 +1486,7 @@
 
         let finalScoreText = `${score} / ${totalQ}`;
         document.getElementById('scoreText').innerText = finalScoreText;
-        document.getElementById('congratsText').innerHTML = `अभिनंदन <b style="color: var(--primary); font-size: 18px;">${loggedInUser}</b>! <br>तुम्ही टेस्ट पूर्ण केली आहे.`;
+        document.getElementById('congratsText').innerHTML = `अभिनंदन <b style="color: var(--primary); font-size: 17px;">${loggedInUser}</b>! <br>तुम्ही टेस्ट पूर्ण केली आहे.`;
 
         localStorage.setItem('last_practice_date', new Date().toISOString());
         
@@ -1328,18 +1498,18 @@
 
         let warningHtml = "";
         if (currentSubjectName !== "Mega Test" && (currentUserPlan === "Free" || currentUserPlan === "Expired") && currentQuestionIndex < totalQ) {
-            warningHtml = `<div style="color: #dc2626; font-size: 13px; font-weight: bold; background: #fee2e2; padding: 12px; border-radius: 8px; margin-top: 15px; border: 1px solid #f87171; text-align: center;">⚠️ तुमचा स्कोर खूप कमी आहे! कारण तुम्ही सर्व प्रश्न सोडवले नाहीत. पूर्ण प्रश्नांची प्रॅक्टिस करण्यासाठी VIP घ्या.</div>`;
+            warningHtml = `<div style="color: #dc2626; font-size: 12px; font-weight: bold; background: #fee2e2; padding: 10px; border-radius: 8px; margin-top: 12px; border: 1px solid #f87171; text-align: center;">⚠️ तुमचा स्कोर खूप कमी आहे! कारण तुम्ही सर्व प्रश्न सोडवले नाहीत. पूर्ण प्रश्नांची प्रॅक्टिस करण्यासाठी VIP घ्या.</div>`;
         }
 
         document.getElementById('detailedReport').innerHTML = `
-            <div style="text-align: center; margin-bottom: 12px; border-bottom: 1px dashed var(--input-border); padding-bottom: 8px;">
-                <b style="font-size: 16px; color: var(--text-dark);">📊 सविस्तर निकाल अहवाल</b>
+            <div style="text-align: center; margin-bottom: 10px; border-bottom: 1px dashed var(--input-border); padding-bottom: 6px;">
+                <b style="font-size: 15px; color: var(--text-dark);">📊 सविस्तर निकाल अहवाल</b>
             </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• एकूण प्रश्न:</span> <b>${totalQ}</b></div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• सोडवलेले प्रश्न:</span> <b>${currentQuestionIndex}</b></div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color: var(--p-color);">• बरोबर उत्तरे:</span> <b style="color:#28a745;">${score} ✅</b></div>
-            <div style="display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--input-border);">
-                <span style="font-weight: bold; color: var(--text-dark);">• यश (Accuracy):</span> <b style="color:var(--primary); font-size: 18px;">${percentage}%</b>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span style="color: var(--p-color);">• एकूण प्रश्न:</span> <b>${totalQ}</b></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span style="color: var(--p-color);">• सोडवलेले प्रश्न:</span> <b>${currentQuestionIndex}</b></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span style="color: var(--p-color);">• बरोबर उत्तरे:</span> <b style="color:#28a745;">${score} ✅</b></div>
+            <div style="display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--input-border);">
+                <span style="font-weight: bold; color: var(--text-dark);">• यश (Accuracy):</span> <b style="color:var(--primary); font-size: 16px;">${percentage}%</b>
             </div>
             ${warningHtml}
         `;
@@ -1356,7 +1526,7 @@
     function shareOnWhatsApp() {
         let percentage = Math.round((score / currentQuizData.length) * 100);
         let link = myReferralCode ? `https://swenandu-netizen.github.io/10th-MCQ/index.html?ref=${myReferralCode}` : `https://swenandu-netizen.github.io/10th-MCQ/index.html`;
-        let text = `🏆 मी Maha Board MCQ ॲपमध्ये टेस्ट पूर्ण केली!\n\n👤 नाव: ${loggedInUser}\n📚 विषय: ${currentSubjectName} - ${currentChapterName}\n🎯 माझा स्कोर: *${score}/${currentQuizData.length}* (${percentage}%)\n\nतू मला हरवू शकतोस का? ॲप डाऊनलोड कर आणि VIP प्लॅनवर मिळव ₹39 ची सूट:\n\n👉 ${link}`;
+        let text = `🏆 मी Maha Board MCQ ॲपमध्ये टेस्ट पूर्ण केली!\n\n👤 नाव: ${loggedInUser}\n📚 विषय: ${currentSubjectName} - ${currentChapterName}\n🎯 माझा स्कोर: *${score}/${currentQuizData.length}* (${percentage}%)\n\n⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!\nबोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.\n\n👉 ${link}`;
         let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         window.open(whatsappUrl, '_blank');
     }
@@ -1373,9 +1543,9 @@
                 let top3 = data.slice(0, 3);
                 top3.forEach((item, idx) => {
                     let m = idx === 0 ? "🥇" : idx === 1 ? "🥈" : "🥉";
-                    top3Html += `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size: 14px;">
+                    top3Html += `<div style="display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size: 13px;">
                         <span style="font-weight: 500; color: #ffffff;">${m} &nbsp; ${item.name}</span>
-                        <span style="font-weight:bold; color:#38b2ac; background: rgba(56,178,172,0.15); padding: 2px 8px; border-radius: 6px;">${item.score} pts</span>
+                        <span style="font-weight:bold; color:#38b2ac; background: rgba(56,178,172,0.15); padding: 2px 6px; border-radius: 6px;">${item.score} pts</span>
                     </div>`;
                 });
 
@@ -1403,6 +1573,18 @@
 
         }).catch(e => {});
     }
+
+            function handleVipOrTrialClick() {
+        if (currentUserPlan === "Free") {
+            // फंक्शन वही आहे, फक्त बोरिंग confirm() ऐवजी सुंदर डिझाईन वाला paywallPopup उघडेल
+            let paywall = document.getElementById('paywallPopup');
+            if(paywall) paywall.classList.remove('hidden');
+        } else {
+            showScreen('priceScreen');
+        }
+    }
+
+
 </script>
 <script>
   if ('serviceWorker' in navigator) {
