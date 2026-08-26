@@ -338,11 +338,11 @@
     <div id="subjectScreen" class="hidden">
         <div id="welcomeText"></div>
 
-        <!-- ⚡ 10X Upgrade Banner (महाराष्ट्र टॉप 3 स्टार्स च्या वर) -->
-        <div style="background: linear-gradient(135deg, #ff8a00 0%, #e52e71 100%); border-radius: 16px; padding: 14px 15px; margin-bottom: 15px; color: white; text-align: left; box-shadow: 0 6px 20px rgba(229, 46, 113, 0.35); border: 1px solid rgba(255,255,255,0.2);">
-            <div style="font-size: 14px; font-weight: 800; margin-bottom: 4px;">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</div>
-            <div style="font-size: 12px; color: #fef3c7; line-height: 1.4; margin-bottom: 10px;">बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.</div>
-            <button onclick="handleVipOrTrialClick()" style="background: white; color: #e52e71; border: none; padding: 8px 12px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: auto;">👑 VIP किंवा Trial घ्या</button>
+        <!-- ⚡ 10X Upgrade Banner (Dynamic based on User Plan) -->
+        <div id="upgradeBanner" class="hidden" style="background: linear-gradient(135deg, #ff8a00 0%, #e52e71 100%); border-radius: 16px; padding: 14px 15px; margin-bottom: 15px; color: white; text-align: left; box-shadow: 0 6px 20px rgba(229, 46, 113, 0.35); border: 1px solid rgba(255,255,255,0.2);">
+            <div style="font-size: 14px; font-weight: 800; margin-bottom: 4px;" id="bannerTitle">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</div>
+            <div style="font-size: 12px; color: #fef3c7; line-height: 1.4; margin-bottom: 10px;" id="bannerDesc">बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.</div>
+            <button id="bannerBtn" onclick="handleVipOrTrialClick()" style="background: white; color: #e52e71; border: none; padding: 8px 12px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: auto;">👑 VIP किंवा Trial घ्या</button>
         </div>
 
         <!-- 🌟 Top 3 Quick Preview -->
@@ -554,13 +554,6 @@
             <!-- Dynamic Data -->
         </div>
 
-        <!-- ⚡ Profile 10X Upgrade Banner -->
-        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 14px; border-radius: 14px; margin-bottom: 12px; text-align: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-            <div style="font-weight: 800; font-size: 14px; margin-bottom: 4px;">⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!</div>
-            <div style="font-size: 12px; color: #d1fae5; margin-bottom: 8px;">बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.</div>
-            <button onclick="handleVipOrTrialClick()" style="background: white; color: #059669; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer;">👑 VIP किंवा Trial घ्या</button>
-        </div>
-
         <!-- 💸 Rewards & Referral Section Inside Profile -->
         <div style="background: var(--input-bg); border: 2px dashed #ff8a00; padding: 12px; border-radius: 15px; margin-bottom: 12px; text-align: center;">
             <p style="margin: 0 0 4px 0; font-weight: bold; color: var(--text-dark); font-size: 13px;">🎁 माझी कमाई (रेफरल कोड)</p>
@@ -630,7 +623,7 @@
 
             <!-- Option 2: Buy VIP (Glowing Orange/Pink) -->
             <button class="primary-btn" style="background: linear-gradient(90deg, #f59e0b, #e52e71); margin-bottom: 16px; font-size: 14px; padding: 14px; border-radius: 16px; box-shadow: 0 8px 20px rgba(229, 46, 113, 0.4); font-weight: 700; border: 1px solid rgba(255,255,255,0.2);" onclick="closePaywallAndGoToPremium()">
-                👑 VIP प्लॅन घ्या (फक्त ₹१११)
+                👑 VIP प्लॅन घ्या (फक्त ₹११लि)
             </button>
 
             <!-- Skip Button -->
@@ -661,7 +654,7 @@
 
 <script>
     // 🔄 ॲपचा ग्लोबल व्हर्जन चेक (लूप आणि लॉगिन डिलीट होण्यापासून सुरक्षित)
-    const APP_VERSION = "v2.8";
+    const APP_VERSION = "v2.9";
     let storedVersion = localStorage.getItem('app_live_version');
     if (storedVersion !== APP_VERSION) {
         let savedMob = localStorage.getItem('savedMobile');
@@ -821,6 +814,35 @@
         } else { document.getElementById('thoughtBox').style.display = "none"; }
     }
 
+    function updateUpgradeBanner() {
+        let banner = document.getElementById('upgradeBanner');
+        let bTitle = document.getElementById('bannerTitle');
+        let bDesc = document.getElementById('bannerDesc');
+        let bBtn = document.getElementById('bannerBtn');
+
+        if (banner) {
+            if (currentUserPlan === "Free") {
+                banner.classList.remove('hidden');
+                bTitle.innerText = "⚡ स्मार्ट अभ्यास, 10X जबरदस्त प्रोग्रेस!";
+                bDesc.innerText = "बोर्ड परीक्षेची तयारी १० पट वेगवान करण्यासाठी VIP प्लॅन किंवा फ्री ट्रायल घ्या.";
+                bBtn.innerText = "👑 VIP किंवा Trial घ्या";
+            } else if (currentUserPlan === "Trial") {
+                banner.classList.remove('hidden');
+                bTitle.innerText = "⏳ तुमची फ्री ट्रायल चालू आहे!";
+                bDesc.innerText = "पूर्ण तयारीसाठी आणि सर्व फायद्यांसाठी आजच VIP प्लॅन घ्या.";
+                bBtn.innerText = "👑 आताच VIP प्लॅन घ्या (फक्त ₹१११)";
+            } else if (currentUserPlan === "Expired") {
+                banner.classList.remove('hidden');
+                bTitle.innerText = "⚠️ तुमची ट्रायल संपली आहे!";
+                bDesc.innerText = "अभ्यास अखंड ठेवण्यासाठी आणि 10X प्रोग्रेससाठी VIP प्लॅन घ्या.";
+                bBtn.innerText = "👑 VIP प्लॅन खरेदी करा";
+            } else {
+                // Paid / VIP यूजरसाठी पूर्णपणे लपवा
+                banner.classList.add('hidden');
+            }
+        }
+    }
+
     function showScreen(screenId) {
         clearInterval(timerInterval);
         let resetBox = document.getElementById('resetDeviceBox');
@@ -857,6 +879,7 @@
             appContainer.classList.add('transparent-bg');
             renderNotices(); 
             fetchHomeTop3();
+            updateUpgradeBanner(); // होम पेजवर येताच प्लॅननुसार बॅनर अपडेट होईल
         } else {
             appContainer.classList.remove('transparent-bg');
         }
@@ -1574,17 +1597,14 @@
         }).catch(e => {});
     }
 
-            function handleVipOrTrialClick() {
+    function handleVipOrTrialClick() {
         if (currentUserPlan === "Free") {
-            // फंक्शन वही आहे, फक्त बोरिंग confirm() ऐवजी सुंदर डिझाईन वाला paywallPopup उघडेल
             let paywall = document.getElementById('paywallPopup');
             if(paywall) paywall.classList.remove('hidden');
         } else {
             showScreen('priceScreen');
         }
     }
-
-
 </script>
 <script>
   if ('serviceWorker' in navigator) {
